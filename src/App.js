@@ -22,7 +22,8 @@ import InstaDashboard from "./components/InstaDashboard";
 import FacebookAgent from "./pages/FacebookAgent";
 import FacebookDashboard from "./components/FacebookDashboard";
 import ConnectFacebook from "./components/ConnectFacebook";
-
+import LegalAgent from "./pages/LegalAgent"
+import LegalAgentDashboard from "./components/LegalAgentDashboard";
 
 
 
@@ -61,6 +62,9 @@ function App() {
       <Route path="/facebook-agent" element={<FacebookAgent />} />
       <Route path="/facebook-dashboard" element={<FacebookDashboard />} />
       <Route path="/connect-facebook" element={<ConnectFacebook />} />
+      <Route path="/legal-agent" element={<LegalAgent />} />
+      <Route path="/legal-agent/dashboard" element={<LegalAgentDashboard />} />
+
 
 
 

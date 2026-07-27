@@ -9,7 +9,8 @@ import {
   FaDollarSign,
   FaHeadset,
   FaPenNib,
-  FaShoppingCart
+  FaShoppingCart,
+  FaBalanceScale
 } from "react-icons/fa";
 
 function FeaturedAgents() {
@@ -46,6 +47,14 @@ function FeaturedAgents() {
       desc: "AI-powered Facebook agent for Messenger automation, customer support, and campaign interactions.",
       plan: "Enterprise",
       icon: <FaFacebook />
+    },
+    {
+      name: "Legal Agent for Advocates",
+      slug: "legal-agent",
+      category: "Legal AI",
+      desc: "AI-powered legal assistant for advocates to manage client inquiries, schedule consultations, draft legal documents, and provide instant case-related support.",
+      plan: "Enterprise",
+      icon: <FaBalanceScale />
     },
     // {
     //   name: "TalentScout Pro",
