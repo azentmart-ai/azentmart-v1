@@ -56,9 +56,9 @@ function Hero() {
         finance, support, and more — no technical expertise required.
       </p>
 
-      <div className="hero-buttons">
-        <button className="primary-btn">Get Started Free</button>
-        <button className="secondary-btn">Browse Agents</button>
+      <div className="hero-buttons1">
+        <button className="primary-btn1">Get Started Free</button>
+        <button className="secondary-btn1">Browse Agents</button>
       </div>
 
       {/* STATS SECTION */}

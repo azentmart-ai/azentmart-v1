@@ -147,13 +147,13 @@ body {
 
 /* buttons */
 
-.hero-buttons {
+.hero-buttons1 {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-.primary-btn {
+.primary-btn1 {
   padding: 14px 28px;
   border-radius: 10px;
   border: none;
@@ -163,7 +163,7 @@ body {
   cursor: pointer;
 }
 
-.secondary-btn {
+.secondary-btn1 {
   padding: 14px 28px;
   border-radius: 10px;
   border: 2px solid #7c4dff;
@@ -428,13 +428,13 @@ body {
 }
 /* ===== PRICING SECTION ===== */
 
-.pricing-section{
+.pricing-section1{
   padding:100px 20px;
   text-align:center;
   background:#f7f8fb;
 }
 
-.pricing-badge{
+.pricing-badge1{
   display:inline-block;
   padding:8px 30px;
   border-radius:30px;
@@ -443,13 +443,13 @@ body {
   margin-bottom:20px;
 }
 
-.pricing-title{
+.pricing-title1{
   font-size:48px;
   font-weight:700;
   margin-bottom:15px;
 }
 
-.pricing-desc{
+.pricing-desc1{
   max-width:650px;
   margin:auto;
   color:#6b7280;
@@ -468,7 +468,7 @@ body {
 
 /* ===== CARD ===== */
 
-.pricing-card{
+.pricing-card1{
   background:#14172a;
   color:white;
   border-radius:18px;
@@ -477,7 +477,7 @@ body {
   transition:0.3s;
 }
 
-.pricing-card:hover{
+.pricing-card1:hover{
   transform:translateY(-8px);
   box-shadow:0 10px 30px rgba(124,77,255,0.25);
 }

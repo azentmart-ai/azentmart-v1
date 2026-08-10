@@ -24,7 +24,9 @@ import FacebookDashboard from "./components/FacebookDashboard";
 import ConnectFacebook from "./components/ConnectFacebook";
 import LegalAgent from "./pages/LegalAgent"
 import LegalAgentDashboard from "./components/LegalAgentDashboard";
-
+import YourAIAssistant from "./pages/YourAIAssistant"
+import YourAIAuth from "./components/YourAIAuth"
+import InterviewDashboard from "./pages/InterviewDashboard"
 
 
 function HomePage() {
@@ -64,6 +66,9 @@ function App() {
       <Route path="/connect-facebook" element={<ConnectFacebook />} />
       <Route path="/legal-agent" element={<LegalAgent />} />
       <Route path="/legal-agent/dashboard" element={<LegalAgentDashboard />} />
+      <Route path="/your-ai-assistant" element={<YourAIAssistant />} />
+      <Route path="/auth" element={<YourAIAuth />} />
+      <Route path="/interview-dashboard" element={<InterviewDashboard/>} />
 
 
 

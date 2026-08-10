@@ -30,25 +30,25 @@ function Pricing() {
   ];
 
   return (
-    <section className="pricing-section">
+    <section className="pricing-section1">
 
-      <div className="pricing-badge">Pricing</div>
+      <div className="pricing-badge1">Pricing</div>
 
-      <h2 className="pricing-title">
+      <h2 className="pricing-title1">
         Simple, Transparent Pricing
       </h2>
 
-      <p className="pricing-desc">
+      <p className="pricing-desc1">
         Choose the plan that matches your team's size and automation needs.
         Upgrade or downgrade anytime.
       </p>
 
-      <div className="row pricing-grid">
+      <div className="row pricing-grid1">
 
         {plans.map((plan, index) => (
           <div className="col-12 col-md-6 col-lg-3 d-flex" key={index}>
 
-            <div className="pricing-card w-100">
+            <div className="pricing-card1 w-100">
 
               <span className="plan-label">{plan.name}</span>
 
