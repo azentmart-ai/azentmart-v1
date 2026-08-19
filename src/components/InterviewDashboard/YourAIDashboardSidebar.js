@@ -144,31 +144,32 @@ const YourAIDashboardSidebar = ({ activePage, setActivePage }) => {
 
         {/* Free Plan */}
 
-        <div className="dashboard-plan-card">
+{/* Free Plan */}
+<div className="dashboard-plan-card">
 
-          <div className="dashboard-plan-header">
+  <div className="dashboard-plan-header">
 
-            <div className="dashboard-plan-title">
+    <div className="dashboard-plan-title">
+      <FiGift />
+      <span>Free Plan</span>
+    </div>
 
-              <FiGift />
+    <FiMoreVertical />
 
-              <span>
-                Free Plan
-              </span>
+  </div>
 
-            </div>
+  <p>
+    Start your AI interview preparation with the free plan.
+  </p>
 
-            <FiMoreVertical />
+  <button
+    className="dashboard-upgrade-btn"
+    onClick={() => setActivePage("upgrade")}
+  >
+    Upgrade
+  </button>
 
-          </div>
-
-          <p>
-
-            Start your AI interview preparation with the free plan.
-
-          </p>
-
-        </div>
+</div>
 
         {/* Bottom Menu */}
 
@@ -206,7 +207,7 @@ const YourAIDashboardSidebar = ({ activePage, setActivePage }) => {
 
         <div className="dashboard-avatar">
 
-          NE
+          
 
         </div>
 

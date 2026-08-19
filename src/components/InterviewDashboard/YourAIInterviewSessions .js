@@ -27,6 +27,14 @@ const YourAIInterviewSessions = () => {
   const [showConnectModal, setShowConnectModal] = useState(false);
 
   // =====================================================
+  // LIVE SESSION MENU / END SESSION MODAL
+  // =====================================================
+
+  const [showSessionMenu, setShowSessionMenu] = useState(false);
+  const [showEndSessionModal, setShowEndSessionModal] = useState(false);
+  const [endSessionOption, setEndSessionOption] = useState("exit");
+
+  // =====================================================
   // LIVE INTERVIEW STATE
   // =====================================================
 
@@ -321,6 +329,47 @@ const YourAIInterviewSessions = () => {
     setSharedStream(null);
     setIsConnected(false);
     setShowConnectModal(false);
+  };
+
+  // =====================================================
+  // OPEN SESSION MENU
+  // =====================================================
+
+  const toggleSessionMenu = () => {
+    setShowSessionMenu((previous) => !previous);
+  };
+
+  // =====================================================
+  // OPEN END SESSION MODAL
+  // =====================================================
+
+  const openEndSessionModal = () => {
+    setShowSessionMenu(false);
+    setEndSessionOption("exit");
+    setShowEndSessionModal(true);
+  };
+
+  // =====================================================
+  // CLOSE END SESSION MODAL
+  // =====================================================
+
+  const closeEndSessionModal = () => {
+    setShowEndSessionModal(false);
+  };
+
+  // =====================================================
+  // CONFIRM END SESSION
+  // =====================================================
+
+  const handleConfirmEndSession = () => {
+    if (
+      endSessionOption === "exit" ||
+      endSessionOption === "end"
+    ) {
+      stopLiveInterview();
+      setShowEndSessionModal(false);
+      setShowSessionMenu(false);
+    }
   };
 
   // =====================================================
@@ -1331,6 +1380,151 @@ I would answer this clearly by explaining the concept, giving a practical exampl
 
 
       {/* =================================================
+          END SESSION MODAL
+      ================================================= */}
+
+      {showEndSessionModal && (
+        <div
+          className="yourai-end-session-overlay"
+          onClick={closeEndSessionModal}
+        >
+          <div
+            className="yourai-end-session-modal"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
+
+            <div className="yourai-end-session-header">
+
+              <div>
+
+                <h2>
+                  End Session
+                </h2>
+
+                <p>
+                  Choose whether to exit the call session
+                  or end it permanently.
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                className="yourai-end-session-close"
+                onClick={closeEndSessionModal}
+                aria-label="Close"
+              >
+                <FiX />
+              </button>
+
+            </div>
+
+
+            <div className="yourai-end-session-options">
+
+              {/* EXIT */}
+
+              <button
+                type="button"
+                className={`yourai-end-session-option ${
+                  endSessionOption === "exit"
+                    ? "selected"
+                    : ""
+                }`}
+                onClick={() =>
+                  setEndSessionOption("exit")
+                }
+              >
+
+                <div className="yourai-option-radio">
+                  <span />
+                </div>
+
+                <div className="yourai-option-content">
+
+                  <h3>
+                    Exit
+                  </h3>
+
+                  <p>
+                    Exit call session without ending it.
+                    The session will automatically end when
+                    the timer runs out.
+                  </p>
+
+                </div>
+
+              </button>
+
+
+              {/* END SESSION */}
+
+              <button
+                type="button"
+                className={`yourai-end-session-option permanent ${
+                  endSessionOption === "end"
+                    ? "selected"
+                    : ""
+                }`}
+                onClick={() =>
+                  setEndSessionOption("end")
+                }
+              >
+
+                <div className="yourai-option-radio">
+                  <span />
+                </div>
+
+                <div className="yourai-option-content">
+
+                  <h3>
+                    End Session
+                  </h3>
+
+                  <p>
+                    If you end this session, you can
+                    continue it within 5 minutes by
+                    extending it with 0.5 credit. After
+                    that, it will be permanently ended.
+                  </p>
+
+                </div>
+
+              </button>
+
+            </div>
+
+
+            <div className="yourai-end-session-footer">
+
+              <button
+                type="button"
+                className="yourai-end-session-close-btn"
+                onClick={closeEndSessionModal}
+              >
+                Close
+              </button>
+
+
+              <button
+                type="button"
+                className="yourai-end-session-confirm-btn"
+                onClick={handleConfirmEndSession}
+              >
+                Confirm
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+
+      {/* =================================================
           FINAL LIVE INTERVIEW SPLIT SCREEN
       ================================================= */}
 
@@ -1366,19 +1560,162 @@ I would answer this clearly by explaining the concept, giving a practical exampl
                 </span>
 
 
-                <button
-                  className="yourai-menu-btn"
-                  type="button"
-                >
-                  ⋮
-                </button>
+                <div className="yourai-session-menu-wrapper">
+
+                  <button
+                    className={`yourai-menu-btn ${
+                      showSessionMenu ? "active" : ""
+                    }`}
+                    type="button"
+                    onClick={toggleSessionMenu}
+                    aria-label="Session menu"
+                    aria-expanded={showSessionMenu}
+                  >
+                    ⋮
+                  </button>
+
+
+                  {showSessionMenu && (
+                    <div className="yourai-session-menu">
+
+                      <div className="yourai-session-menu-title">
+                        Session
+                      </div>
+
+
+                      <button
+                        type="button"
+                        className="yourai-session-menu-item"
+                        onClick={() => {
+                          // Answer text size submenu can be added here.
+                        }}
+                      >
+
+                        <div className="yourai-session-menu-left">
+
+                          <span className="yourai-menu-symbol">
+                            Aᴬ
+                          </span>
+
+                          <span>
+                            Answer text size
+                          </span>
+
+                        </div>
+
+                        <span className="yourai-menu-arrow">
+                          ›
+                        </span>
+
+                      </button>
+
+
+                      <button
+                        type="button"
+                        className="yourai-session-menu-item"
+                        onClick={() => {
+                          // Language submenu can be added here.
+                        }}
+                      >
+
+                        <div className="yourai-session-menu-left">
+
+                          <span className="yourai-menu-symbol">
+                            ◎
+                          </span>
+
+                          <span>
+                            Language
+                          </span>
+
+                        </div>
+
+                        <div className="yourai-menu-right">
+
+                          <span>
+                            {language}
+                          </span>
+
+                          <span className="yourai-menu-arrow">
+                            ›
+                          </span>
+
+                        </div>
+
+                      </button>
+
+
+                      <div className="yourai-session-menu-item auto-answer-item">
+
+                        <div className="yourai-session-menu-left">
+
+                          <span className="yourai-menu-symbol">
+                            ✧
+                          </span>
+
+                          <span>
+                            Auto Answer
+                          </span>
+
+                        </div>
+
+
+                        <label className="yourai-menu-toggle">
+
+                          <input
+                            type="checkbox"
+                            checked={autoAnswer}
+                            onChange={(e) =>
+                              setAutoAnswer(
+                                e.target.checked
+                              )
+                            }
+                          />
+
+                          <span className="yourai-toggle-slider" />
+
+                        </label>
+
+                      </div>
+
+
+                      <div className="yourai-menu-divider" />
+
+
+                      <button
+                        type="button"
+                        className="yourai-session-menu-item edit-session-item"
+                        onClick={() => {
+                          setShowSessionMenu(false);
+                          setShowConnectModal(false);
+                          setShowRealInterview(false);
+                          setShowCreateSession(true);
+                        }}
+                      >
+
+                        <div className="yourai-session-menu-left">
+
+                          <span className="yourai-menu-symbol">
+                            ✎
+                          </span>
+
+                          <span>
+                            Edit session
+                          </span>
+
+                        </div>
+
+                      </button>
+
+                    </div>
+                  )}
+
+                </div>
 
 
                 <button
                   className="yourai-live-exit"
-                  onClick={
-                    stopLiveInterview
-                  }
+                  onClick={openEndSessionModal}
                 >
                   ⇥ Exit
                 </button>

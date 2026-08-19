@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import YourAIDashboardSidebar from "../components/InterviewDashboard/YourAIDashboardSidebar";
 import YourAIInterviewSessions from "../components/InterviewDashboard/YourAIInterviewSessions ";
 import YourAIResume from "../components/InterviewDashboard/YourAIResume";
-
+import UpgradePage from "../components/InterviewDashboard/UpgradePage";
 
 const InterviewDashboard = () => {
 
@@ -23,6 +23,7 @@ const InterviewDashboard = () => {
         {activePage === "sessions" && (
           <YourAIInterviewSessions />
         )}
+        {activePage === "upgrade" && <UpgradePage />}
 
        {activePage === "resume" && <YourAIResume />}
 
