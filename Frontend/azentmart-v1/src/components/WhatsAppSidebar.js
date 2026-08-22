@@ -1,5 +1,7 @@
 import React from "react";
+
 import logo from "../assets/logo.jpeg";
+
 import {
   FaBullhorn,
   FaInbox,
@@ -12,7 +14,8 @@ import {
   FaPlug,
   FaCog,
   FaCode,
-  FaLink
+  FaLink,
+  FaCreditCard,
 } from "react-icons/fa";
 
 function WhatsAppSidebar({ activeTab, setActiveTab }) {
@@ -22,7 +25,11 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
       {/* TOP */}
       <div className="sidebar-top">
         <div className="sidebar-logo">
-          <img src={logo} alt="Logo" className="sidebar-logo-img" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="sidebar-logo-img"
+          />
         </div>
       </div>
 
@@ -31,6 +38,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
 
         <ul className="sidebar-menu">
 
+          {/* CAMPAIGNS */}
           <li
             className={activeTab === "campaigns" ? "active" : ""}
             onClick={() => setActiveTab("campaigns")}
@@ -38,6 +46,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaBullhorn /> Campaigns
           </li>
 
+          {/* TEAM INBOX */}
           <li
             className={activeTab === "inbox" ? "active" : ""}
             onClick={() => setActiveTab("inbox")}
@@ -45,6 +54,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaInbox /> Team Inbox
           </li>
 
+          {/* CONTACTS */}
           <li
             className={activeTab === "contacts" ? "active" : ""}
             onClick={() => setActiveTab("contacts")}
@@ -52,13 +62,15 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaAddressBook /> Contacts
           </li>
 
+          {/* AGENTS */}
           <li
             className={activeTab === "astra" ? "active" : ""}
             onClick={() => setActiveTab("astra")}
           >
-            <FaCube /> Astra
+            <FaCube /> Agents
           </li>
 
+          {/* AUTOMATIONS */}
           <li
             className={activeTab === "automations" ? "active" : ""}
             onClick={() => setActiveTab("automations")}
@@ -66,6 +78,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaProjectDiagram /> Automations
           </li>
 
+          {/* COMMERCE */}
           <li
             className={activeTab === "commerce" ? "active" : ""}
             onClick={() => setActiveTab("commerce")}
@@ -73,6 +86,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaShoppingCart /> Commerce
           </li>
 
+          {/* ADS */}
           <li
             className={activeTab === "ads" ? "active" : ""}
             onClick={() => setActiveTab("ads")}
@@ -80,8 +94,13 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaAd /> Ads
           </li>
 
+          {/* ANALYTICS */}
           <li
-            className={activeTab === "analytics" ? "active analytics-active" : ""}
+            className={
+              activeTab === "analytics"
+                ? "active analytics-active"
+                : ""
+            }
             onClick={() => setActiveTab("analytics")}
           >
             <FaChartPie /> Analytics
@@ -90,31 +109,77 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
         </ul>
 
         {/* CONNECTORS */}
-        <p className="menu-heading">Connectors</p>
+        <p className="menu-heading">
+          Connectors
+        </p>
+
         <ul className="sidebar-menu">
-          <li onClick={() => setActiveTab("api")}>
+
+          {/* API */}
+          <li
+            className={activeTab === "api" ? "active" : ""}
+            onClick={() => setActiveTab("api")}
+          >
             <FaCode /> API
           </li>
-          <li onClick={() => setActiveTab("integrations")}>
+
+          {/* INTEGRATIONS */}
+          <li
+            className={activeTab === "integrations" ? "active" : ""}
+            onClick={() => setActiveTab("integrations")}
+          >
             <FaPlug /> Integrations
           </li>
-          <li onClick={() => setActiveTab("webhooks")}>
+
+          {/* WEBHOOKS */}
+          <li
+            className={activeTab === "webhooks" ? "active" : ""}
+            onClick={() => setActiveTab("webhooks")}
+          >
             <FaLink /> Webhooks
           </li>
+
         </ul>
 
         {/* SETTINGS */}
-        <p className="menu-heading">Settings</p>
+        <p className="menu-heading">
+          Settings
+        </p>
+
         <ul className="sidebar-menu">
-          <li onClick={() => setActiveTab("user-management")}>
+
+          {/* BILLING */}
+          <li
+            className={activeTab === "billing" ? "active" : ""}
+            onClick={() => setActiveTab("billing")}
+          >
+            <FaCreditCard /> Billing
+          </li>
+
+          {/* USER MANAGEMENT */}
+          <li
+            className={activeTab === "user-management" ? "active" : ""}
+            onClick={() => setActiveTab("user-management")}
+          >
             <FaCog /> User Management
           </li>
-          <li onClick={() => setActiveTab("account")}>
+
+          {/* ACCOUNT DETAILS */}
+          <li
+            className={activeTab === "account" ? "active" : ""}
+            onClick={() => setActiveTab("account")}
+          >
             <FaCog /> Account Details
           </li>
-          <li onClick={() => setActiveTab("channels")}>
+
+          {/* CHANNELS */}
+          <li
+            className={activeTab === "channels" ? "active" : ""}
+            onClick={() => setActiveTab("channels")}
+          >
             <FaCog /> Channels
           </li>
+
         </ul>
 
       </div>
