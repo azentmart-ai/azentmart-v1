@@ -9,6 +9,7 @@ import BillingPage from "../components/BillingPage";
 import CommercePage from "../components/CommercePage";
 import AdsPage from "../components/AdsPage";
 import ApiPage from "../components/ApiPage";
+import IntegrationsPage from "../components/IntegrationsPage";
 
 const WhatsappDashboard = () => {
   const [activeTab, setActiveTab] = useState("analytics");
@@ -1515,15 +1516,7 @@ const WhatsappDashboard = () => {
       // ========================================================
 
       case "integrations":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>Integrations Page</h1>
-          </div>
-        );
+        return <IntegrationsPage />;
 
       // ========================================================
       // WEBHOOKS

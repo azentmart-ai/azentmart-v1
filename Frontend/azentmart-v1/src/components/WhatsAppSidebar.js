@@ -131,13 +131,7 @@ function WhatsAppSidebar({ activeTab, setActiveTab }) {
             <FaPlug /> Integrations
           </li>
 
-          {/* WEBHOOKS */}
-          <li
-            className={activeTab === "webhooks" ? "active" : ""}
-            onClick={() => setActiveTab("webhooks")}
-          >
-            <FaLink /> Webhooks
-          </li>
+          
 
         </ul>
 
