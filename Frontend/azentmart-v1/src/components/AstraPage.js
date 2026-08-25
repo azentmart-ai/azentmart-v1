@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   FaSearch,
@@ -15,48 +15,123 @@ import {
 function AstraPage() {
   const [search, setSearch] = useState("");
 
-  const [assistants, setAssistants] = useState([
-    {
-      id: 1,
-      name: "WhatsApp AI Assistant",
-      description:
-        "Automatically responds to customer messages and provides instant support.",
-      channel: "WhatsApp",
-      status: "Active",
-      conversations: 128,
-    },
-    {
-      id: 2,
-      name: "Customer Support Assistant",
-      description:
-        "Helps customers with common questions and support requests.",
-      channel: "WhatsApp",
-      status: "Active",
-      conversations: 86,
-    },
-    {
-      id: 3,
-      name: "Sales Assistant",
-      description:
-        "Engages leads, answers product questions and helps convert prospects.",
-      channel: "WhatsApp",
-      status: "Inactive",
-      conversations: 42,
-    },
-  ]);
+  const [assistants, setAssistants] = useState([]);
 
-  // ============================================================
-  // CREATE / EDIT MODAL
-  // ============================================================
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const [error, setError] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [editingAssistant, setEditingAssistant] = useState(null);
 
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
+    name: "WhatsApp AI Assistant",
+    description:
+      "Automatically responds to customer messages and provides instant support.",
     channel: "WhatsApp",
+
+    provider: "openai",
+    model: "gpt-4o-mini",
+    system_prompt:
+      "You are a helpful WhatsApp customer support assistant.",
+    is_active: true,
+    auto_reply_enabled: true,
+    auto_reply_max_per_conversation: 3,
   });
+
+  // ============================================================
+  // LOAD EXISTING AI CONFIG
+  // ============================================================
+
+  const loadAssistant = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch("/api/ai/config", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error(
+            "Please login again to manage your AI assistant."
+          );
+        }
+
+        const data = await response.json().catch(() => null);
+
+        throw new Error(
+          data?.error || "Failed to load AI configuration."
+        );
+      }
+
+      const data = await response.json();
+
+      // No AI configured yet
+      if (!data.configured) {
+        setAssistants([]);
+        setLoading(false);
+        return;
+      }
+
+      // Existing real AI configuration
+      const assistant = {
+        id: "ai-config",
+        name: "WhatsApp AI Assistant",
+        description:
+          data.system_prompt ||
+          "Automatically responds to customer messages and provides instant support.",
+        channel: "WhatsApp",
+        status: data.is_active ? "Active" : "Inactive",
+        conversations: 0,
+
+        provider: data.provider,
+        model: data.model,
+        system_prompt: data.system_prompt || "",
+        is_active: data.is_active === true,
+        auto_reply_enabled:
+          data.auto_reply_enabled === true,
+        auto_reply_max_per_conversation:
+          data.auto_reply_max_per_conversation || 3,
+      };
+
+      setAssistants([assistant]);
+
+      setFormData({
+        name: "WhatsApp AI Assistant",
+        description:
+          data.system_prompt ||
+          "Automatically responds to customer messages and provides instant support.",
+        channel: "WhatsApp",
+
+        provider: data.provider || "openai",
+        model: data.model || "gpt-4o-mini",
+        system_prompt:
+          data.system_prompt ||
+          "You are a helpful WhatsApp customer support assistant.",
+        is_active: data.is_active === true,
+        auto_reply_enabled:
+          data.auto_reply_enabled === true,
+        auto_reply_max_per_conversation:
+          data.auto_reply_max_per_conversation || 3,
+      });
+    } catch (err) {
+      console.error("AI config load error:", err);
+      setError(err.message || "Failed to load assistant.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAssistant();
+  }, []);
 
   // ============================================================
   // FILTER
@@ -70,23 +145,33 @@ function AstraPage() {
   );
 
   // ============================================================
-  // OPEN CREATE MODAL
+  // OPEN CREATE
   // ============================================================
 
   const openCreateModal = () => {
     setEditingAssistant(null);
 
     setFormData({
-      name: "",
-      description: "",
+      name: "WhatsApp AI Assistant",
+      description:
+        "Automatically responds to customer messages and provides instant support.",
       channel: "WhatsApp",
+
+      provider: "openai",
+      model: "gpt-4o-mini",
+      system_prompt:
+        "You are a helpful WhatsApp customer support assistant.",
+      is_active: true,
+      auto_reply_enabled: true,
+      auto_reply_max_per_conversation: 3,
     });
 
+    setError("");
     setShowModal(true);
   };
 
   // ============================================================
-  // OPEN EDIT MODAL
+  // OPEN EDIT
   // ============================================================
 
   const openEditModal = (assistant) => {
@@ -96,24 +181,34 @@ function AstraPage() {
       name: assistant.name,
       description: assistant.description,
       channel: assistant.channel,
+
+      provider: assistant.provider || "openai",
+      model: assistant.model || "gpt-4o-mini",
+      system_prompt:
+        assistant.system_prompt ||
+        assistant.description ||
+        "You are a helpful WhatsApp customer support assistant.",
+      is_active: assistant.is_active === true,
+      auto_reply_enabled:
+        assistant.auto_reply_enabled === true,
+      auto_reply_max_per_conversation:
+        assistant.auto_reply_max_per_conversation || 3,
     });
 
+    setError("");
     setShowModal(true);
   };
 
   // ============================================================
-  // CLOSE MODAL
+  // CLOSE
   // ============================================================
 
   const closeModal = () => {
+    if (saving) return;
+
     setShowModal(false);
     setEditingAssistant(null);
-
-    setFormData({
-      name: "",
-      description: "",
-      channel: "WhatsApp",
-    });
+    setError("");
   };
 
   // ============================================================
@@ -130,99 +225,217 @@ function AstraPage() {
   };
 
   // ============================================================
-  // SAVE ASSISTANT
+  // SAVE EXISTING AI CONFIG
   // ============================================================
 
-  const saveAssistant = () => {
+  const saveAssistant = async () => {
     if (!formData.name.trim()) {
-      alert("Please enter assistant name.");
+      setError("Please enter assistant name.");
       return;
     }
 
     if (!formData.description.trim()) {
-      alert("Please enter assistant description.");
+      setError("Please enter assistant description.");
       return;
     }
 
-    // EDIT EXISTING ASSISTANT
-    if (editingAssistant) {
-      setAssistants((current) =>
-        current.map((assistant) =>
-          assistant.id === editingAssistant.id
-            ? {
-                ...assistant,
-                name: formData.name,
-                description: formData.description,
-                channel: formData.channel,
-              }
-            : assistant
-        )
-      );
+    if (!formData.provider) {
+      setError("Please select an AI provider.");
+      return;
     }
 
-    // CREATE NEW ASSISTANT
-    else {
-      const newAssistant = {
-        id: Date.now(),
-        name: formData.name,
-        description: formData.description,
-        channel: formData.channel,
-        status: "Active",
-        conversations: 0,
+    if (!formData.model.trim()) {
+      setError("Please enter an AI model.");
+      return;
+    }
+
+    if (!formData.system_prompt.trim()) {
+      setError("Please enter a system prompt.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+      setError("");
+
+      /*
+       * IMPORTANT:
+       * Existing backend requires API key when no ai_configs
+       * record exists.
+       *
+       * We intentionally do NOT invent/send an API key here.
+       * If configuration already exists, the backend reuses
+       * the encrypted existing key.
+       */
+
+      const payload = {
+        provider: formData.provider,
+        model: formData.model,
+
+        system_prompt: formData.system_prompt,
+
+        is_active: formData.is_active === true,
+
+        auto_reply_enabled:
+          formData.auto_reply_enabled === true,
+
+        auto_reply_max_per_conversation: Math.min(
+          20,
+          Math.max(
+            1,
+            Number(
+              formData.auto_reply_max_per_conversation || 3
+            )
+          )
+        ),
       };
 
-      setAssistants((current) => [
-        ...current,
-        newAssistant,
-      ]);
-    }
+      const response = await fetch("/api/ai/config", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    closeModal();
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error ||
+            "Failed to save AI configuration."
+        );
+      }
+
+      await loadAssistant();
+
+      setShowModal(false);
+      setEditingAssistant(null);
+    } catch (err) {
+      console.error("AI config save error:", err);
+
+      setError(
+        err.message ||
+          "Failed to save assistant."
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   // ============================================================
   // TOGGLE ASSISTANT
   // ============================================================
 
-  const toggleAssistant = (id) => {
-    setAssistants((current) =>
-      current.map((assistant) =>
-        assistant.id === id
-          ? {
-              ...assistant,
-              status:
-                assistant.status === "Active"
-                  ? "Inactive"
-                  : "Active",
-            }
-          : assistant
-      )
-    );
-  };
+  const toggleAssistant = async (assistant) => {
+    try {
+      setError("");
 
-  // ============================================================
-  // DELETE ASSISTANT
-  // ============================================================
+      const response = await fetch("/api/ai/config", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          provider: assistant.provider,
+          model: assistant.model,
+          system_prompt:
+            assistant.system_prompt || null,
 
-  const deleteAssistant = (id) => {
-    const assistant = assistants.find(
-      (item) => item.id === id
-    );
+          is_active:
+            assistant.status !== "Active",
 
-    const confirmed = window.confirm(
-      `Delete "${assistant?.name}"?`
-    );
+          auto_reply_enabled:
+            assistant.auto_reply_enabled === true,
 
-    if (!confirmed) {
-      return;
+          auto_reply_max_per_conversation:
+            assistant.auto_reply_max_per_conversation || 3,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error ||
+            "Failed to update assistant status."
+        );
+      }
+
+      await loadAssistant();
+    } catch (err) {
+      console.error("Toggle assistant error:", err);
+
+      setError(
+        err.message ||
+          "Failed to update assistant."
+      );
     }
-
-    setAssistants((current) =>
-      current.filter(
-        (assistant) => assistant.id !== id
-      )
-    );
   };
+
+  // ============================================================
+  // DELETE
+  // ============================================================
+
+  const deleteAssistant = async () => {
+    const confirmed = window.confirm(
+      "Delete the AI configuration? This will disable/remove the existing AI assistant."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setError("");
+
+      const response = await fetch("/api/ai/config", {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error ||
+            "Failed to delete AI configuration."
+        );
+      }
+
+      setAssistants([]);
+    } catch (err) {
+      console.error("Delete assistant error:", err);
+
+      setError(
+        err.message ||
+          "Failed to delete assistant."
+      );
+    }
+  };
+
+  // ============================================================
+  // SUMMARY
+  // ============================================================
+
+  const activeCount = assistants.filter(
+    (assistant) =>
+      assistant.status === "Active"
+  ).length;
+
+  const totalConversations =
+    assistants.reduce(
+      (total, assistant) =>
+        total + Number(assistant.conversations || 0),
+      0
+    );
+
+  // ============================================================
+  // PAGE
+  // ============================================================
 
   return (
     <div className="astra-page">
@@ -252,6 +465,25 @@ function AstraPage() {
 
       </div>
 
+      {/* ======================================================
+          ERROR
+      ====================================================== */}
+
+      {error && !showModal && (
+        <div
+          style={{
+            marginBottom: "14px",
+            padding: "11px 14px",
+            borderRadius: "7px",
+            background: "#3a1d24",
+            border: "1px solid #71323f",
+            color: "#ffb8c2",
+            fontSize: "13px",
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       {/* ======================================================
           SUMMARY
@@ -269,12 +501,11 @@ function AstraPage() {
             <span>Total Assistants</span>
 
             <strong>
-              {assistants.length}
+              {loading ? "..." : assistants.length}
             </strong>
           </div>
 
         </div>
-
 
         <div className="astra-stat-card">
 
@@ -286,17 +517,11 @@ function AstraPage() {
             <span>Active</span>
 
             <strong>
-              {
-                assistants.filter(
-                  (assistant) =>
-                    assistant.status === "Active"
-                ).length
-              }
+              {loading ? "..." : activeCount}
             </strong>
           </div>
 
         </div>
-
 
         <div className="astra-stat-card">
 
@@ -308,18 +533,15 @@ function AstraPage() {
             <span>Conversations</span>
 
             <strong>
-              {assistants.reduce(
-                (total, assistant) =>
-                  total + assistant.conversations,
-                0
-              )}
+              {loading
+                ? "..."
+                : totalConversations}
             </strong>
           </div>
 
         </div>
 
       </div>
-
 
       {/* ======================================================
           SEARCH
@@ -344,20 +566,31 @@ function AstraPage() {
 
       </div>
 
-
       {/* ======================================================
           ASSISTANT LIST
       ====================================================== */}
 
       <div className="astra-list">
 
-        {filteredAssistants.length === 0 ? (
+        {loading ? (
+
+          <div className="astra-empty">
+            <FaRobot />
+
+            <h3>
+              Loading assistant...
+            </h3>
+          </div>
+
+        ) : filteredAssistants.length === 0 ? (
 
           <div className="astra-empty">
 
             <FaRobot />
 
-            <h3>No assistants found</h3>
+            <h3>
+              No assistant configured
+            </h3>
 
             <p>
               Create an AI assistant to start automating
@@ -415,9 +648,6 @@ function AstraPage() {
                     {assistant.description}
                   </p>
 
-
-                  {/* DETAILS */}
-
                   <div className="astra-details">
 
                     <span>
@@ -436,25 +666,19 @@ function AstraPage() {
 
               </div>
 
-
               {/* ACTIONS */}
 
               <div className="astra-actions">
-
-                {/* POWER */}
 
                 <button
                   className="astra-action-btn"
                   title="Toggle assistant"
                   onClick={() =>
-                    toggleAssistant(assistant.id)
+                    toggleAssistant(assistant)
                   }
                 >
                   <FaPowerOff />
                 </button>
-
-
-                {/* EDIT */}
 
                 <button
                   className="astra-action-btn"
@@ -466,15 +690,10 @@ function AstraPage() {
                   <FaEdit />
                 </button>
 
-
-                {/* DELETE */}
-
                 <button
                   className="astra-action-btn delete"
                   title="Delete assistant"
-                  onClick={() =>
-                    deleteAssistant(assistant.id)
-                  }
+                  onClick={deleteAssistant}
                 >
                   <FaTrash />
                 </button>
@@ -489,7 +708,6 @@ function AstraPage() {
 
       </div>
 
-
       {/* ======================================================
           FOOTER
       ====================================================== */}
@@ -501,6 +719,402 @@ function AstraPage() {
 
       </div>
 
+      {/* ======================================================
+          POPUP DESIGN
+      ====================================================== */}
+
+      <style>{`
+
+        .astra-page .astra-modal-overlay {
+          position: fixed !important;
+          inset: 0 !important;
+
+          width: 100vw !important;
+          height: 100vh !important;
+
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+
+          padding: 20px !important;
+
+          background: rgba(3, 10, 15, 0.76) !important;
+
+          backdrop-filter: blur(5px) !important;
+          -webkit-backdrop-filter: blur(5px) !important;
+
+          z-index: 99999 !important;
+        }
+
+        .astra-page .astra-modal-overlay .astra-modal {
+          width: 480px !important;
+          max-width: calc(100vw - 40px) !important;
+
+          max-height: calc(100vh - 40px) !important;
+
+          margin: 0 !important;
+          padding: 0 !important;
+
+          display: flex !important;
+          flex-direction: column !important;
+
+          overflow: hidden !important;
+
+          background: #0b181e !important;
+
+          border: 1px solid #29404a !important;
+
+          border-radius: 10px !important;
+
+          box-shadow:
+            0 25px 70px rgba(0, 0, 0, 0.55) !important;
+        }
+
+        .astra-page .astra-modal-header {
+          width: 100% !important;
+
+          min-height: 88px !important;
+
+          margin: 0 !important;
+
+          padding: 20px 22px 17px !important;
+
+          display: flex !important;
+
+          align-items: flex-start !important;
+
+          justify-content: space-between !important;
+
+          gap: 15px !important;
+
+          background: #0b181e !important;
+
+          border: 0 !important;
+
+          border-bottom: 1px solid #2a3c44 !important;
+        }
+
+        .astra-page .astra-modal-header h3 {
+          margin: 0 !important;
+
+          padding: 0 !important;
+
+          color: #edf3f5 !important;
+
+          font-size: 19px !important;
+
+          font-weight: 700 !important;
+
+          line-height: 1.3 !important;
+        }
+
+        .astra-page .astra-modal-header p {
+          margin: 5px 0 0 !important;
+
+          padding: 0 !important;
+
+          color: #8196a0 !important;
+
+          font-size: 12px !important;
+
+          line-height: 1.45 !important;
+        }
+
+        .astra-page .astra-modal-close {
+          width: 31px !important;
+          height: 31px !important;
+
+          min-width: 31px !important;
+
+          margin: 0 !important;
+          padding: 0 !important;
+
+          display: flex !important;
+
+          align-items: center !important;
+          justify-content: center !important;
+
+          background: #111f26 !important;
+
+          color: #8da2ac !important;
+
+          border: 1px solid #3b4f58 !important;
+
+          border-radius: 6px !important;
+
+          cursor: pointer !important;
+
+          font-size: 13px !important;
+        }
+
+        .astra-page .astra-modal-close:hover {
+          background: #1b2b33 !important;
+          color: #ffffff !important;
+          border-color: #60747d !important;
+        }
+
+        .astra-page .astra-form {
+          width: 100% !important;
+
+          margin: 0 !important;
+
+          padding: 22px !important;
+
+          display: flex !important;
+
+          flex-direction: column !important;
+
+          gap: 18px !important;
+
+          background: #0b181e !important;
+
+          border: 0 !important;
+
+          overflow-y: auto !important;
+        }
+
+        .astra-page .astra-form-group {
+          width: 100% !important;
+
+          margin: 0 !important;
+
+          padding: 0 !important;
+
+          display: flex !important;
+
+          flex-direction: column !important;
+
+          gap: 7px !important;
+
+          background: transparent !important;
+
+          border: 0 !important;
+        }
+
+        .astra-page .astra-form-group label {
+          margin: 0 !important;
+
+          padding: 0 !important;
+
+          color: #8da2ac !important;
+
+          font-size: 12px !important;
+
+          font-weight: 600 !important;
+
+          line-height: 1.3 !important;
+        }
+
+        .astra-page .astra-form-group input,
+        .astra-page .astra-form-group textarea,
+        .astra-page .astra-form-group select {
+          width: 100% !important;
+
+          margin: 0 !important;
+
+          color: #e7eef1 !important;
+
+          background: #1d2b32 !important;
+
+          border: 1px solid #263d46 !important;
+
+          border-radius: 7px !important;
+
+          outline: none !important;
+
+          box-shadow: none !important;
+
+          font-family: inherit !important;
+
+          font-size: 13px !important;
+        }
+
+        .astra-page .astra-form-group input {
+          height: 40px !important;
+
+          min-height: 40px !important;
+
+          padding: 0 12px !important;
+        }
+
+        .astra-page .astra-form-group textarea {
+          min-height: 94px !important;
+
+          padding: 11px 12px !important;
+
+          resize: vertical !important;
+
+          line-height: 1.5 !important;
+        }
+
+        .astra-page .astra-form-group select {
+          height: 40px !important;
+
+          min-height: 40px !important;
+
+          padding: 0 12px !important;
+
+          cursor: pointer !important;
+        }
+
+        .astra-page .astra-form-group input::placeholder,
+        .astra-page .astra-form-group textarea::placeholder {
+          color: #708691 !important;
+          opacity: 1 !important;
+        }
+
+        .astra-page .astra-form-group input:focus,
+        .astra-page .astra-form-group textarea:focus,
+        .astra-page .astra-form-group select:focus {
+          background: #1d2b32 !important;
+
+          border-color: #7c3aed !important;
+
+          box-shadow:
+            0 0 0 2px rgba(124, 58, 237, 0.14) !important;
+        }
+
+        .astra-page .astra-form-group select option {
+          background: #1d2b32 !important;
+          color: #edf3f5 !important;
+        }
+
+        .astra-page .astra-modal-footer {
+          width: 100% !important;
+
+          min-height: 67px !important;
+
+          margin: 0 !important;
+
+          padding: 13px 22px !important;
+
+          display: flex !important;
+
+          align-items: center !important;
+
+          justify-content: flex-end !important;
+
+          gap: 10px !important;
+
+          background: #0b181e !important;
+
+          border: 0 !important;
+
+          border-top: 1px solid #2a3c44 !important;
+        }
+
+        .astra-page .astra-cancel-btn {
+          height: 38px !important;
+
+          min-height: 38px !important;
+
+          padding: 0 15px !important;
+
+          margin: 0 !important;
+
+          background: #0b181e !important;
+
+          color: #dce5e8 !important;
+
+          border: 1px solid #536771 !important;
+
+          border-radius: 7px !important;
+
+          font-size: 13px !important;
+
+          font-weight: 600 !important;
+
+          cursor: pointer !important;
+        }
+
+        .astra-page .astra-cancel-btn:hover {
+          background: #17272f !important;
+          color: #ffffff !important;
+        }
+
+        .astra-page .astra-save-btn {
+          height: 38px !important;
+
+          min-height: 38px !important;
+
+          padding: 0 17px !important;
+
+          margin: 0 !important;
+
+          display: inline-flex !important;
+
+          align-items: center !important;
+
+          justify-content: center !important;
+
+          gap: 6px !important;
+
+          background:
+            linear-gradient(
+              135deg,
+              #7838ed,
+              #8d55f5
+            ) !important;
+
+          color: #ffffff !important;
+
+          border: 0 !important;
+
+          border-radius: 7px !important;
+
+          font-size: 13px !important;
+
+          font-weight: 600 !important;
+
+          cursor: pointer !important;
+
+          box-shadow:
+            0 7px 18px rgba(
+              124,
+              58,
+              237,
+              0.18
+            ) !important;
+        }
+
+        .astra-page .astra-save-btn:hover {
+          background:
+            linear-gradient(
+              135deg,
+              #6c2fd9,
+              #7d43e5
+            ) !important;
+        }
+
+        @media (max-width: 600px) {
+
+          .astra-page .astra-modal-overlay {
+            padding: 12px !important;
+          }
+
+          .astra-page .astra-modal-overlay .astra-modal {
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            max-height: calc(100vh - 24px) !important;
+          }
+
+          .astra-page .astra-modal-header {
+            padding: 17px !important;
+          }
+
+          .astra-page .astra-form {
+            padding: 18px !important;
+          }
+
+          .astra-page .astra-modal-footer {
+            padding: 12px 17px !important;
+          }
+
+        }
+
+      `}</style>
 
       {/* ======================================================
           CREATE / EDIT MODAL
@@ -512,11 +1126,10 @@ function AstraPage() {
 
           <div className="astra-modal">
 
-            {/* MODAL HEADER */}
-
             <div className="astra-modal-header">
 
               <div>
+
                 <h3>
                   {editingAssistant
                     ? "Edit Assistant"
@@ -526,24 +1139,44 @@ function AstraPage() {
                 <p>
                   {editingAssistant
                     ? "Update your AI assistant details."
-                    : "Create an AI assistant for your WhatsApp conversations."}
+                    : "Configure your AI assistant for WhatsApp conversations."}
                 </p>
+
               </div>
 
               <button
                 className="astra-modal-close"
                 onClick={closeModal}
                 title="Close"
+                disabled={saving}
               >
                 <FaTimes />
               </button>
 
             </div>
 
-
             {/* FORM */}
 
             <div className="astra-form">
+
+              {/* ERROR */}
+
+              {error && (
+                <div
+                  style={{
+                    padding: "10px 12px",
+                    borderRadius: "7px",
+                    background: "#3a1d24",
+                    border:
+                      "1px solid #71323f",
+                    color: "#ffb8c2",
+                    fontSize: "12px",
+                    lineHeight: "1.4",
+                  }}
+                >
+                  {error}
+                </div>
+              )}
 
               {/* NAME */}
 
@@ -563,7 +1196,6 @@ function AstraPage() {
 
               </div>
 
-
               {/* DESCRIPTION */}
 
               <div className="astra-form-group">
@@ -582,7 +1214,6 @@ function AstraPage() {
 
               </div>
 
-
               {/* CHANNEL */}
 
               <div className="astra-form-group">
@@ -599,21 +1230,204 @@ function AstraPage() {
                   <option value="WhatsApp">
                     WhatsApp
                   </option>
-
                 </select>
+
+              </div>
+
+              {/* PROVIDER */}
+
+              <div className="astra-form-group">
+
+                <label>
+                  AI Provider
+                </label>
+
+                <select
+                  name="provider"
+                  value={formData.provider}
+                  onChange={handleFormChange}
+                >
+                  <option value="openai">
+                    OpenAI
+                  </option>
+
+                  <option value="anthropic">
+                    Anthropic
+                  </option>
+                </select>
+
+              </div>
+
+              {/* MODEL */}
+
+              <div className="astra-form-group">
+
+                <label>
+                  Model
+                </label>
+
+                <input
+                  type="text"
+                  name="model"
+                  placeholder="Example: gpt-4o-mini"
+                  value={formData.model}
+                  onChange={handleFormChange}
+                />
+
+              </div>
+
+              {/* SYSTEM PROMPT */}
+
+              <div className="astra-form-group">
+
+                <label>
+                  System Prompt
+                </label>
+
+                <textarea
+                  name="system_prompt"
+                  placeholder="Tell the AI how it should behave..."
+                  value={formData.system_prompt}
+                  onChange={handleFormChange}
+                  rows="5"
+                />
+
+              </div>
+
+              {/* AUTO REPLY */}
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "15px",
+                  padding: "12px",
+                  borderRadius: "7px",
+                  background: "#101f26",
+                  border:
+                    "1px solid #263d46",
+                }}
+              >
+
+                <div>
+
+                  <div
+                    style={{
+                      color: "#edf3f5",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Auto Reply
+                  </div>
+
+                  <div
+                    style={{
+                      color: "#8196a0",
+                      fontSize: "11px",
+                      marginTop: "3px",
+                    }}
+                  >
+                    Automatically respond to WhatsApp messages.
+                  </div>
+
+                </div>
+
+                <input
+                  type="checkbox"
+                  checked={
+                    formData.auto_reply_enabled
+                  }
+                  onChange={(e) =>
+                    setFormData((current) => ({
+                      ...current,
+                      auto_reply_enabled:
+                        e.target.checked,
+                    }))
+                  }
+                  style={{
+                    width: "18px",
+                    height: "18px",
+                    accentColor: "#7c3aed",
+                    cursor: "pointer",
+                  }}
+                />
+
+              </div>
+
+              {/* ACTIVE */}
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "15px",
+                  padding: "12px",
+                  borderRadius: "7px",
+                  background: "#101f26",
+                  border:
+                    "1px solid #263d46",
+                }}
+              >
+
+                <div>
+
+                  <div
+                    style={{
+                      color: "#edf3f5",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Assistant Active
+                  </div>
+
+                  <div
+                    style={{
+                      color: "#8196a0",
+                      fontSize: "11px",
+                      marginTop: "3px",
+                    }}
+                  >
+                    Enable or disable the AI assistant.
+                  </div>
+
+                </div>
+
+                <input
+                  type="checkbox"
+                  checked={
+                    formData.is_active
+                  }
+                  onChange={(e) =>
+                    setFormData((current) => ({
+                      ...current,
+                      is_active:
+                        e.target.checked,
+                    }))
+                  }
+                  style={{
+                    width: "18px",
+                    height: "18px",
+                    accentColor: "#7c3aed",
+                    cursor: "pointer",
+                  }}
+                />
 
               </div>
 
             </div>
 
-
-            {/* MODAL FOOTER */}
+            {/* FOOTER */}
 
             <div className="astra-modal-footer">
 
               <button
                 className="astra-cancel-btn"
                 onClick={closeModal}
+                disabled={saving}
               >
                 Cancel
               </button>
@@ -621,8 +1435,11 @@ function AstraPage() {
               <button
                 className="astra-save-btn"
                 onClick={saveAssistant}
+                disabled={saving}
               >
-                {editingAssistant
+                {saving
+                  ? "Saving..."
+                  : editingAssistant
                   ? "Save Changes"
                   : "Create Assistant"}
               </button>

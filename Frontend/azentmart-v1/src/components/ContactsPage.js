@@ -14,6 +14,10 @@ import {
   FaSave,
   FaTrash,
   FaSyncAlt,
+  FaFileUpload,
+  FaFileCsv,
+  FaFilePdf,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 import * as pdfjsLib from "pdfjs-dist";
@@ -54,7 +58,7 @@ function ContactsPage() {
   });
 
   // ============================================================
-  // DOCUMENT UPLOAD STATE
+  // DOCUMENT UPLOAD
   // ============================================================
 
   const [showUploadModal, setShowUploadModal] =
@@ -69,7 +73,7 @@ function ContactsPage() {
   const fileInputRef = useRef(null);
 
   // ============================================================
-  // API HELPER
+  // API REQUEST
   // ============================================================
 
   const apiRequest = async (
@@ -237,7 +241,7 @@ function ContactsPage() {
     ).length;
 
   // ============================================================
-  // FORM
+  // FORM CHANGE
   // ============================================================
 
   const handleFormChange = (
@@ -253,6 +257,10 @@ function ContactsPage() {
       [name]: value,
     }));
   };
+
+  // ============================================================
+  // RESET FORM
+  // ============================================================
 
   const resetForm = () => {
     setForm({
@@ -381,6 +389,7 @@ function ContactsPage() {
 
     setShowModal(false);
     setSelectedContact(null);
+
     resetForm();
   };
 
@@ -405,6 +414,7 @@ function ContactsPage() {
       setError(
         "Phone number is required."
       );
+
       return;
     }
 
@@ -414,7 +424,8 @@ function ContactsPage() {
       setSuccess("");
 
       const payload = {
-        name: name || phone,
+        name:
+          name || phone,
         phone,
         email:
           email || undefined,
@@ -455,6 +466,7 @@ function ContactsPage() {
       );
 
       setShowModal(false);
+
       resetForm();
     } catch (err) {
       console.error(
@@ -489,11 +501,14 @@ function ContactsPage() {
         const payload = {
           name:
             form.name.trim(),
+
           phone:
             form.phone.trim(),
+
           email:
             form.email.trim() ||
             null,
+
           company:
             form.company.trim() ||
             null,
@@ -534,6 +549,7 @@ function ContactsPage() {
 
         setShowModal(false);
         setSelectedContact(null);
+
         resetForm();
       } catch (err) {
         console.error(
@@ -1056,7 +1072,7 @@ function ContactsPage() {
   };
 
   // ============================================================
-  // OPEN UPLOAD MODAL
+  // OPEN DOCUMENT MODAL
   // ============================================================
 
   const openUploadModal =
@@ -1064,13 +1080,14 @@ function ContactsPage() {
       setUploadFile(null);
       setError("");
       setSuccess("");
+
       setShowUploadModal(
         true
       );
     };
 
   // ============================================================
-  // CLOSE UPLOAD MODAL
+  // CLOSE DOCUMENT MODAL
   // ============================================================
 
   const closeUploadModal =
@@ -1131,6 +1148,7 @@ function ContactsPage() {
       }
 
       setError("");
+      setSuccess("");
       setUploadFile(file);
     };
 
@@ -1144,6 +1162,7 @@ function ContactsPage() {
         setError(
           "Please select a CSV or PDF file."
         );
+
         return;
       }
 
@@ -1283,9 +1302,11 @@ function ContactsPage() {
               );
             }
 
-            createdCount += 1;
+            createdCount +=
+              1;
           } catch (err) {
-            skippedCount += 1;
+            skippedCount +=
+              1;
 
             console.warn(
               "Skipping contact during document import:",
@@ -1360,14 +1381,14 @@ function ContactsPage() {
   // ============================================================
 
   return (
-    <div
-      className="contacts-page"
-    >
-      {/* ======================================================
+    <div className="contacts-page">
+
+      {/* ========================================================
           HEADER
-      ======================================================= */}
+      ======================================================== */}
 
       <div className="contacts-header">
+
         <div>
           <h1>
             Contacts
@@ -1380,8 +1401,6 @@ function ContactsPage() {
         </div>
 
         <div className="header-actions">
-
-          {/* SEARCH */}
 
           <div className="search-wrapper">
             <FaSearch className="search-icon" />
@@ -1398,8 +1417,6 @@ function ContactsPage() {
             />
           </div>
 
-          {/* REFRESH */}
-
           <button
             type="button"
             className="refresh-button"
@@ -1407,7 +1424,6 @@ function ContactsPage() {
               loadContacts
             }
             disabled={loading}
-            title="Refresh contacts"
           >
             <FaSyncAlt
               className={
@@ -1418,11 +1434,6 @@ function ContactsPage() {
             />
           </button>
 
-          {/* ==================================================
-              ADD DOCUMENT
-              SAME DESIGN AS ADD CONTACT
-          ================================================== */}
-
           <button
             type="button"
             className="header-purple-button"
@@ -1430,14 +1441,12 @@ function ContactsPage() {
               openUploadModal
             }
           >
-            <span className="upload-icon">
-              ⇧
-            </span>
+            <FaFileUpload
+              size={13}
+            />
 
             Add Doc
           </button>
-
-          {/* ADD CONTACT */}
 
           <button
             type="button"
@@ -1452,15 +1461,17 @@ function ContactsPage() {
 
             Add Contact
           </button>
+
         </div>
       </div>
 
-      {/* ======================================================
+      {/* ========================================================
           ERROR
-      ======================================================= */}
+      ======================================================== */}
 
       {error && (
         <div className="message error-message">
+
           <span>
             {error}
           </span>
@@ -1473,15 +1484,17 @@ function ContactsPage() {
           >
             <FaTimes />
           </button>
+
         </div>
       )}
 
-      {/* ======================================================
+      {/* ========================================================
           SUCCESS
-      ======================================================= */}
+      ======================================================== */}
 
       {success && (
         <div className="message success-message">
+
           <span>
             {success}
           </span>
@@ -1494,12 +1507,13 @@ function ContactsPage() {
           >
             <FaTimes />
           </button>
+
         </div>
       )}
 
-      {/* ======================================================
+      {/* ========================================================
           STATISTICS
-      ======================================================= */}
+      ======================================================== */}
 
       <div className="stats-grid">
 
@@ -1535,17 +1549,19 @@ function ContactsPage() {
 
       </div>
 
-      {/* ======================================================
-          CONTACT TABLE
-      ======================================================= */}
+      {/* ========================================================
+          TABLE
+      ======================================================== */}
 
       <div className="table-card">
 
         <div className="table-scroll">
 
           <table>
+
             <thead>
               <tr>
+
                 <th>
                   Name
                 </th>
@@ -1577,6 +1593,7 @@ function ContactsPage() {
                 <th className="actions-column">
                   Actions
                 </th>
+
               </tr>
             </thead>
 
@@ -1616,6 +1633,7 @@ function ContactsPage() {
                         contact.id
                       }
                     >
+
                       <td>
                         <strong className="contact-name">
                           {contact.name ||
@@ -1659,6 +1677,7 @@ function ContactsPage() {
                       </td>
 
                       <td>
+
                         <div className="action-buttons">
 
                           <button
@@ -1699,20 +1718,24 @@ function ContactsPage() {
                           </button>
 
                         </div>
+
                       </td>
+
                     </tr>
                   )
                 )}
 
             </tbody>
+
           </table>
 
         </div>
+
       </div>
 
-      {/* ======================================================
+      {/* ========================================================
           FOOTER
-      ======================================================= */}
+      ======================================================== */}
 
       <div className="table-footer">
 
@@ -1734,13 +1757,14 @@ function ContactsPage() {
 
       </div>
 
-      {/* ======================================================
+      {/* ========================================================
           ADD DOCUMENT MODAL
-      ======================================================= */}
+          DARK CAMPAIGN-STYLE DESIGN
+      ======================================================== */}
 
       {showUploadModal && (
         <div
-          className="modal-overlay"
+          className="modal-overlay document-overlay"
           onMouseDown={(event) => {
             if (
               event.target ===
@@ -1750,8 +1774,9 @@ function ContactsPage() {
             }
           }}
         >
+
           <div
-            className="upload-modal"
+            className="document-modal"
             onMouseDown={(event) =>
               event.stopPropagation()
             }
@@ -1759,9 +1784,10 @@ function ContactsPage() {
 
             {/* HEADER */}
 
-            <div className="modal-header">
+            <div className="document-modal-header">
 
               <div>
+
                 <h2>
                   Add Document
                 </h2>
@@ -1770,11 +1796,12 @@ function ContactsPage() {
                   Import contacts from
                   CSV or PDF
                 </p>
+
               </div>
 
               <button
                 type="button"
-                className="close-modal-button"
+                className="document-close-button"
                 onClick={
                   closeUploadModal
                 }
@@ -1789,53 +1816,84 @@ function ContactsPage() {
 
             {/* BODY */}
 
-            <div className="upload-body">
+            <div className="document-modal-body">
 
-              <div className="upload-box">
+              {/* UPLOAD AREA */}
 
-                <div className="upload-file-icon">
-                  📄
-                </div>
+              <div
+                className={`document-upload-box ${
+                  uploadFile
+                    ? "document-upload-selected"
+                    : ""
+                }`}
+              >
 
-                <h3>
-                  Upload Contacts File
-                </h3>
+                {!uploadFile ? (
+                  <>
 
-                <p>
-                  Supported formats:
-                  CSV and PDF
-                </p>
+                    <div className="document-upload-icon">
+                      <FaFileUpload />
+                    </div>
 
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".csv,.pdf,text/csv,application/pdf"
-                  onChange={
-                    handleFileSelect
-                  }
-                  id="contacts-document-upload"
-                  style={{
-                    display:
-                      "none",
-                  }}
-                />
+                    <h3>
+                      Upload Contacts File
+                    </h3>
 
-                <label
-                  htmlFor="contacts-document-upload"
-                  className="choose-file-button"
-                >
-                  Choose File
-                </label>
+                    <p>
+                      Supported formats:
+                      CSV and PDF
+                    </p>
 
-                {uploadFile && (
-                  <div className="selected-file">
+                    <input
+                      ref={
+                        fileInputRef
+                      }
+                      type="file"
+                      accept=".csv,.pdf,text/csv,application/pdf"
+                      onChange={
+                        handleFileSelect
+                      }
+                      id="contacts-document-upload"
+                      style={{
+                        display:
+                          "none",
+                      }}
+                    />
 
-                    <strong>
-                      Selected:
-                    </strong>{" "}
-                    {uploadFile.name}
+                    <label
+                      htmlFor="contacts-document-upload"
+                      className="document-choose-button"
+                    >
+                      Choose File
+                    </label>
 
-                    <div>
+                  </>
+                ) : (
+                  <>
+
+                    <div className="document-selected-icon">
+
+                      {uploadFile.name
+                        .toLowerCase()
+                        .endsWith(
+                          ".pdf"
+                        ) ? (
+                        <FaFilePdf />
+                      ) : (
+                        <FaFileCsv />
+                      )}
+
+                    </div>
+
+                    <h3>
+                      File Selected
+                    </h3>
+
+                    <div className="document-selected-name">
+                      {uploadFile.name}
+                    </div>
+
+                    <div className="document-selected-size">
                       {(
                         uploadFile.size /
                         1024
@@ -1845,28 +1903,97 @@ function ContactsPage() {
                       KB
                     </div>
 
-                  </div>
+                    <div className="document-file-actions">
+
+                      <button
+                        type="button"
+                        className="document-change-button"
+                        onClick={() =>
+                          fileInputRef.current?.click()
+                        }
+                        disabled={
+                          uploading
+                        }
+                      >
+                        Change File
+                      </button>
+
+                      <button
+                        type="button"
+                        className="document-remove-button"
+                        onClick={() => {
+                          setUploadFile(
+                            null
+                          );
+
+                          if (
+                            fileInputRef.current
+                          ) {
+                            fileInputRef.current.value =
+                              "";
+                          }
+                        }}
+                        disabled={
+                          uploading
+                        }
+                      >
+                        Remove
+                      </button>
+
+                    </div>
+
+                  </>
                 )}
 
               </div>
 
-              <div className="format-help">
+              {/* FORMAT INFORMATION */}
 
-                <strong>
-                  CSV example:
-                </strong>{" "}
-                Name, Phone, Email,
-                Company
+              <div className="document-format-panel">
 
-                <br />
+                <div className="document-format-item">
 
-                <strong>
-                  PDF:
-                </strong>{" "}
-                The PDF should
-                contain contact
-                names, phone numbers,
-                or email addresses.
+                  <div className="document-check-icon">
+                    <FaCheckCircle />
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      CSV
+                    </strong>
+
+                    <span>
+                      Name, Phone, Email,
+                      Company
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div className="document-format-item">
+
+                  <div className="document-check-icon">
+                    <FaCheckCircle />
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      PDF
+                    </strong>
+
+                    <span>
+                      PDF should contain
+                      contact names,
+                      phone numbers,
+                      or email addresses.
+                    </span>
+
+                  </div>
+
+                </div>
 
               </div>
 
@@ -1874,11 +2001,11 @@ function ContactsPage() {
 
             {/* FOOTER */}
 
-            <div className="modal-footer">
+            <div className="document-modal-footer">
 
               <button
                 type="button"
-                className="cancel-button"
+                className="document-cancel-button"
                 onClick={
                   closeUploadModal
                 }
@@ -1891,7 +2018,7 @@ function ContactsPage() {
 
               <button
                 type="button"
-                className="header-purple-button modal-import-button"
+                className="document-import-button"
                 onClick={
                   importContactsFromDocument
                 }
@@ -1900,20 +2027,32 @@ function ContactsPage() {
                   !uploadFile
                 }
               >
-                {uploading
-                  ? "Importing..."
-                  : "Import Contacts"}
+
+                {uploading ? (
+                  <>
+                    <FaSyncAlt className="spin" />
+                    Importing...
+                  </>
+                ) : (
+                  <>
+                    <FaFileUpload />
+                    Import Contacts
+                  </>
+                )}
+
               </button>
 
             </div>
 
           </div>
+
         </div>
       )}
 
-      {/* ======================================================
+      {/* ========================================================
           ADD / EDIT / VIEW CONTACT MODAL
-      ======================================================= */}
+          KEEPING ORIGINAL LIGHT DESIGN
+      ======================================================== */}
 
       {showModal && (
         <div
@@ -1927,6 +2066,7 @@ function ContactsPage() {
             }
           }}
         >
+
           <div
             className="contact-modal"
             onMouseDown={(event) =>
@@ -1937,6 +2077,7 @@ function ContactsPage() {
             <div className="modal-header">
 
               <div>
+
                 <h2>
                   {modalMode ===
                   "add"
@@ -1956,6 +2097,7 @@ function ContactsPage() {
                     ? "Update WhatsApp contact details."
                     : "View WhatsApp contact details."}
                 </p>
+
               </div>
 
               <button
@@ -2080,6 +2222,7 @@ function ContactsPage() {
                 />
 
                 <div>
+
                   <label className="field-label">
                     Lifecycle Stage
                   </label>
@@ -2098,6 +2241,7 @@ function ContactsPage() {
                     }
                     className="form-input"
                   >
+
                     <option value="Lead">
                       Lead
                     </option>
@@ -2109,10 +2253,13 @@ function ContactsPage() {
                     <option value="Prospect">
                       Prospect
                     </option>
+
                   </select>
+
                 </div>
 
                 <div>
+
                   <label className="field-label">
                     Lead Status
                   </label>
@@ -2131,6 +2278,7 @@ function ContactsPage() {
                     }
                     className="form-input"
                   >
+
                     <option value="Active">
                       Active
                     </option>
@@ -2142,7 +2290,9 @@ function ContactsPage() {
                     <option value="New">
                       New
                     </option>
+
                   </select>
+
                 </div>
 
               </div>
@@ -2174,6 +2324,7 @@ function ContactsPage() {
                       saving
                     }
                   >
+
                     <FaSave
                       size={12}
                     />
@@ -2184,6 +2335,7 @@ function ContactsPage() {
                         "add"
                       ? "Create Contact"
                       : "Save Changes"}
+
                   </button>
                 )}
 
@@ -2192,18 +2344,23 @@ function ContactsPage() {
             </form>
 
           </div>
+
         </div>
       )}
 
-      {/* ======================================================
+      {/* ========================================================
           STYLES
-      ======================================================= */}
+      ======================================================== */}
 
       <style>{`
 
         * {
           box-sizing: border-box;
         }
+
+        /* ========================================================
+           MAIN PAGE
+        ======================================================== */
 
         .contacts-page {
           width: 100%;
@@ -2219,9 +2376,9 @@ function ContactsPage() {
             sans-serif;
         }
 
-        /* ======================================================
+        /* ========================================================
            HEADER
-        ====================================================== */
+        ======================================================== */
 
         .contacts-header {
           display: flex;
@@ -2252,9 +2409,9 @@ function ContactsPage() {
           flex-wrap: wrap;
         }
 
-        /* ======================================================
+        /* ========================================================
            SEARCH
-        ====================================================== */
+        ======================================================== */
 
         .search-wrapper {
           position: relative;
@@ -2293,48 +2450,35 @@ function ContactsPage() {
             rgba(139, 92, 246, 0.12);
         }
 
-        /* ======================================================
-           COMMON PURPLE BUTTON
-           ADD DOC + ADD CONTACT SAME DESIGN
-        ====================================================== */
+        /* ========================================================
+           PURPLE BUTTON
+        ======================================================== */
 
         .header-purple-button {
           height: 40px;
           min-width: max-content;
           padding: 0 16px;
-
           border: none;
           border-radius: 7px;
-
           background: #8b5cf6;
           color: #ffffff;
-
           font-size: 14px;
           font-weight: 650;
-
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
-
           cursor: pointer;
-
           box-shadow:
             0 7px 18px
             rgba(124, 58, 237, 0.20);
-
           transition:
             background 0.15s ease,
-            transform 0.15s ease,
-            box-shadow 0.15s ease;
+            transform 0.15s ease;
         }
 
         .header-purple-button:hover {
           background: #7c3aed;
-
-          box-shadow:
-            0 9px 22px
-            rgba(124, 58, 237, 0.28);
         }
 
         .header-purple-button:active {
@@ -2348,30 +2492,20 @@ function ContactsPage() {
           box-shadow: none;
         }
 
-        .upload-icon {
-          font-size: 16px;
-          line-height: 1;
-          font-weight: 700;
-        }
-
-        /* ======================================================
+        /* ========================================================
            REFRESH
-        ====================================================== */
+        ======================================================== */
 
         .refresh-button {
           width: 40px;
           height: 40px;
-
           border: 1px solid #2a3a43;
           border-radius: 7px;
-
           background: #18262e;
           color: #aab9c4;
-
           display: flex;
           align-items: center;
           justify-content: center;
-
           cursor: pointer;
         }
 
@@ -2385,19 +2519,17 @@ function ContactsPage() {
           cursor: not-allowed;
         }
 
-        /* ======================================================
+        /* ========================================================
            MESSAGES
-        ====================================================== */
+        ======================================================== */
 
         .message {
           border-radius: 7px;
           padding: 12px 14px;
           margin-bottom: 18px;
-
           display: flex;
           align-items: center;
           justify-content: space-between;
-
           font-size: 13px;
         }
 
@@ -2420,32 +2552,25 @@ function ContactsPage() {
           color: #6ee7b7;
         }
 
-        /* ======================================================
-           STATISTICS
-        ====================================================== */
+        /* ========================================================
+           STATS
+        ======================================================== */
 
         .stats-grid {
           display: grid;
           grid-template-columns:
             repeat(3, minmax(150px, 1fr));
-
           gap: 14px;
-
           max-width: 780px;
-
           margin-bottom: 22px;
         }
 
         .stat-card {
           min-height: 82px;
-
           padding: 16px 18px;
-
           border: 1px solid #263640;
           border-radius: 9px;
-
           background: #0e1a20;
-
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -2463,18 +2588,15 @@ function ContactsPage() {
           font-weight: 700;
         }
 
-        /* ======================================================
+        /* ========================================================
            TABLE
-        ====================================================== */
+        ======================================================== */
 
         .table-card {
           width: 100%;
-
           border: 1px solid #263640;
           border-radius: 9px;
-
           overflow: hidden;
-
           background: #0e1a20;
         }
 
@@ -2495,28 +2617,19 @@ function ContactsPage() {
 
         th {
           padding: 15px 14px;
-
           text-align: left;
-
           color: #91a7b6;
-
           font-size: 12px;
           font-weight: 600;
-
           white-space: nowrap;
-
           border-bottom: 1px solid #263640;
         }
 
         td {
           padding: 15px 14px;
-
           color: #b6c5cf;
-
           font-size: 13px;
-
           white-space: nowrap;
-
           border-bottom: 1px solid #1d2b33;
         }
 
@@ -2541,16 +2654,11 @@ function ContactsPage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-
           min-width: 60px;
-
           padding: 5px 10px;
-
           border-radius: 999px;
-
           background: #064b3a;
           color: #34d399;
-
           font-size: 11px;
           font-weight: 650;
         }
@@ -2565,17 +2673,13 @@ function ContactsPage() {
         .action-buttons button {
           width: 31px;
           height: 31px;
-
           border: 1px solid #30414b;
           border-radius: 6px;
-
           background: #18262e;
           color: #9cafbb;
-
           display: flex;
           align-items: center;
           justify-content: center;
-
           cursor: pointer;
         }
 
@@ -2596,70 +2700,47 @@ function ContactsPage() {
           font-size: 14px;
         }
 
-        /* ======================================================
-           FOOTER
-        ====================================================== */
-
         .table-footer {
           display: flex;
           align-items: center;
           justify-content: space-between;
-
           margin-top: 15px;
-
           color: #718797;
           font-size: 13px;
         }
 
-        /* ======================================================
-           MODAL
-        ====================================================== */
+        /* ========================================================
+           GENERIC CONTACT MODAL
+           ORIGINAL LIGHT DESIGN
+        ======================================================== */
 
         .modal-overlay {
           position: fixed;
           inset: 0;
-
           z-index: 9999;
-
           padding: 20px;
-
           background:
             rgba(2, 8, 12, 0.72);
-
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        .upload-modal,
         .contact-modal {
           width: 100%;
-
+          max-width: 560px;
           background: #ffffff;
-
           border-radius: 10px;
-
           box-shadow:
             0 25px 70px
             rgba(0, 0, 0, 0.4);
-
           overflow: hidden;
-        }
-
-        .upload-modal {
-          max-width: 520px;
-        }
-
-        .contact-modal {
-          max-width: 560px;
         }
 
         .modal-header {
           padding: 20px;
-
           border-bottom:
             1px solid #e2e8f0;
-
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -2668,38 +2749,28 @@ function ContactsPage() {
 
         .modal-header h2 {
           margin: 0;
-
           color: #1f2937;
-
           font-size: 19px;
           font-weight: 650;
         }
 
         .modal-header p {
           margin: 5px 0 0;
-
           color: #718096;
-
           font-size: 12px;
         }
 
         .close-modal-button {
           width: 34px;
           height: 34px;
-
           border: none;
           border-radius: 6px;
-
           background: transparent;
-
           color: #64748b;
-
           display: flex;
           align-items: center;
           justify-content: center;
-
           cursor: pointer;
-
           font-size: 16px;
         }
 
@@ -2707,224 +2778,37 @@ function ContactsPage() {
           background: #f1f5f9;
         }
 
-        /* ======================================================
-           UPLOAD BODY
-        ====================================================== */
-
-        .upload-body {
-          padding: 25px 20px;
-        }
-
-        .upload-box {
-          border:
-            2px dashed
-            #a78bfa;
-
-          border-radius: 10px;
-
-          padding: 35px 20px;
-
-          text-align: center;
-
-          background: #faf8ff;
-        }
-
-        .upload-file-icon {
-          font-size: 38px;
-          margin-bottom: 12px;
-        }
-
-        .upload-box h3 {
-          margin: 0 0 6px;
-
-          color: #334155;
-
-          font-size: 16px;
-          font-weight: 650;
-        }
-
-        .upload-box p {
-          margin: 0 0 18px;
-
-          color: #718096;
-
-          font-size: 12px;
-        }
-
-        .choose-file-button {
-          display: inline-flex;
-
-          align-items: center;
-          justify-content: center;
-
-          height: 40px;
-
-          padding: 0 17px;
-
-          border-radius: 7px;
-
-          background: #8b5cf6;
-          color: #ffffff;
-
-          font-size: 14px;
-          font-weight: 650;
-
-          cursor: pointer;
-
-          box-shadow:
-            0 7px 18px
-            rgba(124, 58, 237, 0.20);
-        }
-
-        .choose-file-button:hover {
-          background: #7c3aed;
-        }
-
-        .selected-file {
-          margin-top: 18px;
-
-          padding: 11px 13px;
-
-          border:
-            1px solid
-            #ddd6fe;
-
-          border-radius: 7px;
-
-          background: #ffffff;
-
-          color: #475569;
-
-          font-size: 12px;
-
-          text-align: left;
-        }
-
-        .selected-file div {
-          margin-top: 4px;
-          color: #94a3b8;
-        }
-
-        .format-help {
-          margin-top: 18px;
-
-          padding: 13px;
-
-          background: #f8fafc;
-
-          border-radius: 7px;
-
-          color: #64748b;
-
-          font-size: 12px;
-
-          line-height: 1.6;
-        }
-
-        .format-help strong {
-          color: #475569;
-        }
-
-        /* ======================================================
-           MODAL FOOTER
-        ====================================================== */
-
-        .modal-footer {
-          padding: 16px 20px;
-
-          border-top:
-            1px solid
-            #e2e8f0;
-
-          display: flex;
-
-          align-items: center;
-
-          justify-content: flex-end;
-
-          gap: 10px;
-        }
-
-        .cancel-button {
-          height: 40px;
-
-          padding: 0 16px;
-
-          border:
-            1px solid
-            #d1d5db;
-
-          border-radius: 7px;
-
-          background: #ffffff;
-
-          color: #374151;
-
-          font-size: 14px;
-          font-weight: 600;
-
-          cursor: pointer;
-        }
-
-        .cancel-button:hover {
-          background: #f8fafc;
-        }
-
-        .modal-import-button {
-          min-width: 150px;
-        }
-
-        /* ======================================================
-           CONTACT FORM
-        ====================================================== */
-
         .form-grid {
           padding: 22px;
-
           display: grid;
-
           grid-template-columns:
             repeat(2, minmax(0, 1fr));
-
           gap: 18px;
         }
 
         .field-label {
           display: block;
-
           margin-bottom: 7px;
-
           color: #475569;
-
           font-size: 12px;
           font-weight: 600;
         }
 
         .form-input {
           width: 100%;
-
           height: 40px;
-
           padding: 0 11px;
-
           border:
-            1px solid
-            #d9dee8;
-
+            1px solid #d9dee8;
           border-radius: 6px;
-
           outline: none;
-
           background: #ffffff;
-
           color: #1f2937;
-
           font-size: 13px;
         }
 
         .form-input:focus {
           border-color: #8b5cf6;
-
           box-shadow:
             0 0 0 2px
             rgba(139, 92, 246, 0.12);
@@ -2935,9 +2819,420 @@ function ContactsPage() {
           opacity: 0.7;
         }
 
-        /* ======================================================
+        .modal-footer {
+          padding: 16px 20px;
+          border-top:
+            1px solid #e2e8f0;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 10px;
+        }
+
+        .cancel-button {
+          height: 40px;
+          padding: 0 16px;
+          border:
+            1px solid #d1d5db;
+          border-radius: 7px;
+          background: #ffffff;
+          color: #374151;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .cancel-button:hover {
+          background: #f8fafc;
+        }
+
+        /* ========================================================
+           ========================================================
+           ADD DOCUMENT
+           DARK CAMPAIGN STYLE
+           ========================================================
+        ======================================================== */
+
+        .document-overlay {
+          background:
+            rgba(1, 6, 9, 0.78);
+          backdrop-filter: blur(2px);
+        }
+
+        .document-modal {
+          width: 100%;
+          max-width: 560px;
+          max-height: calc(100vh - 40px);
+          background: #0b181e;
+          border:
+            1px solid #263941;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow:
+            0 25px 70px
+            rgba(0, 0, 0, 0.55);
+          color: #ffffff;
+        }
+
+        /* ========================================================
+           DOCUMENT HEADER
+        ======================================================== */
+
+        .document-modal-header {
+          min-height: 82px;
+          padding: 20px 22px;
+          background: #0b181e;
+          border-bottom:
+            1px solid #263941;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+        }
+
+        .document-modal-header h2 {
+          margin: 0;
+          color: #f8fafc;
+          font-size: 19px;
+          line-height: 1.2;
+          font-weight: 700;
+        }
+
+        .document-modal-header p {
+          margin: 7px 0 0;
+          color: #7f9aaa;
+          font-size: 12px;
+        }
+
+        .document-close-button {
+          width: 34px;
+          height: 34px;
+          border:
+            1px solid #2a3b43;
+          border-radius: 6px;
+          background: #14252c;
+          color: #91a7b6;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 13px;
+          transition:
+            background 0.15s ease,
+            border-color 0.15s ease,
+            color 0.15s ease;
+        }
+
+        .document-close-button:hover {
+          background: #1a3038;
+          border-color: #415963;
+          color: #ffffff;
+        }
+
+        .document-close-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        /* ========================================================
+           DOCUMENT BODY
+        ======================================================== */
+
+        .document-modal-body {
+          padding: 22px;
+          background: #0b181e;
+        }
+
+        /* ========================================================
+           UPLOAD BOX
+        ======================================================== */
+
+        .document-upload-box {
+          min-height: 250px;
+          padding: 30px 22px;
+          border:
+            1px dashed #3a4e57;
+          border-radius: 8px;
+          background: #101f26;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease;
+        }
+
+        .document-upload-box:hover {
+          border-color: #8b5cf6;
+          background: #12232b;
+        }
+
+        .document-upload-selected {
+          border-style: solid;
+          border-color: #5b4a8d;
+          background: #101f26;
+        }
+
+        /* ========================================================
+           UPLOAD ICON
+        ======================================================== */
+
+        .document-upload-icon {
+          width: 54px;
+          height: 54px;
+          margin-bottom: 14px;
+          border-radius: 10px;
+          background: #211a3b;
+          color: #a78bfa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 22px;
+        }
+
+        .document-upload-box h3 {
+          margin: 0 0 7px;
+          color: #eaf0f4;
+          font-size: 15px;
+          font-weight: 650;
+        }
+
+        .document-upload-box p {
+          margin: 0 0 18px;
+          color: #8097a6;
+          font-size: 12px;
+        }
+
+        /* ========================================================
+           CHOOSE FILE BUTTON
+        ======================================================== */
+
+        .document-choose-button {
+          height: 40px;
+          padding: 0 17px;
+          border:
+            1px solid #8b5cf6;
+          border-radius: 7px;
+          background: #8b5cf6;
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          font-weight: 650;
+          cursor: pointer;
+          box-shadow:
+            0 7px 18px
+            rgba(124, 58, 237, 0.20);
+        }
+
+        .document-choose-button:hover {
+          background: #7c3aed;
+          border-color: #7c3aed;
+        }
+
+        /* ========================================================
+           SELECTED FILE
+        ======================================================== */
+
+        .document-selected-icon {
+          width: 54px;
+          height: 54px;
+          margin-bottom: 13px;
+          border-radius: 10px;
+          background: #211a3b;
+          color: #a78bfa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 22px;
+        }
+
+        .document-selected-name {
+          max-width: 390px;
+          margin-top: 3px;
+          color: #e6edf1;
+          font-size: 13px;
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .document-selected-size {
+          margin-top: 5px;
+          margin-bottom: 16px;
+          color: #718896;
+          font-size: 11px;
+        }
+
+        .document-file-actions {
+          display: flex;
+          gap: 8px;
+        }
+
+        .document-change-button,
+        .document-remove-button {
+          height: 34px;
+          padding: 0 13px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .document-change-button {
+          border:
+            1px solid #4a5961;
+          background: #17272e;
+          color: #c7d2d9;
+        }
+
+        .document-change-button:hover {
+          border-color: #8b5cf6;
+          color: #c4b5fd;
+        }
+
+        .document-remove-button {
+          border:
+            1px solid #71323a;
+          background: #2b151a;
+          color: #fda4af;
+        }
+
+        .document-remove-button:hover {
+          background: #35191f;
+          border-color: #ef4444;
+        }
+
+        /* ========================================================
+           FORMAT PANEL
+        ======================================================== */
+
+        .document-format-panel {
+          margin-top: 16px;
+          padding: 14px;
+          border:
+            1px solid #263941;
+          border-radius: 8px;
+          background: #101f26;
+        }
+
+        .document-format-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .document-format-item + .document-format-item {
+          margin-top: 13px;
+        }
+
+        .document-check-icon {
+          flex-shrink: 0;
+          width: 18px;
+          height: 18px;
+          margin-top: 1px;
+          color: #8b5cf6;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+        }
+
+        .document-format-item > div:last-child {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+
+        .document-format-item strong {
+          color: #d8e1e6;
+          font-size: 12px;
+          font-weight: 650;
+        }
+
+        .document-format-item span {
+          color: #728a98;
+          font-size: 11px;
+          line-height: 1.45;
+        }
+
+        /* ========================================================
+           DOCUMENT FOOTER
+        ======================================================== */
+
+        .document-modal-footer {
+          min-height: 70px;
+          padding: 15px 22px;
+          border-top:
+            1px solid #263941;
+          background: #0b181e;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 10px;
+        }
+
+        .document-cancel-button {
+          height: 40px;
+          padding: 0 16px;
+          border:
+            1px solid #40515a;
+          border-radius: 7px;
+          background: #101f26;
+          color: #d1d9de;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .document-cancel-button:hover {
+          background: #172930;
+          border-color: #566a74;
+        }
+
+        .document-cancel-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .document-import-button {
+          height: 40px;
+          min-width: 155px;
+          padding: 0 16px;
+          border: none;
+          border-radius: 7px;
+          background: #8b5cf6;
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          font-size: 13px;
+          font-weight: 650;
+          cursor: pointer;
+          box-shadow:
+            0 7px 18px
+            rgba(124, 58, 237, 0.20);
+        }
+
+        .document-import-button:hover {
+          background: #7c3aed;
+        }
+
+        .document-import-button:disabled {
+          background: #4a3d70;
+          color: #8f86a8;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        /* ========================================================
            ANIMATION
-        ====================================================== */
+        ======================================================== */
 
         .spin {
           animation:
@@ -2956,11 +3251,12 @@ function ContactsPage() {
           }
         }
 
-        /* ======================================================
+        /* ========================================================
            RESPONSIVE
-        ====================================================== */
+        ======================================================== */
 
         @media (max-width: 1100px) {
+
           .contacts-page {
             padding: 28px;
           }
@@ -2981,9 +3277,11 @@ function ContactsPage() {
           .search-wrapper input {
             width: 100%;
           }
+
         }
 
         @media (max-width: 700px) {
+
           .contacts-page {
             padding: 22px 16px;
           }
@@ -3009,14 +3307,25 @@ function ContactsPage() {
             grid-template-columns: 1fr;
           }
 
+          .document-modal {
+            max-width:
+              calc(100vw - 24px);
+          }
+
+          .document-modal-footer {
+            flex-wrap: wrap;
+          }
+
           .table-footer {
             flex-direction: column;
             align-items: flex-start;
             gap: 6px;
           }
+
         }
 
       `}</style>
+
     </div>
   );
 }
@@ -3036,6 +3345,7 @@ function FormField({
 }) {
   return (
     <div>
+
       <label className="field-label">
         {label}
       </label>
@@ -3049,6 +3359,7 @@ function FormField({
         placeholder={placeholder}
         className="form-input"
       />
+
     </div>
   );
 }

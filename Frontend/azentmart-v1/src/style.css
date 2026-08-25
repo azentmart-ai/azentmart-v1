@@ -11163,3 +11163,504 @@ body {
   padding: 4px 8px !important;
   border-radius: 6px !important;
 }
+/* ========================================================
+   CONTACT MODAL
+   DARK CAMPAIGN STYLE
+   MATCHES ADD DOCUMENT MODAL
+======================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: 20px;
+
+  background: rgba(1, 6, 9, 0.78);
+  backdrop-filter: blur(2px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================================
+   CONTACT MODAL CONTAINER
+======================================================== */
+
+.contact-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 40px);
+
+  background: #0b181e;
+
+  border: 1px solid #263941;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.55);
+
+  color: #ffffff;
+}
+
+/* ========================================================
+   CONTACT MODAL HEADER
+======================================================== */
+
+.modal-header {
+  min-height: 82px;
+
+  padding: 20px 22px;
+
+  background: #0b181e;
+
+  border-bottom: 1px solid #263941;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+
+  color: #f8fafc;
+
+  font-size: 19px;
+  line-height: 1.2;
+
+  font-weight: 700;
+}
+
+.modal-header p {
+  margin: 7px 0 0;
+
+  color: #7f9aaa;
+
+  font-size: 12px;
+}
+
+/* ========================================================
+   CLOSE BUTTON
+======================================================== */
+
+.close-modal-button {
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid #2a3b43;
+  border-radius: 6px;
+
+  background: #14252c;
+
+  color: #91a7b6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.close-modal-button:hover {
+  background: #1a3038;
+
+  border-color: #415963;
+
+  color: #ffffff;
+}
+
+.close-modal-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================================
+   CONTACT FORM AREA
+======================================================== */
+
+.form-grid {
+  padding: 22px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  background: #0b181e;
+}
+
+/* ========================================================
+   FIELD LABEL
+======================================================== */
+
+.field-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #8ea5b7;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+/* ========================================================
+   INPUT + SELECT
+======================================================== */
+
+.form-input {
+  width: 100%;
+  height: 40px;
+
+  padding: 0 11px;
+
+  border: 1px solid #2f414a;
+
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #18272e;
+
+  color: #e7edf1;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.form-input::placeholder {
+  color: #718896;
+}
+
+.form-input:hover {
+  border-color: #40545e;
+}
+
+.form-input:focus {
+  border-color: #8b5cf6;
+
+  background: #18272e;
+
+  box-shadow:
+    0 0 0 2px rgba(139, 92, 246, 0.12);
+}
+
+.form-input:disabled {
+  background: #142128;
+
+  color: #7f919c;
+
+  opacity: 0.7;
+
+  cursor: not-allowed;
+}
+
+/* ========================================================
+   SELECT ARROW / OPTIONS
+======================================================== */
+
+select.form-input {
+  appearance: auto;
+
+  cursor: pointer;
+}
+
+select.form-input option {
+  background: #18272e;
+  color: #e7edf1;
+}
+
+/* ========================================================
+   CONTACT MODAL FOOTER
+======================================================== */
+
+.modal-footer {
+  min-height: 70px;
+
+  padding: 15px 22px;
+
+  border-top: 1px solid #263941;
+
+  background: #0b181e;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+/* ========================================================
+   CANCEL BUTTON
+======================================================== */
+
+.cancel-button {
+  height: 40px;
+
+  padding: 0 16px;
+
+  border: 1px solid #40515a;
+
+  border-radius: 7px;
+
+  background: #101f26;
+
+  color: #d1d9de;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.cancel-button:hover {
+  background: #172930;
+
+  border-color: #566a74;
+
+  color: #ffffff;
+}
+
+.cancel-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+/* ========================================================
+   CREATE CONTACT BUTTON
+   Uses existing .header-purple-button
+======================================================== */
+
+.modal-footer .header-purple-button {
+  height: 40px;
+
+  min-width: 145px;
+
+  padding: 0 16px;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #8b5cf6;
+
+  color: #ffffff;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  font-size: 13px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px rgba(124, 58, 237, 0.20);
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.modal-footer .header-purple-button:hover {
+  background: #7c3aed;
+}
+
+.modal-footer .header-purple-button:active {
+  transform: translateY(1px);
+}
+
+.modal-footer .header-purple-button:disabled {
+  background: #4a3d70;
+
+  color: #8f86a8;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+/* ========================================================
+   CONTACT MODAL RESPONSIVE
+======================================================== */
+
+@media (max-width: 700px) {
+  .contact-modal {
+    max-width: calc(100vw - 24px);
+
+    max-height: calc(100vh - 24px);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    padding: 18px;
+  }
+
+  .modal-header {
+    padding: 18px;
+  }
+
+  .modal-footer {
+    padding: 14px 18px;
+  }
+}
+/* ========================================================
+   FIX: REMOVE WHITE LINES FROM CONTACT MODAL
+======================================================== */
+
+.contact-modal {
+  background: #0b181e !important;
+  border: 1px solid #263941 !important;
+}
+
+/* Header */
+.contact-modal .modal-header {
+  background: #0b181e !important;
+  border-bottom: 1px solid #263941 !important;
+}
+
+/* Form area */
+.contact-modal .form-grid {
+  background: #0b181e !important;
+  border: none !important;
+}
+
+/* Footer */
+.contact-modal .modal-footer {
+  background: #0b181e !important;
+  border-top: 1px solid #263941 !important;
+}
+
+/* Remove any white pseudo-elements/dividers */
+.contact-modal::before,
+.contact-modal::after,
+.contact-modal .modal-header::before,
+.contact-modal .modal-header::after,
+.contact-modal .form-grid::before,
+.contact-modal .form-grid::after,
+.contact-modal .modal-footer::before,
+.contact-modal .modal-footer::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Make sure no white background leaks through */
+.contact-modal > form {
+  background: #0b181e !important;
+}
+
+.contact-modal > form > .form-grid {
+  background: #0b181e !important;
+}
+
+/* Prevent horizontal white strips */
+.contact-modal,
+.contact-modal *,
+.contact-modal form {
+  box-sizing: border-box;
+}
+/* ==========================================================
+   AUTOMATION PAGE
+   Align exactly with Contacts / other dashboard pages
+   ========================================================== */
+
+.automation-page {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+
+  /* move ONLY automation content slightly left */
+  margin-left: -30px !important;
+
+  /* compensate so right side still fills the page */
+  width: calc(100% + 30px) !important;
+
+  padding: 0 !important;
+
+  color: #edf4f6;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+.automation-page *,
+.automation-page *::before,
+.automation-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.automation-page-header {
+  width: 100% !important;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin: 0 0 30px 0 !important;
+
+  padding: 0 !important;
+}
+
+.automation-page-header h2 {
+  margin: 0 !important;
+
+  color: #f4f7f8;
+
+  font-size: 30px;
+  line-height: 38px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.automation-page-header p {
+  margin: 6px 0 0 !important;
+
+  color: #8ca1aa;
+
+  font-size: 13px;
+  line-height: 19px;
+}

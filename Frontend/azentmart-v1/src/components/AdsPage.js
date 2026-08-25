@@ -586,7 +586,9 @@ function AdsPage() {
             }
           >
 
-            {/* MODAL HEADER */}
+            {/* ==================================================
+                MODAL HEADER
+            ================================================== */}
             <div className="ads-modal-header">
 
               <div>
@@ -614,7 +616,9 @@ function AdsPage() {
 
             </div>
 
-            {/* FORM */}
+            {/* ==================================================
+                FORM
+            ================================================== */}
             <div className="ads-form">
 
               <label>
@@ -715,7 +719,9 @@ function AdsPage() {
 
             </div>
 
-            {/* MODAL FOOTER */}
+            {/* ==================================================
+                MODAL FOOTER
+            ================================================== */}
             <div className="ads-modal-footer">
 
               <button
@@ -741,6 +747,463 @@ function AdsPage() {
         </div>
 
       )}
+
+      {/* ========================================================
+          POPUP THEME ONLY
+          REST OF PAGE IS NOT CHANGED
+      ======================================================== */}
+      <style>
+        {`
+
+          /* ====================================================
+             MODAL OVERLAY
+          ==================================================== */
+
+          .ads-modal-overlay {
+            position: fixed !important;
+            inset: 0 !important;
+
+            width: 100vw !important;
+            height: 100vh !important;
+
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            background: rgba(3, 10, 18, 0.72) !important;
+
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+
+            z-index: 99999 !important;
+
+            padding: 24px !important;
+
+            box-sizing: border-box !important;
+          }
+
+
+          /* ====================================================
+             WHITE OUTER BORDER / FRAME
+          ==================================================== */
+
+          .ads-modal {
+            width: 540px !important;
+
+            max-width: calc(100vw - 48px) !important;
+
+            max-height: calc(100vh - 48px) !important;
+
+            box-sizing: border-box !important;
+
+            /* WHITE FRAME */
+            border: 12px solid #ffffff !important;
+
+            border-radius: 18px !important;
+
+            background: #071c21 !important;
+
+            overflow: hidden !important;
+
+            box-shadow:
+              0 30px 80px rgba(0, 0, 0, 0.65),
+              0 10px 35px rgba(0, 0, 0, 0.35) !important;
+
+            animation: adsModalIn 0.18s ease-out !important;
+          }
+
+
+          @keyframes adsModalIn {
+
+            from {
+              opacity: 0;
+              transform: translateY(8px) scale(0.98);
+            }
+
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+
+          }
+
+
+          /* ====================================================
+             MODAL HEADER
+          ==================================================== */
+
+          .ads-modal-header {
+            background: #071c21 !important;
+
+            padding: 20px 20px 18px !important;
+
+            border-bottom: 1px solid #18343b !important;
+
+            display: flex !important;
+
+            align-items: flex-start !important;
+
+            justify-content: space-between !important;
+
+            gap: 16px !important;
+          }
+
+
+          .ads-modal-header h3 {
+            margin: 0 !important;
+
+            color: #f8fafc !important;
+
+            font-size: 20px !important;
+
+            font-weight: 700 !important;
+
+            line-height: 1.25 !important;
+          }
+
+
+          .ads-modal-header p {
+            margin: 6px 0 0 !important;
+
+            color: #91a4ad !important;
+
+            font-size: 12px !important;
+
+            line-height: 1.5 !important;
+          }
+
+
+          /* ====================================================
+             CLOSE BUTTON
+          ==================================================== */
+
+          .ads-modal-close {
+            width: 34px !important;
+            height: 34px !important;
+
+            min-width: 34px !important;
+
+            display: flex !important;
+
+            align-items: center !important;
+            justify-content: center !important;
+
+            border: 1px solid #ffffff !important;
+
+            border-radius: 7px !important;
+
+            background: #ffffff !important;
+
+            color: #071c21 !important;
+
+            font-size: 20px !important;
+
+            font-weight: 600 !important;
+
+            line-height: 1 !important;
+
+            cursor: pointer !important;
+
+            transition: 0.15s ease !important;
+          }
+
+
+          .ads-modal-close:hover {
+            background: #f1f5f9 !important;
+
+            transform: scale(1.03) !important;
+          }
+
+
+          /* ====================================================
+             FORM
+          ==================================================== */
+
+          .ads-form {
+            background: #071c21 !important;
+
+            padding: 20px !important;
+          }
+
+
+          .ads-form label {
+            display: block !important;
+
+            margin: 0 0 7px !important;
+
+            color: #91a4ad !important;
+
+            font-size: 12px !important;
+
+            font-weight: 600 !important;
+          }
+
+
+          .ads-form input,
+          .ads-form textarea,
+          .ads-form select {
+            width: 100% !important;
+
+            box-sizing: border-box !important;
+
+            border: 1px solid #29434a !important;
+
+            border-radius: 7px !important;
+
+            background: #1d3037 !important;
+
+            color: #e5edf0 !important;
+
+            outline: none !important;
+
+            font-size: 13px !important;
+
+            font-family: inherit !important;
+
+            transition:
+              border-color 0.15s ease,
+              box-shadow 0.15s ease !important;
+          }
+
+
+          .ads-form input {
+            height: 40px !important;
+
+            padding: 0 12px !important;
+
+            margin-bottom: 16px !important;
+          }
+
+
+          .ads-form textarea {
+            min-height: 92px !important;
+
+            padding: 11px 12px !important;
+
+            resize: vertical !important;
+
+            margin-bottom: 16px !important;
+          }
+
+
+          .ads-form select {
+            height: 40px !important;
+
+            padding: 0 12px !important;
+
+            margin-bottom: 0 !important;
+
+            cursor: pointer !important;
+          }
+
+
+          .ads-form input::placeholder,
+          .ads-form textarea::placeholder {
+            color: #71848c !important;
+          }
+
+
+          .ads-form input:focus,
+          .ads-form textarea:focus,
+          .ads-form select:focus {
+            border-color: #8b5cf6 !important;
+
+            box-shadow:
+              0 0 0 2px rgba(
+                139,
+                92,
+                246,
+                0.15
+              ) !important;
+          }
+
+
+          /* ====================================================
+             PLATFORM + BUDGET
+          ==================================================== */
+
+          .ads-form-row {
+            display: grid !important;
+
+            grid-template-columns:
+              1fr 1fr !important;
+
+            gap: 12px !important;
+
+            margin-bottom: 16px !important;
+          }
+
+
+          .ads-form-row > div {
+            min-width: 0 !important;
+          }
+
+
+          .ads-form-row input {
+            margin-bottom: 0 !important;
+          }
+
+
+          .ads-form-row select {
+            margin-bottom: 0 !important;
+          }
+
+
+          /* ====================================================
+             MODAL FOOTER
+          ==================================================== */
+
+          .ads-modal-footer {
+            background: #071c21 !important;
+
+            border-top: 1px solid #18343b !important;
+
+            padding: 14px 20px !important;
+
+            display: flex !important;
+
+            align-items: center !important;
+
+            justify-content: flex-end !important;
+
+            gap: 10px !important;
+          }
+
+
+          /* ====================================================
+             CANCEL BUTTON
+          ==================================================== */
+
+          .ads-cancel-btn {
+            height: 38px !important;
+
+            padding: 0 16px !important;
+
+            border: 1px solid #dbe4e8 !important;
+
+            border-radius: 7px !important;
+
+            background: #ffffff !important;
+
+            color: #334155 !important;
+
+            font-size: 12px !important;
+
+            font-weight: 600 !important;
+
+            cursor: pointer !important;
+
+            transition: 0.15s ease !important;
+          }
+
+
+          .ads-cancel-btn:hover {
+            background: #f1f5f9 !important;
+          }
+
+
+          /* ====================================================
+             SAVE AD BUTTON
+          ==================================================== */
+
+          .ads-save-btn {
+            height: 38px !important;
+
+            padding: 0 18px !important;
+
+            border: none !important;
+
+            border-radius: 7px !important;
+
+            background:
+              linear-gradient(
+                135deg,
+                #8b5cf6,
+                #7c3aed
+              ) !important;
+
+            color: #ffffff !important;
+
+            font-size: 12px !important;
+
+            font-weight: 700 !important;
+
+            cursor: pointer !important;
+
+            box-shadow:
+              0 6px 18px
+              rgba(
+                124,
+                58,
+                237,
+                0.25
+              ) !important;
+
+            transition: 0.15s ease !important;
+          }
+
+
+          .ads-save-btn:hover {
+            transform: translateY(-1px) !important;
+
+            box-shadow:
+              0 8px 22px
+              rgba(
+                124,
+                58,
+                237,
+                0.35
+              ) !important;
+          }
+
+
+          .ads-save-btn:active {
+            transform: translateY(0) !important;
+          }
+
+
+          /* ====================================================
+             MOBILE
+          ==================================================== */
+
+          @media (max-width: 600px) {
+
+            .ads-modal-overlay {
+              padding: 14px !important;
+            }
+
+            .ads-modal {
+              width: 100% !important;
+
+              max-width: 100% !important;
+
+              border-width: 8px !important;
+
+              border-radius: 14px !important;
+            }
+
+            .ads-modal-header {
+              padding: 16px !important;
+            }
+
+            .ads-form {
+              padding: 16px !important;
+            }
+
+            .ads-modal-footer {
+              padding: 12px 16px !important;
+            }
+
+            .ads-form-row {
+              grid-template-columns: 1fr !important;
+
+              gap: 0 !important;
+            }
+
+          }
+
+        `}
+      </style>
 
     </div>
   );
