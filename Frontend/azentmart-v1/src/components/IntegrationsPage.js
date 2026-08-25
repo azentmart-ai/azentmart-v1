@@ -11,48 +11,16 @@ import {
   FaExclamationCircle,
 } from "react-icons/fa";
 
-/*
- * ============================================================
- * WHATSAPP INTEGRATIONS PAGE
- * ============================================================
- *
- * Frontend only.
- *
- * Existing backend endpoint:
- * GET    /api/whatsapp/config
- * POST   /api/whatsapp/config
- * DELETE /api/whatsapp/config
- *
- * No database changes are required.
- * No backend changes are required.
- *
- * If frontend and backend are on different domains/ports,
- * create a .env file in the frontend project:
- *
- * REACT_APP_API_BASE_URL=http://localhost:3000
- *
- * If both are served from the same origin, leave it empty.
- */
-
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "";
 
-const apiUrl = (path) => {
-  return `${API_BASE_URL}${path}`;
-};
+const apiUrl = (path) => `${API_BASE_URL}${path}`;
 
 const IntegrationsPage = () => {
-  // ==========================================================
-  // STATE
-  // ==========================================================
-
   const [connected, setConnected] = useState(false);
-
   const [loading, setLoading] = useState(true);
-
   const [saving, setSaving] = useState(false);
 
   const [error, setError] = useState("");
-
   const [success, setSuccess] = useState("");
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -60,16 +28,10 @@ const IntegrationsPage = () => {
   const [webhookChecking, setWebhookChecking] = useState(false);
 
   const [phoneInfo, setPhoneInfo] = useState(null);
-
   const [connectionMessage, setConnectionMessage] = useState("");
 
   const [registrationSkipped, setRegistrationSkipped] = useState(false);
-
   const [registrationError, setRegistrationError] = useState("");
-
-  // ==========================================================
-  // FORM STATE
-  // ==========================================================
 
   const [formData, setFormData] = useState({
     phone_number_id: "",
@@ -79,37 +41,36 @@ const IntegrationsPage = () => {
     pin: "",
   });
 
-  // ==========================================================
-  // WEBHOOK PATH
-  // ==========================================================
-
   const webhookPath = "/api/whatsapp/webhook";
 
-  // ==========================================================
-  // CLEAR MESSAGES
-  // ==========================================================
+  // ============================================================
+  // MESSAGES
+  // ============================================================
 
   const clearMessages = () => {
     setError("");
     setSuccess("");
   };
 
-  // ==========================================================
+  // ============================================================
   // LOAD WHATSAPP CONFIG
-  // ==========================================================
+  // ============================================================
 
   const loadWhatsAppConfig = async () => {
     setLoading(true);
     clearMessages();
 
     try {
-      const response = await fetch(apiUrl("/api/whatsapp/config"), {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      const response = await fetch(
+        apiUrl("/api/whatsapp/config"),
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
 
       let data = {};
 
@@ -121,7 +82,9 @@ const IntegrationsPage = () => {
 
       if (response.status === 401) {
         setConnected(false);
-        setConnectionMessage("Please login to check WhatsApp connection.");
+        setConnectionMessage(
+          "Please login to check WhatsApp connection."
+        );
         return;
       }
 
@@ -137,7 +100,6 @@ const IntegrationsPage = () => {
 
       if (data.connected === true) {
         setConnected(true);
-
         setPhoneInfo(data.phone_info || null);
 
         setConnectionMessage(
@@ -150,14 +112,17 @@ const IntegrationsPage = () => {
       }
 
       setConnected(false);
-
       setPhoneInfo(null);
 
       setConnectionMessage(
-        data?.message || "WhatsApp Business is not connected."
+        data?.message ||
+          "WhatsApp Business is not connected."
       );
     } catch (err) {
-      console.error("WhatsApp config GET error:", err);
+      console.error(
+        "WhatsApp config GET error:",
+        err
+      );
 
       setConnected(false);
 
@@ -169,17 +134,13 @@ const IntegrationsPage = () => {
     }
   };
 
-  // ==========================================================
-  // LOAD CONFIG WHEN PAGE OPENS
-  // ==========================================================
-
   useEffect(() => {
     loadWhatsAppConfig();
   }, []);
 
-  // ==========================================================
-  // INPUT CHANGE
-  // ==========================================================
+  // ============================================================
+  // INPUT
+  // ============================================================
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -190,43 +151,32 @@ const IntegrationsPage = () => {
     }));
   };
 
-  // ==========================================================
-  // OPEN MANAGE WHATSAPP
-  // ==========================================================
+  // ============================================================
+  // MANAGE WHATSAPP
+  // ============================================================
 
   const handleManageWhatsApp = () => {
     clearMessages();
-
     setRegistrationError("");
-
     setModalOpen(true);
   };
 
-  // ==========================================================
+  // ============================================================
   // RECONNECT
-  // ==========================================================
+  // ============================================================
 
   const handleReconnectWhatsApp = async () => {
     clearMessages();
-
     setRegistrationError("");
-
-    /*
-     * We intentionally don't try to retrieve the existing
-     * access token because the backend does not return the
-     * sensitive token.
-     *
-     * The user enters the credentials again and saves.
-     */
 
     setModalOpen(true);
 
     await loadWhatsAppConfig();
   };
 
-  // ==========================================================
+  // ============================================================
   // CLOSE MODAL
-  // ==========================================================
+  // ============================================================
 
   const closeModal = () => {
     if (saving) {
@@ -234,24 +184,18 @@ const IntegrationsPage = () => {
     }
 
     setModalOpen(false);
-
     setRegistrationError("");
   };
 
-  // ==========================================================
-  // SAVE WHATSAPP CONFIGURATION
-  // ==========================================================
+  // ============================================================
+  // SAVE CONFIGURATION
+  // ============================================================
 
   const handleSaveConfiguration = async (event) => {
     event.preventDefault();
 
     clearMessages();
-
     setRegistrationError("");
-
-    // --------------------------------------------------------
-    // VALIDATION
-    // --------------------------------------------------------
 
     if (!formData.phone_number_id.trim()) {
       setError("Phone Number ID is required.");
@@ -275,22 +219,34 @@ const IntegrationsPage = () => {
 
     try {
       const payload = {
-        phone_number_id: formData.phone_number_id.trim(),
-        waba_id: formData.waba_id.trim(),
-        access_token: formData.access_token.trim(),
-        verify_token: formData.verify_token.trim(),
-        pin: formData.pin.trim(),
+        phone_number_id:
+          formData.phone_number_id.trim(),
+
+        waba_id:
+          formData.waba_id.trim(),
+
+        access_token:
+          formData.access_token.trim(),
+
+        verify_token:
+          formData.verify_token.trim(),
+
+        pin:
+          formData.pin.trim(),
       };
 
-      const response = await fetch(apiUrl("/api/whatsapp/config"), {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        apiUrl("/api/whatsapp/config"),
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       let data = {};
 
@@ -300,18 +256,12 @@ const IntegrationsPage = () => {
         data = {};
       }
 
-      // ------------------------------------------------------
-      // AUTH ERROR
-      // ------------------------------------------------------
-
       if (response.status === 401) {
-        setError("You are not authenticated. Please login again.");
+        setError(
+          "You are not authenticated. Please login again."
+        );
         return;
       }
-
-      // ------------------------------------------------------
-      // OTHER BACKEND ERROR
-      // ------------------------------------------------------
 
       if (!response.ok) {
         setError(
@@ -323,19 +273,19 @@ const IntegrationsPage = () => {
         return;
       }
 
-      // ------------------------------------------------------
-      // REGISTRATION ERROR
-      // ------------------------------------------------------
-
       if (
         data.success === false &&
         data.registration_error
       ) {
         setConnected(false);
 
-        setRegistrationError(data.registration_error);
+        setRegistrationError(
+          data.registration_error
+        );
 
-        setPhoneInfo(data.phone_info || null);
+        setPhoneInfo(
+          data.phone_info || null
+        );
 
         setSuccess(
           "Configuration was saved, but phone registration failed."
@@ -344,24 +294,26 @@ const IntegrationsPage = () => {
         return;
       }
 
-      // ------------------------------------------------------
-      // SUCCESS
-      // ------------------------------------------------------
-
       if (data.success === true) {
         setConnected(true);
 
-        setPhoneInfo(data.phone_info || null);
+        setPhoneInfo(
+          data.phone_info || null
+        );
 
         setRegistrationSkipped(
           data.registration_skipped === true
         );
 
-        if (data.registration_skipped === true) {
+        if (
+          data.registration_skipped === true
+        ) {
           setSuccess(
             "WhatsApp credentials saved successfully. Phone registration was skipped because no PIN was provided."
           );
-        } else if (data.registered === true) {
+        } else if (
+          data.registered === true
+        ) {
           setSuccess(
             "WhatsApp connected and phone number registered successfully."
           );
@@ -377,9 +329,7 @@ const IntegrationsPage = () => {
             : "WhatsApp Business account is connected."
         );
 
-        /*
-         * Clear sensitive values after successful save.
-         */
+        // Clear sensitive values
         setFormData((previous) => ({
           ...previous,
           access_token: "",
@@ -387,9 +337,6 @@ const IntegrationsPage = () => {
           pin: "",
         }));
 
-        /*
-         * Close modal after successful connection.
-         */
         setTimeout(() => {
           setModalOpen(false);
         }, 800);
@@ -412,32 +359,21 @@ const IntegrationsPage = () => {
     } finally {
       setSaving(false);
 
-      /*
-       * Refresh the actual backend status.
-       */
       setTimeout(() => {
         loadWhatsAppConfig();
       }, 300);
     }
   };
 
-  // ==========================================================
+  // ============================================================
   // WEBHOOK STATUS
-  // ==========================================================
+  // ============================================================
 
   const handleWebhook = async () => {
     setWebhookChecking(true);
-
     clearMessages();
 
     try {
-      /*
-       * We use the existing config endpoint to verify that the
-       * WhatsApp credentials are healthy.
-       *
-       * We do NOT create/change any backend webhook route here.
-       */
-
       const response = await fetch(
         apiUrl("/api/whatsapp/config"),
         {
@@ -478,7 +414,9 @@ const IntegrationsPage = () => {
       if (data.connected === true) {
         setConnected(true);
 
-        setPhoneInfo(data.phone_info || null);
+        setPhoneInfo(
+          data.phone_info || null
+        );
 
         setSuccess(
           "WhatsApp connection is healthy. Webhook endpoint is ready to receive messages when Meta is subscribed."
@@ -507,147 +445,227 @@ const IntegrationsPage = () => {
     }
   };
 
-  // ==========================================================
+  // ============================================================
   // COPY WEBHOOK
-  // ==========================================================
+  // ============================================================
 
   const handleCopy = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
 
-      setSuccess("Webhook endpoint copied.");
+      setSuccess(
+        "Webhook endpoint copied."
+      );
 
       setTimeout(() => {
         setSuccess("");
       }, 2000);
     } catch (err) {
-      console.error("Copy error:", err);
+      console.error(
+        "Copy error:",
+        err
+      );
 
-      setError("Could not copy webhook endpoint.");
+      setError(
+        "Could not copy webhook endpoint."
+      );
     }
   };
 
-  // ==========================================================
+  // ============================================================
   // REFRESH
-  // ==========================================================
+  // ============================================================
 
   const handleRefresh = async () => {
     await loadWhatsAppConfig();
   };
 
-  // ==========================================================
-  // STATUS COLORS
-  // ==========================================================
+  // ============================================================
+  // STYLES
+  // ============================================================
 
-  const statusBackground = connected
-    ? "#dcfce7"
-    : "#fee2e2";
+  const colors = {
+    page: "#081116",
+    card: "#0d1a20",
+    cardSecondary: "#111f26",
+    border: "#20313a",
+    borderLight: "#263b45",
 
-  const statusColor = connected
-    ? "#15803d"
-    : "#b91c1c";
+    heading: "#f5f7f8",
+    text: "#cbd5db",
+    muted: "#8da0aa",
 
-  // ==========================================================
+    purple: "#7c3aed",
+    purpleLight: "#a78bfa",
+    purpleBg: "#251642",
+
+    green: "#22c55e",
+    greenBg: "#0b3020",
+
+    red: "#ef4444",
+    redBg: "#351719",
+
+    white: "#ffffff",
+  };
+
+  const pageStyle = {
+    width: "100%",
+    maxWidth: "none",
+    minHeight: "100vh",
+    margin: 0,
+    padding: "28px 30px 40px",
+    boxSizing: "border-box",
+    background: colors.page,
+    color: colors.heading,
+  };
+
+  const headerStyle = {
+    width: "100%",
+    marginBottom: "28px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: "20px",
+  };
+
+  const cardStyle = {
+    width: "100%",
+    background: colors.card,
+    border: `1px solid ${colors.border}`,
+    borderRadius: "12px",
+    marginBottom: "18px",
+    overflow: "hidden",
+    boxSizing: "border-box",
+  };
+
+  const cardHeaderStyle = {
+    padding: "18px 20px",
+    borderBottom: `1px solid ${colors.border}`,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "20px",
+  };
+
+  const cardBodyStyle = {
+    padding: "24px 20px 20px",
+  };
+
+  const labelStyle = {
+    color: colors.muted,
+    fontSize: "12px",
+    marginBottom: "7px",
+  };
+
+  const valueStyle = {
+    color: colors.text,
+    fontSize: "14px",
+    fontWeight: "500",
+  };
+
+  const buttonBase = {
+    borderRadius: "7px",
+    padding: "10px 16px",
+    fontSize: "13px",
+    fontWeight: "500",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    cursor: "pointer",
+  };
+
+  const statusStyle = (active) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    background: active
+      ? colors.greenBg
+      : colors.redBg,
+    color: active
+      ? colors.green
+      : colors.red,
+    padding: "7px 12px",
+    borderRadius: "20px",
+    fontSize: "12px",
+    fontWeight: "600",
+    whiteSpace: "nowrap",
+  });
+
+  // ============================================================
   // RENDER
-  // ==========================================================
+  // ============================================================
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f8f9fc",
-        padding: "30px",
-        boxSizing: "border-box",
-        position: "relative",
-      }}
-    >
-      {/* ==================================================== */}
-      {/* PAGE HEADER */}
-      {/* ==================================================== */}
+    <div style={pageStyle}>
 
-      <div
-        style={{
-          marginBottom: "28px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: "20px",
-          }}
-        >
-          <div>
-            <h1
-              style={{
-                margin: 0,
-                fontSize: "32px",
-                fontWeight: "600",
-                color: "#172033",
-              }}
-            >
-              Integrations
-            </h1>
+      {/* ======================================================
+          HEADER
+      ====================================================== */}
 
-            <p
-              style={{
-                marginTop: "8px",
-                marginBottom: 0,
-                color: "#6b7280",
-                fontSize: "15px",
-              }}
-            >
-              Connect and manage your WhatsApp integrations
-            </p>
-          </div>
+      <div style={headerStyle}>
 
-          {/* REFRESH BUTTON */}
-
-          <button
-            onClick={handleRefresh}
-            disabled={loading}
-            title="Refresh connection"
+        <div>
+          <h1
             style={{
-              border: "1px solid #ddd6fe",
-              background: "#ffffff",
-              color: "#7c3aed",
-              width: "40px",
-              height: "40px",
-              borderRadius: "8px",
-              cursor: loading
-                ? "not-allowed"
-                : "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: loading ? 0.6 : 1,
+              margin: 0,
+              fontSize: "30px",
+              lineHeight: 1.2,
+              fontWeight: "600",
+              color: colors.heading,
             }}
           >
-            <FaSyncAlt
-              size={14}
-              style={{
-                transform: loading
-                  ? "rotate(360deg)"
-                  : "none",
-              }}
-            />
-          </button>
+            Integrations
+          </h1>
+
+          <p
+            style={{
+              margin: "8px 0 0",
+              color: colors.muted,
+              fontSize: "14px",
+            }}
+          >
+            Connect and manage your WhatsApp integrations
+          </p>
         </div>
+
+        <button
+          onClick={handleRefresh}
+          disabled={loading}
+          title="Refresh connection"
+          style={{
+            width: "38px",
+            height: "38px",
+            borderRadius: "7px",
+            border: "none",
+            background: colors.white,
+            color: "#374151",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: loading
+              ? "not-allowed"
+              : "pointer",
+            opacity: loading ? 0.6 : 1,
+          }}
+        >
+          <FaSyncAlt size={13} />
+        </button>
+
       </div>
 
-      {/* ==================================================== */}
-      {/* ERROR MESSAGE */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          ERROR
+      ====================================================== */}
 
       {error && (
         <div
           style={{
-            background: "#fef2f2",
-            border: "1px solid #fecaca",
-            color: "#b91c1c",
-            borderRadius: "9px",
-            padding: "13px 15px",
+            background: colors.redBg,
+            border: `1px solid #5b2528`,
+            color: "#fca5a5",
+            borderRadius: "8px",
+            padding: "12px 14px",
             marginBottom: "18px",
             display: "flex",
             alignItems: "center",
@@ -655,13 +673,9 @@ const IntegrationsPage = () => {
             fontSize: "13px",
           }}
         >
-          <FaExclamationCircle size={15} />
+          <FaExclamationCircle size={14} />
 
-          <span
-            style={{
-              flex: 1,
-            }}
-          >
+          <span style={{ flex: 1 }}>
             {error}
           </span>
 
@@ -670,7 +684,7 @@ const IntegrationsPage = () => {
             style={{
               border: "none",
               background: "transparent",
-              color: "#b91c1c",
+              color: "#fca5a5",
               cursor: "pointer",
             }}
           >
@@ -679,18 +693,18 @@ const IntegrationsPage = () => {
         </div>
       )}
 
-      {/* ==================================================== */}
-      {/* SUCCESS MESSAGE */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          SUCCESS
+      ====================================================== */}
 
       {success && (
         <div
           style={{
-            background: "#f0fdf4",
-            border: "1px solid #bbf7d0",
-            color: "#15803d",
-            borderRadius: "9px",
-            padding: "13px 15px",
+            background: colors.greenBg,
+            border: `1px solid #174d32`,
+            color: "#86efac",
+            borderRadius: "8px",
+            padding: "12px 14px",
             marginBottom: "18px",
             display: "flex",
             alignItems: "center",
@@ -698,13 +712,9 @@ const IntegrationsPage = () => {
             fontSize: "13px",
           }}
         >
-          <FaCheckCircle size={15} />
+          <FaCheckCircle size={14} />
 
-          <span
-            style={{
-              flex: 1,
-            }}
-          >
+          <span style={{ flex: 1 }}>
             {success}
           </span>
 
@@ -713,7 +723,7 @@ const IntegrationsPage = () => {
             style={{
               border: "none",
               background: "transparent",
-              color: "#15803d",
+              color: "#86efac",
               cursor: "pointer",
             }}
           >
@@ -722,54 +732,36 @@ const IntegrationsPage = () => {
         </div>
       )}
 
-      {/* ==================================================== */}
-      {/* WHATSAPP BUSINESS */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          WHATSAPP BUSINESS
+      ====================================================== */}
 
-      <div
-        style={{
-          background: "#ffffff",
-          border: "1px solid #e5e7eb",
-          borderRadius: "14px",
-          marginBottom: "22px",
-          overflow: "hidden",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-        }}
-      >
-        {/* CARD HEADER */}
+      <div style={cardStyle}>
 
-        <div
-          style={{
-            padding: "20px",
-            borderBottom: "1px solid #eeeeee",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div style={cardHeaderStyle}>
+
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "14px",
+              gap: "13px",
             }}
           >
+
             <div
               style={{
-                width: "46px",
-                height: "46px",
-                borderRadius: "12px",
-                background: "#dcfce7",
+                width: "42px",
+                height: "42px",
+                borderRadius: "10px",
+                background: colors.greenBg,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
               <FaWhatsapp
-                size={25}
-                style={{
-                  color: "#16a34a",
-                }}
+                size={23}
+                color={colors.green}
               />
             </div>
 
@@ -777,9 +769,9 @@ const IntegrationsPage = () => {
               <h2
                 style={{
                   margin: 0,
-                  fontSize: "18px",
+                  fontSize: "17px",
                   fontWeight: "600",
-                  color: "#172033",
+                  color: colors.heading,
                 }}
               >
                 WhatsApp Business
@@ -787,32 +779,19 @@ const IntegrationsPage = () => {
 
               <p
                 style={{
-                  margin: "5px 0 0",
-                  color: "#6b7280",
-                  fontSize: "14px",
+                  margin: "4px 0 0",
+                  color: colors.muted,
+                  fontSize: "13px",
                 }}
               >
                 Connect your WhatsApp Business account
               </p>
             </div>
+
           </div>
 
-          {/* STATUS */}
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              background: statusBackground,
-              color: statusColor,
-              padding: "7px 12px",
-              borderRadius: "20px",
-              fontSize: "13px",
-              fontWeight: "600",
-            }}
-          >
-            <FaCheckCircle size={13} />
+          <div style={statusStyle(connected)}>
+            <FaCheckCircle size={12} />
 
             {loading
               ? "Checking..."
@@ -820,67 +799,44 @@ const IntegrationsPage = () => {
               ? "Connected"
               : "Not Connected"}
           </div>
+
         </div>
 
-        {/* CARD BODY */}
+        <div style={cardBodyStyle}>
 
-        <div
-          style={{
-            padding: "25px 20px 20px",
-          }}
-        >
+          {/* TWO COLUMN INFORMATION */}
+
           <div
             style={{
               display: "grid",
               gridTemplateColumns:
-                "1fr 1fr",
-              gap: "28px",
+                "repeat(2, minmax(0, 1fr))",
+              columnGap: "40px",
+              rowGap: "25px",
             }}
           >
-            {/* PROVIDER */}
 
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Provider
               </div>
 
-              <div
-                style={{
-                  color: "#172033",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                }}
-              >
+              <div style={valueStyle}>
                 WhatsApp Cloud API
               </div>
             </div>
 
-            {/* CONNECTION */}
-
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Connection
               </div>
 
               <div
                 style={{
+                  ...valueStyle,
                   color: connected
-                    ? "#16a34a"
-                    : "#dc2626",
-                  fontSize: "14px",
-                  fontWeight: "500",
+                    ? colors.green
+                    : colors.red,
                 }}
               >
                 {loading
@@ -891,26 +847,17 @@ const IntegrationsPage = () => {
               </div>
             </div>
 
-            {/* MESSAGING */}
-
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Messaging
               </div>
 
               <div
                 style={{
+                  ...valueStyle,
                   color: connected
-                    ? "#16a34a"
-                    : "#dc2626",
-                  fontSize: "14px",
-                  fontWeight: "500",
+                    ? colors.green
+                    : colors.red,
                 }}
               >
                 {connected
@@ -919,26 +866,17 @@ const IntegrationsPage = () => {
               </div>
             </div>
 
-            {/* WEBHOOKS */}
-
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Webhooks
               </div>
 
               <div
                 style={{
+                  ...valueStyle,
                   color: connected
-                    ? "#16a34a"
-                    : "#dc2626",
-                  fontSize: "14px",
-                  fontWeight: "500",
+                    ? colors.green
+                    : colors.red,
                 }}
               >
                 {connected
@@ -946,24 +884,25 @@ const IntegrationsPage = () => {
                   : "Not Connected"}
               </div>
             </div>
+
           </div>
 
-          {/* PHONE INFO */}
+          {/* PHONE */}
 
           {phoneInfo && (
             <div
               style={{
-                marginTop: "20px",
-                padding: "14px",
-                background: "#f9fafb",
+                marginTop: "22px",
+                padding: "15px",
+                background: colors.cardSecondary,
+                border: `1px solid ${colors.borderLight}`,
                 borderRadius: "8px",
-                border: "1px solid #eeeeee",
               }}
             >
               <div
                 style={{
-                  fontSize: "12px",
-                  color: "#6b7280",
+                  fontSize: "11px",
+                  color: colors.muted,
                   marginBottom: "6px",
                 }}
               >
@@ -973,7 +912,7 @@ const IntegrationsPage = () => {
               <div
                 style={{
                   fontSize: "14px",
-                  color: "#172033",
+                  color: colors.heading,
                   fontWeight: "500",
                 }}
               >
@@ -985,9 +924,9 @@ const IntegrationsPage = () => {
               {phoneInfo.verified_name && (
                 <div
                   style={{
-                    marginTop: "4px",
-                    fontSize: "13px",
-                    color: "#6b7280",
+                    marginTop: "5px",
+                    fontSize: "12px",
+                    color: colors.muted,
                   }}
                 >
                   Business Name:{" "}
@@ -1003,12 +942,12 @@ const IntegrationsPage = () => {
             <div
               style={{
                 marginTop: "15px",
-                padding: "12px 14px",
-                background: "#fffbeb",
-                border: "1px solid #fde68a",
+                padding: "11px 13px",
+                background: "#302710",
+                border: "1px solid #5a481b",
                 borderRadius: "8px",
-                color: "#92400e",
-                fontSize: "13px",
+                color: "#facc15",
+                fontSize: "12px",
               }}
             >
               Credentials are valid, but phone registration
@@ -1022,23 +961,19 @@ const IntegrationsPage = () => {
             <div
               style={{
                 marginTop: "15px",
-                padding: "12px 14px",
-                background: "#fef2f2",
-                border: "1px solid #fecaca",
+                padding: "11px 13px",
+                background: colors.redBg,
+                border: "1px solid #5b2528",
                 borderRadius: "8px",
-                color: "#b91c1c",
-                fontSize: "13px",
+                color: "#fca5a5",
+                fontSize: "12px",
               }}
             >
               <strong>
                 Phone registration failed:
               </strong>
 
-              <div
-                style={{
-                  marginTop: "5px",
-                }}
-              >
+              <div style={{ marginTop: "5px" }}>
                 {registrationError}
               </div>
             </div>
@@ -1050,8 +985,8 @@ const IntegrationsPage = () => {
             <div
               style={{
                 marginTop: "15px",
-                fontSize: "13px",
-                color: "#6b7280",
+                fontSize: "12px",
+                color: colors.muted,
               }}
             >
               {connectionMessage}
@@ -1062,114 +997,80 @@ const IntegrationsPage = () => {
 
           <div
             style={{
-              marginTop: "25px",
-              paddingTop: "18px",
-              borderTop: "1px solid #eeeeee",
+              marginTop: "22px",
+              paddingTop: "17px",
+              borderTop: `1px solid ${colors.border}`,
               display: "flex",
-              gap: "10px",
+              gap: "9px",
             }}
           >
-            {/* MANAGE */}
 
             <button
               onClick={handleManageWhatsApp}
               style={{
+                ...buttonBase,
                 border: "none",
-                background: "#7c3aed",
-                color: "#ffffff",
-                padding: "10px 17px",
-                borderRadius: "7px",
-                cursor: "pointer",
-                fontSize: "13px",
-                fontWeight: "500",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
+                background: colors.purple,
+                color: colors.white,
               }}
             >
-              <FaWhatsapp size={14} />
-
+              <FaWhatsapp size={13} />
               Manage WhatsApp
             </button>
-
-            {/* RECONNECT */}
 
             <button
               onClick={handleReconnectWhatsApp}
               disabled={loading}
               style={{
-                border: "1px solid #ddd6fe",
-                background: "#ffffff",
-                color: "#7c3aed",
-                padding: "10px 17px",
-                borderRadius: "7px",
+                ...buttonBase,
+                border: `1px solid ${colors.borderLight}`,
+                background: colors.cardSecondary,
+                color: colors.text,
                 cursor: loading
                   ? "not-allowed"
                   : "pointer",
-                fontSize: "13px",
-                fontWeight: "500",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
                 opacity: loading ? 0.6 : 1,
               }}
             >
-              <FaSyncAlt size={13} />
-
+              <FaSyncAlt size={12} />
               Reconnect
             </button>
+
           </div>
+
         </div>
       </div>
 
-      {/* ==================================================== */}
-      {/* WHATSAPP WEBHOOK */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          WEBHOOK
+      ====================================================== */}
 
-      <div
-        style={{
-          background: "#ffffff",
-          border: "1px solid #e5e7eb",
-          borderRadius: "14px",
-          marginBottom: "22px",
-          overflow: "hidden",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-        }}
-      >
-        {/* HEADER */}
+      <div style={cardStyle}>
 
-        <div
-          style={{
-            padding: "20px",
-            borderBottom: "1px solid #eeeeee",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div style={cardHeaderStyle}>
+
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "14px",
+              gap: "13px",
             }}
           >
+
             <div
               style={{
-                width: "46px",
-                height: "46px",
-                borderRadius: "12px",
-                background: "#ede9fe",
+                width: "42px",
+                height: "42px",
+                borderRadius: "10px",
+                background: colors.purpleBg,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
               <FaLink
-                size={23}
-                style={{
-                  color: "#7c3aed",
-                }}
+                size={21}
+                color={colors.purpleLight}
               />
             </div>
 
@@ -1177,9 +1078,9 @@ const IntegrationsPage = () => {
               <h2
                 style={{
                   margin: 0,
-                  fontSize: "18px",
+                  fontSize: "17px",
                   fontWeight: "600",
-                  color: "#172033",
+                  color: colors.heading,
                 }}
               >
                 WhatsApp Webhook
@@ -1187,77 +1088,46 @@ const IntegrationsPage = () => {
 
               <p
                 style={{
-                  margin: "5px 0 0",
-                  color: "#6b7280",
-                  fontSize: "14px",
+                  margin: "4px 0 0",
+                  color: colors.muted,
+                  fontSize: "13px",
                 }}
               >
-                Receive incoming WhatsApp messages and status
-                updates
+                Receive incoming WhatsApp messages and status updates
               </p>
             </div>
+
           </div>
 
-          {/* ACTIVE STATUS */}
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              background: connected
-                ? "#dcfce7"
-                : "#fee2e2",
-              color: connected
-                ? "#15803d"
-                : "#b91c1c",
-              padding: "7px 12px",
-              borderRadius: "20px",
-              fontSize: "13px",
-              fontWeight: "600",
-            }}
-          >
-            <FaCheckCircle size={13} />
-
+          <div style={statusStyle(connected)}>
+            <FaCheckCircle size={12} />
             {connected ? "Active" : "Inactive"}
           </div>
+
         </div>
 
-        {/* BODY */}
+        <div style={cardBodyStyle}>
 
-        <div
-          style={{
-            padding: "25px 20px 20px",
-          }}
-        >
           <div
             style={{
               display: "grid",
               gridTemplateColumns:
-                "1fr 1fr",
-              gap: "28px",
+                "repeat(2, minmax(0, 1fr))",
+              columnGap: "40px",
             }}
           >
-            {/* STATUS */}
 
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Status
               </div>
 
               <div
                 style={{
+                  ...valueStyle,
                   color: connected
-                    ? "#16a34a"
-                    : "#dc2626",
-                  fontSize: "14px",
-                  fontWeight: "500",
+                    ? colors.green
+                    : colors.red,
                 }}
               >
                 {connected
@@ -1266,46 +1136,34 @@ const IntegrationsPage = () => {
               </div>
             </div>
 
-            {/* EVENTS */}
-
             <div>
-              <div
-                style={{
-                  color: "#6b7280",
-                  fontSize: "12px",
-                  marginBottom: "7px",
-                }}
-              >
+              <div style={labelStyle}>
                 Events
               </div>
 
-              <div
-                style={{
-                  color: "#172033",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                }}
-              >
+              <div style={valueStyle}>
                 Messages & Statuses
               </div>
             </div>
+
           </div>
 
-          {/* WEBHOOK URL DISPLAY */}
+          {/* WEBHOOK ENDPOINT */}
 
           <div
             style={{
               marginTop: "22px",
-              padding: "15px",
-              background: "#f8f7ff",
-              border: "1px solid #e9e5ff",
+              padding: "14px",
+              background: colors.cardSecondary,
+              border: `1px solid ${colors.borderLight}`,
               borderRadius: "8px",
             }}
           >
+
             <div
               style={{
-                color: "#6b7280",
-                fontSize: "12px",
+                color: colors.muted,
+                fontSize: "11px",
                 marginBottom: "8px",
               }}
             >
@@ -1317,13 +1175,14 @@ const IntegrationsPage = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: "10px",
+                gap: "12px",
               }}
             >
+
               <code
                 style={{
-                  color: "#4c1d95",
-                  fontSize: "13px",
+                  color: colors.purpleLight,
+                  fontSize: "12px",
                   wordBreak: "break-all",
                 }}
               >
@@ -1336,22 +1195,24 @@ const IntegrationsPage = () => {
                 }
                 title="Copy webhook path"
                 style={{
-                  border: "1px solid #ddd6fe",
-                  background: "#ffffff",
-                  color: "#7c3aed",
-                  width: "34px",
-                  height: "34px",
+                  width: "32px",
+                  height: "32px",
+                  flexShrink: 0,
                   borderRadius: "6px",
-                  cursor: "pointer",
+                  border: `1px solid ${colors.borderLight}`,
+                  background: colors.card,
+                  color: colors.purpleLight,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  flexShrink: 0,
+                  cursor: "pointer",
                 }}
               >
-                <FaCopy size={13} />
+                <FaCopy size={12} />
               </button>
+
             </div>
+
           </div>
 
           {/* WEBHOOK BUTTON */}
@@ -1359,54 +1220,50 @@ const IntegrationsPage = () => {
           <div
             style={{
               marginTop: "20px",
-              paddingTop: "18px",
-              borderTop: "1px solid #eeeeee",
+              paddingTop: "17px",
+              borderTop: `1px solid ${colors.border}`,
             }}
           >
+
             <button
               onClick={handleWebhook}
               disabled={webhookChecking}
               style={{
-                border: "1px solid #ddd6fe",
-                background: "#ffffff",
-                color: "#7c3aed",
-                padding: "10px 17px",
-                borderRadius: "7px",
+                ...buttonBase,
+                border: `1px solid ${colors.borderLight}`,
+                background: colors.cardSecondary,
+                color: colors.text,
                 cursor: webhookChecking
                   ? "not-allowed"
                   : "pointer",
-                fontSize: "13px",
-                fontWeight: "500",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
                 opacity: webhookChecking
                   ? 0.6
                   : 1,
               }}
             >
-              <FaPlug size={13} />
+              <FaPlug size={12} />
 
               {webhookChecking
                 ? "Checking..."
                 : "Webhook Status"}
             </button>
+
           </div>
+
         </div>
       </div>
 
-      {/* ==================================================== */}
-      {/* INFO CARD */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          INFO
+      ====================================================== */}
 
       <div
         style={{
-          background: "#ffffff",
-          border: "1px solid #e5e7eb",
-          borderRadius: "14px",
-          padding: "20px",
+          ...cardStyle,
+          padding: "18px 20px",
         }}
       >
+
         <div
           style={{
             display: "flex",
@@ -1414,31 +1271,31 @@ const IntegrationsPage = () => {
             gap: "12px",
           }}
         >
+
           <div
             style={{
               width: "38px",
               height: "38px",
               borderRadius: "9px",
-              background: "#f3f4f6",
+              background: colors.greenBg,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <FaWhatsapp
-              size={19}
-              style={{
-                color: "#16a34a",
-              }}
+              size={18}
+              color={colors.green}
             />
           </div>
 
           <div>
+
             <div
               style={{
                 fontSize: "14px",
                 fontWeight: "600",
-                color: "#172033",
+                color: colors.heading,
               }}
             >
               WhatsApp Integration
@@ -1447,21 +1304,24 @@ const IntegrationsPage = () => {
             <div
               style={{
                 marginTop: "4px",
-                fontSize: "13px",
-                color: "#6b7280",
+                fontSize: "12px",
+                color: colors.muted,
               }}
             >
               {connected
                 ? "Your WhatsApp Business integration is configured for messaging and webhook events."
                 : "Connect your WhatsApp Business account to enable messaging and webhook events."}
             </div>
+
           </div>
+
         </div>
+
       </div>
 
-      {/* ==================================================== */}
-      {/* CONNECT / RECONNECT MODAL */}
-      {/* ==================================================== */}
+      {/* ======================================================
+          MODAL
+      ====================================================== */}
 
       {modalOpen && (
         <div
@@ -1469,7 +1329,7 @@ const IntegrationsPage = () => {
             position: "fixed",
             inset: 0,
             background:
-              "rgba(15, 23, 42, 0.55)",
+              "rgba(0, 0, 0, 0.65)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1478,37 +1338,41 @@ const IntegrationsPage = () => {
             boxSizing: "border-box",
           }}
         >
+
           <div
             style={{
               width: "100%",
               maxWidth: "560px",
               maxHeight: "90vh",
               overflowY: "auto",
-              background: "#ffffff",
-              borderRadius: "14px",
+              background: "#101b21",
+              border: `1px solid ${colors.border}`,
+              borderRadius: "12px",
               boxShadow:
-                "0 20px 50px rgba(0,0,0,0.2)",
+                "0 20px 60px rgba(0,0,0,0.5)",
             }}
           >
+
             {/* MODAL HEADER */}
 
             <div
               style={{
-                padding: "20px",
+                padding: "19px 20px",
                 borderBottom:
-                  "1px solid #eeeeee",
+                  `1px solid ${colors.border}`,
                 display: "flex",
-                justifyContent:
-                  "space-between",
+                justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
+
               <div>
+
                 <h2
                   style={{
                     margin: 0,
-                    color: "#172033",
-                    fontSize: "20px",
+                    color: colors.heading,
+                    fontSize: "19px",
                     fontWeight: "600",
                   }}
                 >
@@ -1517,14 +1381,14 @@ const IntegrationsPage = () => {
 
                 <p
                   style={{
-                    margin:
-                      "5px 0 0",
-                    color: "#6b7280",
-                    fontSize: "13px",
+                    margin: "5px 0 0",
+                    color: colors.muted,
+                    fontSize: "12px",
                   }}
                 >
                   Connect your WhatsApp Cloud API
                 </p>
+
               </div>
 
               <button
@@ -1532,46 +1396,48 @@ const IntegrationsPage = () => {
                 disabled={saving}
                 style={{
                   border: "none",
-                  background:
-                    "transparent",
-                  color: "#6b7280",
+                  background: "transparent",
+                  color: colors.muted,
                   cursor: saving
                     ? "not-allowed"
                     : "pointer",
-                  fontSize: "18px",
+                  fontSize: "17px",
                 }}
               >
                 <FaTimes />
               </button>
+
             </div>
 
-            {/* MODAL BODY */}
+            {/* FORM */}
 
             <form
               onSubmit={
                 handleSaveConfiguration
               }
             >
+
               <div
                 style={{
-                  padding: "22px",
+                  padding: "21px",
                 }}
               >
+
                 {/* PHONE NUMBER ID */}
 
                 <div
                   style={{
-                    marginBottom: "17px",
+                    marginBottom: "16px",
                   }}
                 >
+
                   <label
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "12px",
                       fontWeight: "500",
-                      color: "#374151",
-                      marginBottom:
-                        "7px",
+                      color: colors.text,
+                      marginBottom: "7px",
                     }}
                   >
                     Phone Number ID *
@@ -1590,34 +1456,35 @@ const IntegrationsPage = () => {
                     autoComplete="off"
                     style={{
                       width: "100%",
-                      boxSizing:
-                        "border-box",
+                      boxSizing: "border-box",
                       border:
-                        "1px solid #d1d5db",
+                        `1px solid ${colors.borderLight}`,
                       borderRadius: "7px",
-                      padding:
-                        "11px 12px",
-                      fontSize: "13px",
+                      padding: "10px 11px",
+                      fontSize: "12px",
                       outline: "none",
+                      background: colors.cardSecondary,
+                      color: colors.heading,
                     }}
                   />
+
                 </div>
 
                 {/* WABA ID */}
 
                 <div
                   style={{
-                    marginBottom: "17px",
+                    marginBottom: "16px",
                   }}
                 >
+
                   <label
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "12px",
                       fontWeight: "500",
-                      color: "#374151",
-                      marginBottom:
-                        "7px",
+                      color: colors.text,
+                      marginBottom: "7px",
                     }}
                   >
                     WABA ID
@@ -1636,34 +1503,35 @@ const IntegrationsPage = () => {
                     autoComplete="off"
                     style={{
                       width: "100%",
-                      boxSizing:
-                        "border-box",
+                      boxSizing: "border-box",
                       border:
-                        "1px solid #d1d5db",
+                        `1px solid ${colors.borderLight}`,
                       borderRadius: "7px",
-                      padding:
-                        "11px 12px",
-                      fontSize: "13px",
+                      padding: "10px 11px",
+                      fontSize: "12px",
                       outline: "none",
+                      background: colors.cardSecondary,
+                      color: colors.heading,
                     }}
                   />
+
                 </div>
 
                 {/* ACCESS TOKEN */}
 
                 <div
                   style={{
-                    marginBottom: "17px",
+                    marginBottom: "16px",
                   }}
                 >
+
                   <label
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "12px",
                       fontWeight: "500",
-                      color: "#374151",
-                      marginBottom:
-                        "7px",
+                      color: colors.text,
+                      marginBottom: "7px",
                     }}
                   >
                     Access Token *
@@ -1682,37 +1550,37 @@ const IntegrationsPage = () => {
                     rows={4}
                     style={{
                       width: "100%",
-                      boxSizing:
-                        "border-box",
+                      boxSizing: "border-box",
                       border:
-                        "1px solid #d1d5db",
+                        `1px solid ${colors.borderLight}`,
                       borderRadius: "7px",
-                      padding:
-                        "11px 12px",
-                      fontSize: "13px",
+                      padding: "10px 11px",
+                      fontSize: "12px",
                       outline: "none",
                       resize: "vertical",
-                      fontFamily:
-                        "inherit",
+                      fontFamily: "inherit",
+                      background: colors.cardSecondary,
+                      color: colors.heading,
                     }}
                   />
+
                 </div>
 
                 {/* VERIFY TOKEN */}
 
                 <div
                   style={{
-                    marginBottom: "17px",
+                    marginBottom: "16px",
                   }}
                 >
+
                   <label
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "12px",
                       fontWeight: "500",
-                      color: "#374151",
-                      marginBottom:
-                        "7px",
+                      color: colors.text,
+                      marginBottom: "7px",
                     }}
                   >
                     Verify Token
@@ -1731,34 +1599,31 @@ const IntegrationsPage = () => {
                     autoComplete="off"
                     style={{
                       width: "100%",
-                      boxSizing:
-                        "border-box",
+                      boxSizing: "border-box",
                       border:
-                        "1px solid #d1d5db",
+                        `1px solid ${colors.borderLight}`,
                       borderRadius: "7px",
-                      padding:
-                        "11px 12px",
-                      fontSize: "13px",
+                      padding: "10px 11px",
+                      fontSize: "12px",
                       outline: "none",
+                      background: colors.cardSecondary,
+                      color: colors.heading,
                     }}
                   />
+
                 </div>
 
                 {/* PIN */}
 
-                <div
-                  style={{
-                    marginBottom: "5px",
-                  }}
-                >
+                <div>
+
                   <label
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "12px",
                       fontWeight: "500",
-                      color: "#374151",
-                      marginBottom:
-                        "7px",
+                      color: colors.text,
+                      marginBottom: "7px",
                     }}
                   >
                     6-Digit PIN
@@ -1779,68 +1644,61 @@ const IntegrationsPage = () => {
                     autoComplete="off"
                     style={{
                       width: "100%",
-                      boxSizing:
-                        "border-box",
+                      boxSizing: "border-box",
                       border:
-                        "1px solid #d1d5db",
+                        `1px solid ${colors.borderLight}`,
                       borderRadius: "7px",
-                      padding:
-                        "11px 12px",
-                      fontSize: "13px",
+                      padding: "10px 11px",
+                      fontSize: "12px",
                       outline: "none",
+                      background: colors.cardSecondary,
+                      color: colors.heading,
                     }}
                   />
 
                   <p
                     style={{
-                      margin:
-                        "6px 0 0",
+                      margin: "6px 0 0",
                       fontSize: "11px",
-                      color: "#6b7280",
+                      color: colors.muted,
                     }}
                   >
-                    Required for phone
-                    registration when
-                    applicable. Leave empty
-                    for Meta test numbers.
+                    Required for phone registration
+                    when applicable. Leave empty for
+                    Meta test numbers.
                   </p>
+
                 </div>
+
               </div>
 
               {/* MODAL FOOTER */}
 
               <div
                 style={{
-                  padding: "16px 22px",
+                  padding: "15px 21px",
                   borderTop:
-                    "1px solid #eeeeee",
+                    `1px solid ${colors.border}`,
                   display: "flex",
-                  justifyContent:
-                    "flex-end",
-                  gap: "10px",
+                  justifyContent: "flex-end",
+                  gap: "9px",
                 }}
               >
+
                 <button
                   type="button"
-                  onClick={
-                    closeModal
-                  }
+                  onClick={closeModal}
                   disabled={saving}
                   style={{
+                    ...buttonBase,
                     border:
-                      "1px solid #d1d5db",
+                      `1px solid ${colors.borderLight}`,
                     background:
-                      "#ffffff",
-                    color: "#374151",
-                    padding:
-                      "10px 17px",
-                    borderRadius:
-                      "7px",
+                      colors.cardSecondary,
+                    color: colors.text,
                     cursor: saving
                       ? "not-allowed"
                       : "pointer",
-                    fontSize: "13px",
-                    fontWeight: "500",
                   }}
                 >
                   Cancel
@@ -1850,41 +1708,31 @@ const IntegrationsPage = () => {
                   type="submit"
                   disabled={saving}
                   style={{
+                    ...buttonBase,
                     border: "none",
-                    background:
-                      "#7c3aed",
-                    color: "#ffffff",
-                    padding:
-                      "10px 17px",
-                    borderRadius:
-                      "7px",
+                    background: colors.purple,
+                    color: colors.white,
+                    opacity: saving ? 0.7 : 1,
                     cursor: saving
                       ? "not-allowed"
                       : "pointer",
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    display: "flex",
-                    alignItems:
-                      "center",
-                    gap: "8px",
-                    opacity: saving
-                      ? 0.7
-                      : 1,
                   }}
                 >
-                  <FaSave
-                    size={13}
-                  />
+                  <FaSave size={12} />
 
                   {saving
                     ? "Connecting..."
                     : "Save Configuration"}
                 </button>
+
               </div>
+
             </form>
+
           </div>
         </div>
       )}
+
     </div>
   );
 };

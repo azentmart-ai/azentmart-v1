@@ -22,61 +22,36 @@ const WhatsappDashboard = () => {
   // ============================================================
   // TEAM INBOX FRONTEND STATE
   // ============================================================
-
-  const [selectedConversation, setSelectedConversation] =
-    useState(null);
+  const [selectedConversation, setSelectedConversation] = useState(null);
 
   // Full chat history for selected conversation
   const [messages, setMessages] = useState([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [messageError, setMessageError] = useState("");
 
-  const [conversationSearch, setConversationSearch] =
-    useState("");
-
+  const [conversationSearch, setConversationSearch] = useState("");
   const [messageText, setMessageText] = useState("");
-
-  // Sending state
   const [sendingMessage, setSendingMessage] = useState(false);
 
   // ============================================================
   // LOAD CONVERSATIONS FROM BACKEND
   // ============================================================
-
   useEffect(() => {
     const loadConversations = async () => {
       setLoading(true);
       setError("");
 
       try {
-        // Existing backend endpoint
-        const response = await fetch(
-          "/api/azentmart/conversations"
-        );
-
+        const response = await fetch("/api/azentmart/conversations");
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
         }
 
         const data = await response.json();
-
-        console.log(
-          "Conversations received from backend:",
-          data
-        );
-
-        setConversations(
-          Array.isArray(data) ? data : []
-        );
+        setConversations(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error(
-          "Failed to load conversations:",
-          err
-        );
-
-        setError(
-          "Failed to load conversations from backend."
-        );
+        console.error("Failed to load conversations:", err);
+        setError("Failed to load conversations from backend.");
       } finally {
         setLoading(false);
       }
@@ -88,28 +63,15 @@ const WhatsappDashboard = () => {
   // ============================================================
   // FILTER CONVERSATIONS
   // ============================================================
-
   const filteredConversations = useMemo(() => {
-    const query = conversationSearch
-      .trim()
-      .toLowerCase();
-
-    if (!query) {
-      return conversations;
-    }
+    const query = conversationSearch.trim().toLowerCase();
+    if (!query) return conversations;
 
     return conversations.filter((conversation) => {
-      const name =
-        conversation.contact?.name || "";
-
-      const phone =
-        conversation.contact?.phone || "";
-
-      const lastMessage =
-        conversation.last_message_text || "";
-
-      const status =
-        conversation.status || "";
+      const name = conversation.contact?.name || "";
+      const phone = conversation.contact?.phone || "";
+      const lastMessage = conversation.last_message_text || "";
+      const status = conversation.status || "";
 
       return (
         name.toLowerCase().includes(query) ||
@@ -123,61 +85,24 @@ const WhatsappDashboard = () => {
   // ============================================================
   // SELECT CONVERSATION + LOAD FULL CHAT HISTORY
   // ============================================================
-
   const handleSelectConversation = async (conversation) => {
     setSelectedConversation(conversation);
     setMessageText("");
     setMessages([]);
     setMessageError("");
 
-    if (!conversation?.id) {
-      return;
-    }
+    if (!conversation?.id) return;
 
     try {
       setLoadingMessages(true);
-
-      console.log(
-        "Loading messages for conversation:",
-        conversation.id
-      );
-
-      /*
-       * Existing backend endpoint:
-       *
-       * GET
-       * /api/azentmart/conversations/{id}/messages
-       *
-       * DO NOT CHANGE BACKEND.
-       */
-
       const response = await fetch(
         `/api/azentmart/conversations/${conversation.id}/messages`
       );
-
       const data = await response.json();
 
-      console.log(
-        "Messages received:",
-        data
-      );
-
       if (!response.ok) {
-        throw new Error(
-          data?.error ||
-            "Failed to load chat history."
-        );
+        throw new Error(data?.error || "Failed to load chat history.");
       }
-
-      /*
-       * Support all existing response formats:
-       *
-       * [...]
-       *
-       * { messages: [...] }
-       *
-       * { items: [...] }
-       */
 
       const history = Array.isArray(data)
         ? data
@@ -187,39 +112,15 @@ const WhatsappDashboard = () => {
         ? data.items
         : [];
 
-      /*
-       * Backend API returns newest first.
-       *
-       * Chat UI should display:
-       *
-       * oldest
-       *   ↓
-       * newer
-       *   ↓
-       * newest
-       */
-
       setMessages([...history].reverse());
     } catch (err) {
-      console.error(
-        "Failed to load chat history:",
-        err
-      );
-
-      setMessageError(
-        err.message ||
-          "Failed to load chat history."
-      );
-
+      console.error("Failed to load chat history:", err);
+      setMessageError(err.message || "Failed to load chat history.");
       setMessages([]);
     } finally {
       setLoadingMessages(false);
     }
   };
-
-  // ============================================================
-  // BACK TO CONVERSATION LIST
-  // ============================================================
 
   const handleBackToInbox = () => {
     setSelectedConversation(null);
@@ -231,217 +132,90 @@ const WhatsappDashboard = () => {
   // ============================================================
   // SEND MESSAGE
   // ============================================================
-
   const handleSendMessage = async () => {
     const text = messageText.trim();
-
-    if (!text) {
-      return;
-    }
-
-    if (!selectedConversation?.id) {
-      alert("Please select a conversation first.");
-      return;
-    }
-
-    if (sendingMessage) {
-      return;
-    }
+    if (!text || !selectedConversation?.id || sendingMessage) return;
 
     try {
       setSendingMessage(true);
       setMessageError("");
 
-      console.log(
-        "Sending WhatsApp message:",
-        {
+      const response = await fetch("/api/whatsapp/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           conversation_id: selectedConversation.id,
           message_type: "text",
           content_text: text,
-        }
-      );
-
-      /*
-       * EXISTING BACKEND SEND ENDPOINT
-       *
-       * POST /api/whatsapp/send
-       *
-       * Your backend already supports:
-       *
-       * conversation_id
-       * message_type
-       * content_text
-       *
-       * DO NOT CHANGE BACKEND.
-       */
-
-      const response = await fetch(
-        "/api/whatsapp/send",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            conversation_id:
-              selectedConversation.id,
-            message_type: "text",
-            content_text: text,
-          }),
-        }
-      );
+        }),
+      });
 
       const data = await response.json();
-
-      console.log(
-        "Send message response:",
-        data
-      );
-
       if (!response.ok) {
-        throw new Error(
-          data?.error ||
-            "Failed to send WhatsApp message."
-        );
+        throw new Error(data?.error || "Failed to send WhatsApp message.");
       }
 
-      /*
-       * Message successfully sent.
-       *
-       * Add it immediately to the UI so the user
-       * doesn't have to refresh the page.
-       */
-
       const newMessage = {
-        id:
-          data?.message_id ||
-          `temp-${Date.now()}`,
-        conversation_id:
-          selectedConversation.id,
+        id: data?.message_id || `temp-${Date.now()}`,
+        conversation_id: selectedConversation.id,
         content_text: text,
         message_type: "text",
         direction: "outbound",
         sender_type: "agent",
-        created_at:
-          new Date().toISOString(),
-        whatsapp_message_id:
-          data?.whatsapp_message_id || null,
+        created_at: new Date().toISOString(),
+        whatsapp_message_id: data?.whatsapp_message_id || null,
       };
 
-      setMessages((previousMessages) => [
-        ...previousMessages,
-        newMessage,
-      ]);
+      setMessages((prev) => [...prev, newMessage]);
 
-      /*
-       * Update the conversation preview
-       * in Team Inbox.
-       */
-
-      setConversations((previousConversations) =>
-        previousConversations.map(
-          (conversation) =>
-            conversation.id ===
-            selectedConversation.id
-              ? {
-                  ...conversation,
-                  last_message_text: text,
-                  updated_at:
-                    newMessage.created_at,
-                }
-              : conversation
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === selectedConversation.id
+            ? { ...c, last_message_text: text, updated_at: newMessage.created_at }
+            : c
         )
       );
 
-      /*
-       * Also update selected conversation so
-       * the state stays consistent.
-       */
-
-      setSelectedConversation((previous) =>
-        previous
-          ? {
-              ...previous,
-              last_message_text: text,
-              updated_at:
-                newMessage.created_at,
-            }
-          : previous
+      setSelectedConversation((prev) =>
+        prev
+          ? { ...prev, last_message_text: text, updated_at: newMessage.created_at }
+          : prev
       );
 
-      // Clear input after successful send
       setMessageText("");
     } catch (err) {
-      console.error(
-        "Failed to send WhatsApp message:",
-        err
-      );
-
-      setMessageError(
-        err.message ||
-          "Failed to send WhatsApp message."
-      );
+      console.error("Failed to send WhatsApp message:", err);
+      setMessageError(err.message || "Failed to send WhatsApp message.");
     } finally {
       setSendingMessage(false);
     }
   };
 
-  // ============================================================
-  // MESSAGE KEYBOARD
-  // ============================================================
-
   const handleMessageKeyDown = (event) => {
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
+    if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       handleSendMessage();
     }
   };
 
-  // ============================================================
-  // CONVERSATION TIME
-  // ============================================================
-
   const formatConversationDate = (date) => {
-    if (!date) {
-      return "";
-    }
-
+    if (!date) return "";
     try {
-      return new Date(date).toLocaleString(
-        "en-IN",
-        {
-          day: "2-digit",
-          month: "short",
-          hour: "2-digit",
-          minute: "2-digit",
-        }
-      );
+      return new Date(date).toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     } catch {
       return "";
     }
   };
 
-  // ============================================================
-  // AVATAR LETTER
-  // ============================================================
-
   const getInitial = (conversation) => {
-    const name =
-      conversation?.contact?.name ||
-      "C";
-
-    return name
-      .trim()
-      .charAt(0)
-      .toUpperCase();
+    const name = conversation?.contact?.name || "C";
+    return name.trim().charAt(0).toUpperCase();
   };
-
-  // ============================================================
-  // MESSAGE TEXT HELPER
-  // ============================================================
 
   const getMessageText = (message) => {
     return (
@@ -455,10 +229,6 @@ const WhatsappDashboard = () => {
       ""
     );
   };
-
-  // ============================================================
-  // MESSAGE DIRECTION HELPER
-  // ============================================================
 
   const isOutgoingMessage = (message) => {
     const direction = String(
@@ -482,30 +252,14 @@ const WhatsappDashboard = () => {
   // ============================================================
   // RENDER CONTENT
   // ============================================================
-
   const renderContent = () => {
     switch (activeTab) {
-
-      // ========================================================
-      // ANALYTICS
-      // ========================================================
-
       case "analytics":
         return <WAAnalytics />;
 
-      // ========================================================
-      // TEAM INBOX
-      // ========================================================
-
       case "inbox":
-
-        // ======================================================
-        // CHAT VIEW
-        // ======================================================
-
         if (selectedConversation) {
-          const contact =
-            selectedConversation.contact || {};
+          const contact = selectedConversation.contact || {};
 
           return (
             <div
@@ -514,24 +268,20 @@ const WhatsappDashboard = () => {
                 height: "calc(100vh - 40px)",
                 maxHeight: "calc(100vh - 40px)",
                 minHeight: 0,
-                background: "#f8f9fc",
+                background: "#0c1317",
                 boxSizing: "border-box",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
               }}
             >
-
-              {/* ==================================================
-                  CHAT HEADER
-              ================================================== */}
-
+              {/* CHAT HEADER */}
               <div
                 style={{
-                  background: "#ffffff",
-                  border: "1px solid #e5e7eb",
+                  background: "#202c33",
+                  borderBottom: "1px solid #2a3942",
                   borderRadius: "12px 12px 0 0",
-                  padding: "18px 22px",
+                  padding: "14px 22px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -539,7 +289,6 @@ const WhatsappDashboard = () => {
                   flexShrink: 0,
                 }}
               >
-
                 <div
                   style={{
                     display: "flex",
@@ -548,19 +297,17 @@ const WhatsappDashboard = () => {
                     minWidth: 0,
                   }}
                 >
-
-                  {/* BACK BUTTON */}
-
                   <button
                     onClick={handleBackToInbox}
                     style={{
-                      border: "1px solid #e5e7eb",
-                      background: "#ffffff",
-                      width: "38px",
-                      height: "38px",
-                      borderRadius: "9px",
+                      border: "1px solid #2a3942",
+                      background: "#111b21",
+                      color: "#e9edef",
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "8px",
                       cursor: "pointer",
-                      fontSize: "18px",
+                      fontSize: "16px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -571,114 +318,91 @@ const WhatsappDashboard = () => {
                     ←
                   </button>
 
-                  {/* AVATAR */}
-
                   <div
                     style={{
-                      width: "44px",
-                      height: "44px",
+                      width: "40px",
+                      height: "40px",
                       borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg, #7c3aed, #9333ea)",
-                      color: "#ffffff",
+                      background: "#00a884",
+                      color: "#111b21",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       fontWeight: "700",
-                      fontSize: "17px",
+                      fontSize: "16px",
                       flexShrink: 0,
                     }}
                   >
-                    {getInitial(
-                      selectedConversation
-                    )}
+                    {getInitial(selectedConversation)}
                   </div>
 
-                  {/* CUSTOMER */}
-
-                  <div
-                    style={{
-                      minWidth: 0,
-                    }}
-                  >
+                  <div style={{ minWidth: 0 }}>
                     <h1
                       style={{
                         margin: 0,
-                        fontSize: "19px",
-                        fontWeight: "700",
-                        color: "#111827",
+                        fontSize: "17px",
+                        fontWeight: "600",
+                        color: "#e9edef",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {contact.name ||
-                        "Unknown Contact"}
+                      {contact.name || "Unknown Contact"}
                     </h1>
-
                     <p
                       style={{
-                        margin: "4px 0 0",
-                        color: "#6b7280",
-                        fontSize: "13px",
+                        margin: "3px 0 0",
+                        color: "#8696a0",
+                        fontSize: "12px",
                       }}
                     >
-                      {contact.phone ||
-                        "No phone number"}
+                      {contact.phone || "No phone number"}
                     </p>
                   </div>
-
                 </div>
-
-                {/* STATUS */}
 
                 <span
                   style={{
-                    padding: "6px 12px",
-                    borderRadius: "20px",
-                    fontSize: "12px",
+                    padding: "4px 12px",
+                    borderRadius: "12px",
+                    fontSize: "11px",
                     fontWeight: "600",
                     background:
-                      selectedConversation.status ===
-                      "open"
-                        ? "#dcfce7"
-                        : "#f3f4f6",
+                      selectedConversation.status === "open"
+                        ? "#005c4b"
+                        : "#202c33",
                     color:
-                      selectedConversation.status ===
-                      "open"
-                        ? "#166534"
-                        : "#555",
+                      selectedConversation.status === "open"
+                        ? "#25d366"
+                        : "#8696a0",
+                    border:
+                      selectedConversation.status === "open"
+                        ? "none"
+                        : "1px solid #2a3942",
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {selectedConversation.status ||
-                    "Unknown"}
+                  {selectedConversation.status || "Unknown"}
                 </span>
-
               </div>
 
-              {/* ==================================================
-                  CHAT BODY
-              ================================================== */}
-
+              {/* CHAT BODY */}
               <div
                 style={{
                   flex: 1,
                   minHeight: 0,
-                  background: "#ffffff",
-                  borderLeft: "1px solid #e5e7eb",
-                  borderRight: "1px solid #e5e7eb",
+                  background: "#0b141a",
+                  borderLeft: "1px solid #222e35",
+                  borderRight: "1px solid #222e35",
                   padding: "24px",
                   overflowY: "auto",
                   overflowX: "hidden",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "14px",
+                  gap: "12px",
                 }}
               >
-
-                {/* LOADING MESSAGES */}
-
                 {loadingMessages && (
                   <div
                     style={{
@@ -686,32 +410,26 @@ const WhatsappDashboard = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "#6b7280",
+                      color: "#8696a0",
                     }}
                   >
                     Loading chat history...
                   </div>
                 )}
 
-                {/* MESSAGE ERROR */}
-
-                {!loadingMessages &&
-                  messageError && (
-                    <div
-                      style={{
-                        padding: "15px",
-                        background: "#fff1f2",
-                        color: "#dc2626",
-                        borderRadius: "10px",
-                        border:
-                          "1px solid #fecdd3",
-                      }}
-                    >
-                      {messageError}
-                    </div>
-                  )}
-
-                {/* EMPTY CHAT */}
+                {!loadingMessages && messageError && (
+                  <div
+                    style={{
+                      padding: "14px",
+                      background: "#32161b",
+                      color: "#f87171",
+                      borderRadius: "8px",
+                      border: "1px solid #451a20",
+                    }}
+                  >
+                    {messageError}
+                  </div>
+                )}
 
                 {!loadingMessages &&
                   !messageError &&
@@ -723,189 +441,98 @@ const WhatsappDashboard = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         flexDirection: "column",
-                        color: "#9ca3af",
+                        color: "#8696a0",
                         gap: "8px",
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: "34px",
-                        }}
-                      >
-                        💬
-                      </div>
-
-                      <strong
-                        style={{
-                          color: "#6b7280",
-                          fontSize: "15px",
-                        }}
-                      >
+                      <div style={{ fontSize: "32px" }}>💬</div>
+                      <strong style={{ color: "#e9edef", fontSize: "14px" }}>
                         No messages yet
                       </strong>
-
-                      <span
-                        style={{
-                          fontSize: "13px",
-                        }}
-                      >
-                        Start a conversation with this
-                        customer.
+                      <span style={{ fontSize: "12px" }}>
+                        Start a conversation with this customer.
                       </span>
                     </div>
                   )}
 
-                {/* ==================================================
-                    FULL CHAT HISTORY
-                ================================================== */}
-
                 {!loadingMessages &&
                   messages.length > 0 &&
-                  messages.map(
-                    (message, index) => {
-                      const outgoing =
-                        isOutgoingMessage(
-                          message
-                        );
+                  messages.map((message, index) => {
+                    const outgoing = isOutgoingMessage(message);
+                    const text = getMessageText(message);
 
-                      const text =
-                        getMessageText(
-                          message
-                        );
-
-                      return (
+                    return (
+                      <div
+                        key={
+                          message?.id ||
+                          message?.whatsapp_message_id ||
+                          `message-${index}`
+                        }
+                        style={{
+                          display: "flex",
+                          justifyContent: outgoing ? "flex-end" : "flex-start",
+                          width: "100%",
+                        }}
+                      >
                         <div
-                          key={
-                            message?.id ||
-                            message?.whatsapp_message_id ||
-                            `message-${index}`
-                          }
                           style={{
-                            display: "flex",
-                            justifyContent:
-                              outgoing
-                                ? "flex-end"
-                                : "flex-start",
-                            width: "100%",
+                            maxWidth: "70%",
+                            background: outgoing ? "#005c4b" : "#202c33",
+                            color: "#e9edef",
+                            padding: "10px 14px",
+                            borderRadius: outgoing
+                              ? "8px 8px 0px 8px"
+                              : "8px 8px 8px 0px",
+                            fontSize: "14px",
+                            lineHeight: "1.5",
+                            wordBreak: "break-word",
+                            boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
                           }}
                         >
                           <div
                             style={{
-                              maxWidth: "70%",
-                              background:
-                                outgoing
-                                  ? "#7c3aed"
-                                  : "#f3f4f6",
-                              color:
-                                outgoing
-                                  ? "#ffffff"
-                                  : "#1f2937",
-                              padding:
-                                "12px 15px",
-                              borderRadius:
-                                outgoing
-                                  ? "16px 4px 16px 16px"
-                                  : "4px 16px 16px 16px",
-                              fontSize: "14px",
-                              lineHeight: "1.5",
-                              wordBreak:
-                                "break-word",
+                              fontSize: "11px",
+                              color: outgoing ? "#8696a0" : "#00a884",
+                              fontWeight: "600",
+                              marginBottom: "4px",
                             }}
                           >
+                            {outgoing ? "You" : contact.name || "Customer"}
+                          </div>
 
-                            {/* SENDER */}
+                          <div>{text || "Message"}</div>
 
+                          {message?.created_at && (
                             <div
                               style={{
-                                fontSize: "11px",
-                                color: outgoing
-                                  ? "rgba(255,255,255,0.75)"
-                                  : "#6b7280",
-                                marginBottom:
-                                  "5px",
+                                marginTop: "5px",
+                                fontSize: "10px",
+                                color: "#8696a0",
+                                textAlign: "right",
                               }}
                             >
-                              {outgoing
-                                ? "You"
-                                : contact.name ||
-                                  "Customer"}
+                              {formatConversationDate(message.created_at)}
                             </div>
-
-                            {/* MESSAGE TEXT */}
-
-                            <div>
-                              {text ||
-                                "Message"}
-                            </div>
-
-                            {/* TIME */}
-
-                            {message?.created_at && (
-                              <div
-                                style={{
-                                  marginTop:
-                                    "6px",
-                                  fontSize:
-                                    "10px",
-                                  color:
-                                    outgoing
-                                      ? "rgba(255,255,255,0.7)"
-                                      : "#9ca3af",
-                                  textAlign:
-                                    "right",
-                                }}
-                              >
-                                {formatConversationDate(
-                                  message.created_at
-                                )}
-                              </div>
-                            )}
-
-                          </div>
+                          )}
                         </div>
-                      );
-                    }
-                  )}
-
+                      </div>
+                    );
+                  })}
               </div>
 
-              {/* ==================================================
-                  CHAT COMPOSER
-              ================================================== */}
-
+              {/* CHAT COMPOSER */}
               <div
                 style={{
                   flexShrink: 0,
                   position: "relative",
                   zIndex: 5,
-                  background: "#ffffff",
-                  border: "1px solid #e5e7eb",
+                  background: "#202c33",
+                  border: "1px solid #2a3942",
                   borderRadius: "0 0 12px 12px",
-                  padding: "15px",
+                  padding: "14px",
                   boxSizing: "border-box",
-                  boxShadow: "0 -4px 14px rgba(0, 0, 0, 0.04)",
                 }}
               >
-
-                {/* SEND ERROR */}
-
-                {messageError && !loadingMessages && (
-                  <div
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px 12px",
-                      background: "#fff1f2",
-                      color: "#dc2626",
-                      borderRadius: "8px",
-                      fontSize: "13px",
-                      border:
-                        "1px solid #fecdd3",
-                    }}
-                  >
-                    {messageError}
-                  </div>
-                )}
-
                 <div
                   style={{
                     display: "flex",
@@ -913,173 +540,129 @@ const WhatsappDashboard = () => {
                     gap: "10px",
                   }}
                 >
-
                   <textarea
                     value={messageText}
-                    onChange={(event) =>
-                      setMessageText(
-                        event.target.value
-                      )
-                    }
-                    onKeyDown={
-                      handleMessageKeyDown
-                    }
+                    onChange={(e) => setMessageText(e.target.value)}
+                    onKeyDown={handleMessageKeyDown}
                     placeholder="Type a message..."
                     rows={2}
                     disabled={sendingMessage}
                     style={{
                       flex: 1,
                       resize: "none",
-                      border:
-                        "1px solid #d1d5db",
-                      borderRadius: "10px",
-                      padding: "11px 13px",
+                      border: "1px solid #2a3942",
+                      borderRadius: "8px",
+                      padding: "10px 12px",
                       outline: "none",
                       fontFamily: "inherit",
                       fontSize: "14px",
+                      background: "#111b21",
+                      color: "#e9edef",
                       boxSizing: "border-box",
-                      opacity:
-                        sendingMessage
-                          ? 0.7
-                          : 1,
                     }}
                   />
 
                   <button
                     onClick={handleSendMessage}
-                    disabled={
-                      !messageText.trim() ||
-                      sendingMessage
-                    }
+                    disabled={!messageText.trim() || sendingMessage}
                     style={{
                       border: "none",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                       background:
-                        messageText.trim() &&
-                        !sendingMessage
-                          ? "#7c3aed"
-                          : "#d1d5db",
-                      color: "#ffffff",
+                        messageText.trim() && !sendingMessage
+                          ? "#00a884"
+                          : "#2a3942",
+                      color:
+                        messageText.trim() && !sendingMessage
+                          ? "#111b21"
+                          : "#8696a0",
                       padding: "12px 20px",
                       cursor:
-                        messageText.trim() &&
-                        !sendingMessage
+                        messageText.trim() && !sendingMessage
                           ? "pointer"
                           : "not-allowed",
-                      fontWeight: "600",
+                      fontWeight: "700",
                       minWidth: "80px",
                     }}
                   >
-                    {sendingMessage
-                      ? "Sending..."
-                      : "Send"}
+                    {sendingMessage ? "..." : "Send"}
                   </button>
-
                 </div>
-
-                <div
-                  style={{
-                    marginTop: "7px",
-                    fontSize: "11px",
-                    color: "#9ca3af",
-                  }}
-                >
-                  Press Enter to send
-                </div>
-
               </div>
-
             </div>
           );
         }
 
         // ======================================================
-        // CONVERSATION LIST
+        // CONVERSATION LIST (TEAM INBOX)
         // ======================================================
-
         return (
           <div
             style={{
-              padding: "30px",
+              padding: "26px 36px",
               width: "100%",
               minHeight: "100vh",
-              background: "#f8f9fc",
+              background: "#0c1317",
               boxSizing: "border-box",
             }}
           >
-
             {/* HEADER */}
-
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "flex-end",
+                alignItems: "center",
                 gap: "20px",
                 marginBottom: "25px",
                 flexWrap: "wrap",
               }}
             >
-
               <div>
                 <h1
                   style={{
-                    fontSize: "28px",
+                    fontSize: "26px",
                     fontWeight: "700",
-                    margin: "0 0 8px 0",
+                    color: "#e9edef",
+                    margin: "0 0 6px 0",
                   }}
                 >
                   Team Inbox
                 </h1>
-
-                <p
-                  style={{
-                    color: "#666",
-                    margin: 0,
-                  }}
-                >
-                  WhatsApp conversations from your
-                  backend.
+                <p style={{ color: "#8696a0", margin: 0, fontSize: "13px" }}>
+                  WhatsApp conversations from your backend.
                 </p>
               </div>
 
               {/* SEARCH */}
-
               <input
                 type="text"
                 placeholder="Search conversations..."
                 value={conversationSearch}
-                onChange={(event) =>
-                  setConversationSearch(
-                    event.target.value
-                  )
-                }
+                onChange={(e) => setConversationSearch(e.target.value)}
                 style={{
                   width: "280px",
                   maxWidth: "100%",
-                  border:
-                    "1px solid #d1d5db",
-                  borderRadius: "9px",
-                  padding: "11px 13px",
+                  border: "1px solid #2a3942",
+                  borderRadius: "8px",
+                  padding: "9px 13px",
                   fontSize: "14px",
                   outline: "none",
-                  background: "#ffffff",
+                  background: "#202c33",
+                  color: "#e9edef",
                   boxSizing: "border-box",
                 }}
               />
-
             </div>
 
             {/* LOADING */}
-
             {loading && (
               <div
                 style={{
                   padding: "20px",
-                  background: "#fff",
+                  background: "#111b21",
                   borderRadius: "10px",
-                  border:
-                    "1px solid #e5e7eb",
+                  border: "1px solid #222e35",
+                  color: "#8696a0",
                 }}
               >
                 Loading conversations...
@@ -1087,16 +670,14 @@ const WhatsappDashboard = () => {
             )}
 
             {/* ERROR */}
-
             {error && (
               <div
                 style={{
-                  padding: "20px",
-                  background: "#fff1f2",
-                  color: "#dc2626",
-                  borderRadius: "10px",
-                  border:
-                    "1px solid #fecdd3",
+                  padding: "16px",
+                  background: "#32161b",
+                  color: "#f87171",
+                  borderRadius: "8px",
+                  border: "1px solid #451a20",
                 }}
               >
                 {error}
@@ -1104,509 +685,235 @@ const WhatsappDashboard = () => {
             )}
 
             {/* NO CONVERSATIONS */}
+            {!loading && !error && conversations.length === 0 && (
+              <div
+                style={{
+                  padding: "30px",
+                  background: "#111b21",
+                  borderRadius: "10px",
+                  border: "1px solid #222e35",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ marginTop: 0, color: "#e9edef" }}>
+                  No conversations found
+                </h3>
+                <p style={{ color: "#8696a0" }}>
+                  There are currently no WhatsApp conversations.
+                </p>
+              </div>
+            )}
 
-            {!loading &&
-              !error &&
-              conversations.length === 0 && (
-                <div
-                  style={{
-                    padding: "30px",
-                    background: "#fff",
-                    borderRadius: "10px",
-                    border:
-                      "1px solid #e5e7eb",
-                  }}
-                >
-                  <h3
+            {/* CONVERSATION CARDS */}
+            {!loading && !error && filteredConversations.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                {filteredConversations.map((conversation) => (
+                  <div
+                    key={conversation.id}
+                    onClick={() => handleSelectConversation(conversation)}
                     style={{
-                      marginTop: 0,
+                      background: "#111b21",
+                      border: "1px solid #222e35",
+                      borderRadius: "10px",
+                      padding: "18px 20px",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#202c33";
+                      e.currentTarget.style.borderColor = "#00a884";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "#111b21";
+                      e.currentTarget.style.borderColor = "#222e35";
                     }}
                   >
-                    No conversations found
-                  </h3>
-
-                  <p
-                    style={{
-                      color: "#666",
-                    }}
-                  >
-                    There are currently no
-                    WhatsApp conversations.
-                  </p>
-                </div>
-              )}
-
-            {/* SEARCH EMPTY */}
-
-            {!loading &&
-              !error &&
-              conversations.length > 0 &&
-              filteredConversations.length === 0 && (
-                <div
-                  style={{
-                    padding: "30px",
-                    background: "#fff",
-                    borderRadius: "10px",
-                    border:
-                      "1px solid #e5e7eb",
-                    textAlign: "center",
-                  }}
-                >
-                  <h3>
-                    No matching conversations
-                  </h3>
-
-                  <p
-                    style={{
-                      color: "#666",
-                    }}
-                  >
-                    Try a different customer name,
-                    phone number or message.
-                  </p>
-                </div>
-              )}
-
-            {/* CONVERSATION LIST */}
-
-            {!loading &&
-              !error &&
-              filteredConversations.length > 0 && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
-                  }}
-                >
-
-                  {filteredConversations.map(
-                    (conversation) => (
+                    {/* CONTACT + STATUS */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "15px",
+                      }}
+                    >
                       <div
-                        key={conversation.id}
-                        onClick={() =>
-                          handleSelectConversation(
-                            conversation
-                          )
-                        }
                         style={{
-                          background: "#fff",
-                          border:
-                            "1px solid #e5e7eb",
-                          borderRadius: "12px",
-                          padding: "20px",
-                          boxShadow:
-                            "0 1px 3px rgba(0,0,0,0.05)",
-                          cursor: "pointer",
-                          transition:
-                            "transform 0.15s ease, box-shadow 0.15s ease",
-                        }}
-                        onMouseEnter={(event) => {
-                          event.currentTarget.style.transform =
-                            "translateY(-1px)";
-                          event.currentTarget.style.boxShadow =
-                            "0 4px 12px rgba(0,0,0,0.08)";
-                        }}
-                        onMouseLeave={(event) => {
-                          event.currentTarget.style.transform =
-                            "translateY(0)";
-                          event.currentTarget.style.boxShadow =
-                            "0 1px 3px rgba(0,0,0,0.05)";
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
                         }}
                       >
-
-                        {/* CONTACT + STATUS */}
-
                         <div
                           style={{
+                            width: "42px",
+                            height: "42px",
+                            borderRadius: "50%",
+                            background: "#202c33",
+                            color: "#00a884",
                             display: "flex",
-                            justifyContent:
-                              "space-between",
-                            alignItems:
-                              "flex-start",
-                            gap: "20px",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontWeight: "700",
+                            fontSize: "15px",
+                            flexShrink: 0,
                           }}
                         >
-
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems:
-                                "center",
-                              gap: "13px",
-                            }}
-                          >
-
-                            <div
-                              style={{
-                                width: "44px",
-                                height: "44px",
-                                borderRadius:
-                                  "50%",
-                                background:
-                                  "linear-gradient(135deg, #7c3aed, #9333ea)",
-                                color:
-                                  "#ffffff",
-                                display:
-                                  "flex",
-                                alignItems:
-                                  "center",
-                                justifyContent:
-                                  "center",
-                                fontWeight:
-                                  "700",
-                                fontSize:
-                                  "16px",
-                                flexShrink: 0,
-                              }}
-                            >
-                              {getInitial(
-                                conversation
-                              )}
-                            </div>
-
-                            <div>
-                              <h3
-                                style={{
-                                  margin:
-                                    "0 0 6px 0",
-                                  fontSize:
-                                    "18px",
-                                  fontWeight:
-                                    "600",
-                                }}
-                              >
-                                {conversation
-                                  .contact
-                                  ?.name ||
-                                  "Unknown Contact"}
-                              </h3>
-
-                              <p
-                                style={{
-                                  margin: 0,
-                                  color:
-                                    "#666",
-                                }}
-                              >
-                                {conversation
-                                  .contact
-                                  ?.phone ||
-                                  "No phone number"}
-                              </p>
-                            </div>
-
-                          </div>
-
-                          {/* STATUS */}
-
-                          <span
-                            style={{
-                              padding:
-                                "5px 10px",
-                              borderRadius:
-                                "20px",
-                              fontSize:
-                                "12px",
-                              fontWeight:
-                                "600",
-                              background:
-                                conversation.status ===
-                                "open"
-                                  ? "#dcfce7"
-                                  : "#f3f4f6",
-                              color:
-                                conversation.status ===
-                                "open"
-                                  ? "#166534"
-                                  : "#555",
-                              whiteSpace:
-                                "nowrap",
-                            }}
-                          >
-                            {conversation.status ||
-                              "unknown"}
-                          </span>
-
+                          {getInitial(conversation)}
                         </div>
 
-                        {/* LAST MESSAGE */}
-
-                        <div
-                          style={{
-                            marginTop: "15px",
-                            paddingTop: "15px",
-                            borderTop:
-                              "1px solid #eee",
-                          }}
-                        >
-
-                          <p
+                        <div>
+                          <h3
                             style={{
-                              margin:
-                                "0 0 8px 0",
-                              fontWeight:
-                                "500",
+                              margin: "0 0 4px 0",
+                              fontSize: "15px",
+                              fontWeight: "600",
+                              color: "#e9edef",
                             }}
                           >
-                            Last message
-                          </p>
-
+                            {conversation.contact?.name || "Unknown Contact"}
+                          </h3>
                           <p
                             style={{
                               margin: 0,
-                              color: "#555",
-                              overflow:
-                                "hidden",
-                              textOverflow:
-                                "ellipsis",
-                              whiteSpace:
-                                "nowrap",
+                              color: "#8696a0",
+                              fontSize: "12px",
                             }}
                           >
-                            {conversation
-                              .last_message_text ||
-                              "No message"}
+                            {conversation.contact?.phone || "No phone number"}
                           </p>
-
                         </div>
-
-                        {/* DETAILS */}
-
-                        <div
-                          style={{
-                            display: "flex",
-                            flexWrap:
-                              "wrap",
-                            gap: "25px",
-                            marginTop:
-                              "15px",
-                            fontSize:
-                              "13px",
-                            color:
-                              "#777",
-                          }}
-                        >
-
-                          <span>
-                            Unread:{" "}
-                            {conversation
-                              .unread_count ??
-                              0}
-                          </span>
-
-                          <span>
-                            Created:{" "}
-                            {conversation.created_at
-                              ? new Date(
-                                  conversation.created_at
-                                ).toLocaleString()
-                              : "N/A"}
-                          </span>
-
-                          <span
-                            style={{
-                              marginLeft:
-                                "auto",
-                              color:
-                                "#7c3aed",
-                              fontWeight:
-                                "600",
-                            }}
-                          >
-                            Open chat →
-                          </span>
-
-                        </div>
-
                       </div>
-                    )
-                  )}
 
-                </div>
-              )}
+                      <span
+                        style={{
+                          padding: "4px 10px",
+                          borderRadius: "12px",
+                          fontSize: "11px",
+                          fontWeight: "600",
+                          background:
+                            conversation.status === "open"
+                              ? "#005c4b"
+                              : "#202c33",
+                          color:
+                            conversation.status === "open"
+                              ? "#25d366"
+                              : "#8696a0",
+                          border:
+                            conversation.status === "open"
+                              ? "none"
+                              : "1px solid #2a3942",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {conversation.status || "unknown"}
+                      </span>
+                    </div>
 
+                    {/* LAST MESSAGE */}
+                    <div
+                      style={{
+                        marginTop: "14px",
+                        paddingTop: "12px",
+                        borderTop: "1px solid #222e35",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: "0 0 6px 0",
+                          fontWeight: "500",
+                          fontSize: "12px",
+                          color: "#8696a0",
+                        }}
+                      >
+                        Last message
+                      </p>
+                      <p
+                        style={{
+                          margin: 0,
+                          color: "#d1d7db",
+                          fontSize: "13px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {conversation.last_message_text || "No message"}
+                      </p>
+                    </div>
+
+                    {/* DETAILS */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "20px",
+                        marginTop: "12px",
+                        fontSize: "12px",
+                        color: "#8696a0",
+                      }}
+                    >
+                      <span>Unread: {conversation.unread_count ?? 0}</span>
+                      <span>
+                        Created:{" "}
+                        {conversation.created_at
+                          ? new Date(
+                              conversation.created_at
+                            ).toLocaleDateString()
+                          : "N/A"}
+                      </span>
+                      <span
+                        style={{
+                          marginLeft: "auto",
+                          color: "#00a884",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Open chat →
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         );
-
-      // ========================================================
-      // CHAT
-      // ========================================================
-
-      case "chat":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>AI Chat Page</h1>
-          </div>
-        );
-
-      // ========================================================
-      // CAMPAIGNS
-      // ========================================================
 
       case "campaigns":
         return <CampaignsPage />;
-
-      // ========================================================
-      // BROADCAST
-      // ========================================================
-
-      case "broadcast":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>Broadcast Page</h1>
-          </div>
-        );
-
-      // ========================================================
-      // CONTACTS
-      // ========================================================
-
       case "contacts":
         return <ContactsPage />;
-
-      // ========================================================
-      // ASTRA / AGENTS
-      // ========================================================
-
       case "astra":
+      case "agents":
         return <AstraPage />;
-
       case "billing":
         return <BillingPage />;
-
-      // ========================================================
-      // AUTOMATIONS
-      // ========================================================
-
       case "automations":
         return <AutomationPage />;
-
-      // ========================================================
-      // COMMERCE
-      // ========================================================
-
       case "commerce":
         return <CommercePage />;
-
-      // ========================================================
-      // ADS
-      // ========================================================
-
       case "ads":
         return <AdsPage />;
-
-      // ========================================================
-      // API
-      // ========================================================
-
       case "api":
         return <ApiPage />;
-
-      // ========================================================
-      // INTEGRATIONS
-      // ========================================================
-
       case "integrations":
         return <IntegrationsPage />;
-
-      // ========================================================
-      // WEBHOOKS
-      // ========================================================
-
-      case "webhooks":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>Webhooks Page</h1>
-          </div>
-        );
-
-      // ========================================================
-      // USER MANAGEMENT
-      // ========================================================
-
-      case "user-management":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>User Management</h1>
-          </div>
-        );
-
-      // ========================================================
-      // ACCOUNT
-      // ========================================================
-
-      case "account":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>Account Details</h1>
-          </div>
-        );
-
-      // ========================================================
-      // CHANNELS
-      // ========================================================
-
-      case "channels":
-        return (
-          <div
-            style={{
-              padding: "30px",
-            }}
-          >
-            <h1>Channels</h1>
-          </div>
-        );
-
-      // ========================================================
-      // DEFAULT
-      // ========================================================
 
       default:
         return <WAAnalytics />;
     }
   };
 
-  // ============================================================
-  // MAIN DASHBOARD
-  // ============================================================
-
   return (
-    <div className="layout-container">
-
-      {/* SIDEBAR */}
-
-      <WhatsAppSidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-
-      {/* CONTENT */}
-
-      <div className="layout-content">
-        {renderContent()}
-      </div>
-
+    <div className="agent-dashboard-layout">
+      <WhatsAppSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="agent-dashboard-main">{renderContent()}</div>
     </div>
   );
 };

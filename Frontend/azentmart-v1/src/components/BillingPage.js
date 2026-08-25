@@ -7,60 +7,41 @@ import {
   FaCalendarAlt,
   FaSyncAlt,
   FaPlus,
+  FaShieldAlt,
 } from "react-icons/fa";
 
 import { supabase } from "../lib/supabase";
 
 function BillingPage() {
-  /*
-   * ============================================================
-   * ACCOUNT DATA
-   * ============================================================
-   */
+  // ============================================================
+  // ACCOUNT DATA
+  // ============================================================
 
   const [accountId, setAccountId] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
 
-  /*
-   * ============================================================
-   * CREDIT DATA
-   * ============================================================
-   */
+  // ============================================================
+  // CREDIT DATA
+  // ============================================================
 
   const [creditBalance, setCreditBalance] = useState(0);
   const [totalCreditsUsed, setTotalCreditsUsed] = useState(0);
-  const [totalCreditsPurchased, setTotalCreditsPurchased] = useState(0);
+  const [totalCreditsPurchased, setTotalCreditsPurchased] =
+    useState(0);
 
   const [loadingCredits, setLoadingCredits] = useState(true);
   const [creditError, setCreditError] = useState("");
 
-  /*
-   * ============================================================
-   * CREDIT PACKAGE STATE
-   * ============================================================
-   */
+  // ============================================================
+  // CREDIT PACKAGE STATE
+  // ============================================================
 
   const [selectedCredits, setSelectedCredits] = useState(250);
   const [customAmount, setCustomAmount] = useState("");
 
-  /*
-   * ============================================================
-   * RAZORPAY STANDARD CHECKOUT
-   * ============================================================
-   *
-   * The frontend NEVER contains the Razorpay Key Secret.
-   *
-   * Flow:
-   * 1. User selects credits.
-   * 2. Frontend calls /api/razorpay/create-order.
-   * 3. Backend creates the Razorpay order using the secret.
-   * 4. Razorpay Checkout opens in the browser.
-   * 5. On success, the frontend sends the three Razorpay
-   *    response values to /api/razorpay/verify-payment.
-   * 6. Backend verifies the signature and handles fulfilment.
-   *
-   * The Key ID returned by create-order is safe for Checkout.
-   */
+  // ============================================================
+  // CREDIT OPTIONS
+  // ============================================================
 
   const creditOptions = [
     {
@@ -85,32 +66,24 @@ function BillingPage() {
     },
   ];
 
-  /*
-   * ============================================================
-   * TRANSACTIONS
-   * ============================================================
-   *
-   * We are not touching the backend/database transaction system.
-   * Therefore this remains empty for now.
-   */
+  // ============================================================
+  // TRANSACTIONS
+  // ============================================================
 
   const transactions = [];
 
-  /*
-   * ============================================================
-   * LOAD CREDIT DATA FROM SUPABASE
-   * ============================================================
-   */
+  // ============================================================
+  // LOAD CREDIT DATA
+  // ============================================================
 
   const loadCreditData = async () => {
     try {
       setLoadingCredits(true);
       setCreditError("");
 
-      /*
-       * STEP 1:
-       * Get currently logged-in Supabase user
-       */
+      // ----------------------------------------------------------
+      // STEP 1: CURRENT USER
+      // ----------------------------------------------------------
 
       const {
         data: { user },
@@ -118,7 +91,10 @@ function BillingPage() {
       } = await supabase.auth.getUser();
 
       if (userError) {
-        console.error("Supabase auth error:", userError);
+        console.error(
+          "Supabase auth error:",
+          userError
+        );
 
         setCreditError(
           `Unable to get logged-in user: ${userError.message}`
@@ -128,8 +104,6 @@ function BillingPage() {
       }
 
       if (!user) {
-        console.warn("No logged-in Supabase user found.");
-
         setCreditError(
           "No logged-in user found. Please sign in again."
         );
@@ -139,24 +113,26 @@ function BillingPage() {
 
       setCurrentUserId(user.id);
 
-      console.log("Logged-in Supabase user:", user.id);
-
-      /*
-       * STEP 2:
-       * Find account belonging to this user
-       */
+      // ----------------------------------------------------------
+      // STEP 2: ACCOUNT PROFILE
+      // ----------------------------------------------------------
 
       const {
         data: profile,
         error: profileError,
       } = await supabase
         .from("profiles")
-        .select("user_id, account_id, account_role")
+        .select(
+          "user_id, account_id, account_role"
+        )
         .eq("user_id", user.id)
         .maybeSingle();
 
       if (profileError) {
-        console.error("Supabase profile error:", profileError);
+        console.error(
+          "Supabase profile error:",
+          profileError
+        );
 
         setCreditError(
           `Unable to find your account profile: ${profileError.message}`
@@ -166,11 +142,6 @@ function BillingPage() {
       }
 
       if (!profile) {
-        console.warn(
-          "No profile found for logged-in user:",
-          user.id
-        );
-
         setCreditError(
           "No account profile found for the logged-in user."
         );
@@ -179,11 +150,6 @@ function BillingPage() {
       }
 
       if (!profile.account_id) {
-        console.warn(
-          "Profile does not contain an account_id:",
-          profile
-        );
-
         setCreditError(
           "Your user profile does not have an account assigned."
         );
@@ -191,18 +157,11 @@ function BillingPage() {
         return;
       }
 
-      /*
-       * Save account ID
-       */
-
       setAccountId(profile.account_id);
 
-      console.log("Account profile loaded:", profile);
-
-      /*
-       * STEP 3:
-       * Load credit account
-       */
+      // ----------------------------------------------------------
+      // STEP 3: CREDIT ACCOUNT
+      // ----------------------------------------------------------
 
       const {
         data: creditData,
@@ -229,11 +188,6 @@ function BillingPage() {
       }
 
       if (!creditData) {
-        console.warn(
-          "No account_credits record found for account:",
-          profile.account_id
-        );
-
         setCreditBalance(0);
         setTotalCreditsUsed(0);
         setTotalCreditsPurchased(0);
@@ -245,12 +199,13 @@ function BillingPage() {
         return;
       }
 
-      /*
-       * STEP 4:
-       * Update UI with REAL Supabase values
-       */
+      // ----------------------------------------------------------
+      // STEP 4: UPDATE UI
+      // ----------------------------------------------------------
 
-      setCreditBalance(Number(creditData.balance) || 0);
+      setCreditBalance(
+        Number(creditData.balance) || 0
+      );
 
       setTotalCreditsUsed(
         Number(creditData.total_used) || 0
@@ -258,11 +213,6 @@ function BillingPage() {
 
       setTotalCreditsPurchased(
         Number(creditData.total_purchased) || 0
-      );
-
-      console.log(
-        "Credit data loaded successfully:",
-        creditData
       );
     } catch (error) {
       console.error(
@@ -279,32 +229,27 @@ function BillingPage() {
     }
   };
 
-  /*
-   * ============================================================
-   * LOAD DATA WHEN PAGE OPENS
-   * ============================================================
-   */
+  // ============================================================
+  // INITIAL LOAD
+  // ============================================================
 
   useEffect(() => {
     loadCreditData();
   }, []);
 
-  /*
-   * ============================================================
-   * ACTIVE CREDIT OPTION
-   * ============================================================
-   */
+  // ============================================================
+  // ACTIVE OPTION
+  // ============================================================
 
   const activeOption =
     creditOptions.find(
-      (item) => item.credits === selectedCredits
+      (item) =>
+        item.credits === selectedCredits
     ) || creditOptions[0];
 
-  /*
-   * ============================================================
-   * DISPLAY CREDIT / PRICE
-   * ============================================================
-   */
+  // ============================================================
+  // DISPLAY VALUES
+  // ============================================================
 
   const displayCredits = customAmount
     ? Number(customAmount)
@@ -314,11 +259,9 @@ function BillingPage() {
     ? Number(customAmount)
     : activeOption.price;
 
-  /*
-   * ============================================================
-   * CUSTOM AMOUNT
-   * ============================================================
-   */
+  // ============================================================
+  // CUSTOM AMOUNT
+  // ============================================================
 
   const handleCustomAmount = (value) => {
     setCustomAmount(value);
@@ -333,11 +276,9 @@ function BillingPage() {
     setSelectedCredits(amount);
   };
 
-  /*
-   * ============================================================
-   * PURCHASE / RAZORPAY STANDARD CHECKOUT
-   * ============================================================
-   */
+  // ============================================================
+  // RAZORPAY SCRIPT
+  // ============================================================
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -346,18 +287,31 @@ function BillingPage() {
         return;
       }
 
-      const existingScript = document.querySelector(
-        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
-      );
+      const existingScript =
+        document.querySelector(
+          'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+        );
 
       if (existingScript) {
-        existingScript.addEventListener("load", () => resolve(true));
-        existingScript.addEventListener("error", () => resolve(false));
+        existingScript.addEventListener(
+          "load",
+          () => resolve(true)
+        );
+
+        existingScript.addEventListener(
+          "error",
+          () => resolve(false)
+        );
+
         return;
       }
 
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      const script =
+        document.createElement("script");
+
+      script.src =
+        "https://checkout.razorpay.com/v1/checkout.js";
+
       script.async = true;
 
       script.onload = () => resolve(true);
@@ -367,159 +321,193 @@ function BillingPage() {
     });
   };
 
+  // ============================================================
+  // ADD CREDITS
+  // ============================================================
+
   const handleAddCredits = async () => {
-    if (!displayCredits || displayCredits < 250) {
-      alert("Minimum top-up is 250 credits (₹250).");
+    if (
+      !displayCredits ||
+      displayCredits < 250
+    ) {
+      alert(
+        "Minimum top-up is 250 credits (₹250)."
+      );
+
       return;
     }
 
-    const creditsToPurchase = Number(displayCredits);
+    const creditsToPurchase =
+      Number(displayCredits);
 
-    if (!Number.isFinite(creditsToPurchase) || creditsToPurchase < 250) {
-      alert("Please enter a valid credit amount.");
+    if (
+      !Number.isFinite(creditsToPurchase) ||
+      creditsToPurchase < 250
+    ) {
+      alert(
+        "Please enter a valid credit amount."
+      );
+
       return;
     }
 
     try {
-      /*
-       * STEP 1:
-       * Load Razorpay Checkout in the browser.
-       */
+      // --------------------------------------------------------
+      // LOAD RAZORPAY
+      // --------------------------------------------------------
 
-      const razorpayLoaded = await loadRazorpayScript();
+      const razorpayLoaded =
+        await loadRazorpayScript();
 
       if (!razorpayLoaded) {
         alert(
           "Unable to load Razorpay Checkout. Please check your internet connection and try again."
         );
+
         return;
       }
 
-      /*
-       * STEP 2:
-       * Create the Razorpay order through OUR backend.
-       *
-       * The Key Secret stays on the backend.
-       */
+      // --------------------------------------------------------
+      // CREATE ORDER
+      // --------------------------------------------------------
 
-      const orderResponse = await fetch("/api/razorpay/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          credits: creditsToPurchase,
-        }),
-      });
+      const orderResponse =
+        await fetch(
+          "/api/razorpay/create-order",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              credits: creditsToPurchase,
+            }),
+          }
+        );
 
-      const orderData = await orderResponse.json();
+      const orderData =
+        await orderResponse.json();
 
-      if (!orderResponse.ok || !orderData.success) {
-        console.error("Razorpay order creation failed:", orderData);
+      if (
+        !orderResponse.ok ||
+        !orderData.success
+      ) {
+        console.error(
+          "Razorpay order creation failed:",
+          orderData
+        );
 
         throw new Error(
-          orderData.error || "Unable to create Razorpay order."
+          orderData.error ||
+            "Unable to create Razorpay order."
         );
       }
 
-      console.log("Razorpay order created:", orderData);
-
-      /*
-       * STEP 3:
-       * Open Razorpay Standard Checkout.
-       */
+      // --------------------------------------------------------
+      // RAZORPAY OPTIONS
+      // --------------------------------------------------------
 
       const options = {
         key: orderData.keyId,
+
         amount: orderData.amount,
-        currency: orderData.currency || "INR",
+
+        currency:
+          orderData.currency || "INR",
+
         name: "AzentmartAI",
-        description: `${creditsToPurchase.toLocaleString(
-          "en-IN"
-        )} Calling Credits`,
-        order_id: orderData.orderId,
 
-        handler: async function (paymentResponse) {
-          console.log(
-            "Razorpay payment response received:",
+        description:
+          `${creditsToPurchase.toLocaleString(
+            "en-IN"
+          )} Calling Credits`,
+
+        order_id:
+          orderData.orderId,
+
+        handler:
+          async function (
             paymentResponse
-          );
+          ) {
+            try {
+              const verifyResponse =
+                await fetch(
+                  "/api/razorpay/verify-payment",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type":
+                        "application/json",
+                    },
 
-          /*
-           * STEP 4:
-           * Send the successful Checkout response to the backend.
-           *
-           * The backend must verify the Razorpay signature before
-           * treating the payment as genuine.
-           */
+                    body: JSON.stringify({
+                      razorpay_order_id:
+                        paymentResponse.razorpay_order_id,
 
-          try {
-            const verifyResponse = await fetch(
-              "/api/razorpay/verify-payment",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  razorpay_order_id: paymentResponse.razorpay_order_id,
-                  razorpay_payment_id: paymentResponse.razorpay_payment_id,
-                  razorpay_signature: paymentResponse.razorpay_signature,
-                  credits: creditsToPurchase,
-                  accountId,
-                  userId: currentUserId,
-                }),
+                      razorpay_payment_id:
+                        paymentResponse.razorpay_payment_id,
+
+                      razorpay_signature:
+                        paymentResponse.razorpay_signature,
+
+                      credits:
+                        creditsToPurchase,
+
+                      accountId,
+
+                      userId:
+                        currentUserId,
+                    }),
+                  }
+                );
+
+              const verifyData =
+                await verifyResponse.json();
+
+              if (
+                !verifyResponse.ok ||
+                !verifyData.success
+              ) {
+                console.error(
+                  "Payment verification failed:",
+                  verifyData
+                );
+
+                alert(
+                  verifyData.error ||
+                    "Payment was completed, but verification failed."
+                );
+
+                return;
               }
-            );
 
-            const verifyData = await verifyResponse.json();
+              alert(
+                `${creditsToPurchase.toLocaleString(
+                  "en-IN"
+                )} credits purchased successfully!`
+              );
 
-            if (!verifyResponse.ok || !verifyData.success) {
+              await loadCreditData();
+            } catch (
+              verificationError
+            ) {
               console.error(
-                "Razorpay payment verification failed:",
-                verifyData
+                "Verification error:",
+                verificationError
               );
 
               alert(
-                verifyData.error ||
-                  "Payment was completed, but verification failed. Please check the Razorpay dashboard before retrying."
+                "Payment was completed, but the verification request failed."
               );
-
-              return;
             }
-
-            console.log(
-              "Razorpay payment verified successfully:",
-              verifyData
-            );
-
-            alert(
-              `${creditsToPurchase.toLocaleString(
-                "en-IN"
-              )} credits purchased successfully!`
-            );
-
-            /*
-             * Refresh the existing Supabase credit data so the
-             * current balance cards show the latest values.
-             */
-
-            await loadCreditData();
-          } catch (verificationError) {
-            console.error(
-              "Razorpay verification request failed:",
-              verificationError
-            );
-
-            alert(
-              "Payment was completed, but the verification request failed. Please check the Razorpay dashboard before retrying."
-            );
-          }
-        },
+          },
 
         modal: {
           ondismiss: function () {
-            console.log("Razorpay Checkout closed by user.");
+            console.log(
+              "Razorpay Checkout closed."
+            );
           },
         },
 
@@ -529,9 +517,16 @@ function BillingPage() {
         },
 
         notes: {
-          credits: String(creditsToPurchase),
-          account_id: accountId ? String(accountId) : "",
-          user_id: currentUserId ? String(currentUserId) : "",
+          credits:
+            String(creditsToPurchase),
+
+          account_id: accountId
+            ? String(accountId)
+            : "",
+
+          user_id: currentUserId
+            ? String(currentUserId)
+            : "",
         },
 
         theme: {
@@ -539,20 +534,30 @@ function BillingPage() {
         },
       };
 
-      const razorpay = new window.Razorpay(options);
+      const razorpay =
+        new window.Razorpay(options);
 
-      razorpay.on("payment.failed", function (response) {
-        console.error("Razorpay payment failed:", response.error);
+      razorpay.on(
+        "payment.failed",
+        function (response) {
+          console.error(
+            "Razorpay payment failed:",
+            response.error
+          );
 
-        alert(
-          response.error?.description ||
-            "Payment failed. Please try again."
-        );
-      });
+          alert(
+            response.error?.description ||
+              "Payment failed. Please try again."
+          );
+        }
+      );
 
       razorpay.open();
     } catch (error) {
-      console.error("Razorpay checkout error:", error);
+      console.error(
+        "Razorpay checkout error:",
+        error
+      );
 
       alert(
         error.message ||
@@ -561,173 +566,599 @@ function BillingPage() {
     }
   };
 
-  /*
-   * ============================================================
-   * REFRESH
-   * ============================================================
-   */
+  // ============================================================
+  // REFRESH
+  // ============================================================
 
   const handleRefresh = async () => {
     await loadCreditData();
   };
 
-  /*
-   * ============================================================
-   * RETURN UI
-   * ============================================================
-   */
+  // ============================================================
+  // FORMAT
+  // ============================================================
+
+  const formatNumber = (value) =>
+    Number(value || 0).toLocaleString(
+      "en-IN"
+    );
+
+  // ============================================================
+  // STYLES
+  // ============================================================
+
+  const styles = {
+    page: {
+      minHeight: "100vh",
+      width: "100%",
+      boxSizing: "border-box",
+      background: "#081116",
+      color: "#f5f7f8",
+      padding:
+        "30px 30px 45px",
+      fontFamily:
+        "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    },
+
+    header: {
+      display: "flex",
+      justifyContent:
+        "space-between",
+      alignItems: "flex-start",
+      marginBottom: "28px",
+    },
+
+    back: {
+      background: "transparent",
+      border: "none",
+      padding: 0,
+      color: "#7da2bd",
+      fontSize: "13px",
+      cursor: "pointer",
+      marginBottom: "14px",
+    },
+
+    title: {
+      margin: 0,
+      fontSize: "30px",
+      lineHeight: "1.2",
+      fontWeight: "600",
+      letterSpacing: "-0.5px",
+      color: "#f5f7f8",
+    },
+
+    subtitle: {
+      margin:
+        "8px 0 0",
+      fontSize: "13px",
+      color: "#82a0b4",
+    },
+
+    refreshButton: {
+      border: "none",
+      background: "#ffffff",
+      color: "#36404a",
+      borderRadius: "7px",
+      padding:
+        "11px 17px",
+      fontSize: "12px",
+      fontWeight: "600",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      cursor: "pointer",
+    },
+
+    error: {
+      background: "#351719",
+      border:
+        "1px solid #63262a",
+      color: "#fca5a5",
+      padding:
+        "12px 15px",
+      borderRadius: "8px",
+      marginBottom: "20px",
+      fontSize: "13px",
+    },
+
+    summaryGrid: {
+      display: "grid",
+      gridTemplateColumns:
+        "repeat(3, minmax(0, 1fr))",
+      gap: "18px",
+      marginBottom: "26px",
+    },
+
+    summaryCard: {
+      background: "#0e1a20",
+      border:
+        "1px solid #20313a",
+      borderRadius: "9px",
+      padding: "17px 18px",
+      display: "flex",
+      alignItems: "center",
+      gap: "13px",
+    },
+
+    summaryIcon: {
+      width: "40px",
+      height: "40px",
+      borderRadius: "9px",
+      border:
+        "1px solid #263942",
+      background: "#101f26",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#dbe5ea",
+      flexShrink: 0,
+    },
+
+    summaryLabel: {
+      display: "block",
+      color: "#8299a7",
+      fontSize: "11px",
+      marginBottom: "5px",
+    },
+
+    summaryNumber: {
+      fontSize: "23px",
+      fontWeight: "650",
+      color: "#00c897",
+      marginRight: "5px",
+    },
+
+    summaryUnit: {
+      color: "#8299a7",
+      fontSize: "11px",
+    },
+
+    mainGrid: {
+      display: "grid",
+      gridTemplateColumns:
+        "minmax(0, 1fr) minmax(0, 1fr)",
+      gap: "20px",
+      marginBottom: "20px",
+    },
+
+    panel: {
+      background: "#0e1a20",
+      border:
+        "1px solid #20313a",
+      borderRadius: "10px",
+      padding: "24px",
+      minHeight: "385px",
+      boxSizing: "border-box",
+    },
+
+    panelTitle: {
+      margin: 0,
+      fontSize: "18px",
+      fontWeight: "600",
+      color: "#edf3f5",
+    },
+
+    description: {
+      color: "#82a0b4",
+      fontSize: "12px",
+      lineHeight: "1.7",
+      margin:
+        "14px 0 20px",
+    },
+
+    rateBox: {
+      display: "flex",
+      gap: "12px",
+      padding: "16px",
+      border:
+        "1px solid #24363f",
+      background: "#0d181e",
+      borderRadius: "9px",
+    },
+
+    rateIcon: {
+      width: "30px",
+      height: "30px",
+      borderRadius: "50%",
+      background: "#334558",
+      color: "#a9c1d1",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+    },
+
+    rateTitle: {
+      margin: 0,
+      fontSize: "12px",
+      fontWeight: "600",
+      color: "#edf3f5",
+    },
+
+    rateText: {
+      margin:
+        "5px 0 0",
+      fontSize: "11px",
+      lineHeight: "1.6",
+      color: "#7f98a7",
+    },
+
+    optionGrid: {
+      display: "grid",
+      gridTemplateColumns:
+        "repeat(4, minmax(0, 1fr))",
+      gap: "9px",
+      marginTop: "18px",
+    },
+
+    option: {
+      border:
+        "1px solid #2a3d46",
+      background: "#18262d",
+      color: "#dce5e9",
+      borderRadius: "7px",
+      padding:
+        "13px 8px",
+      cursor: "pointer",
+      minHeight: "62px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      transition:
+        "all 0.15s ease",
+    },
+
+    selectedOption: {
+      border:
+        "1px solid #7c4dff",
+      background: "#251747",
+      boxShadow:
+        "0 0 0 1px rgba(124,77,255,0.12)",
+    },
+
+    optionLabel: {
+      fontSize: "12px",
+      fontWeight: "700",
+    },
+
+    optionPrice: {
+      marginTop: "5px",
+      fontSize: "10px",
+      color: "#91a7b4",
+    },
+
+    customBox: {
+      marginTop: "12px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent:
+        "space-between",
+      gap: "10px",
+      padding:
+        "11px 13px",
+      border:
+        "1px solid #273a43",
+      borderRadius: "8px",
+      background: "#0d181e",
+    },
+
+    customLabel: {
+      fontSize: "11px",
+      color: "#8da5b3",
+    },
+
+    customInput: {
+      width: "135px",
+      boxSizing: "border-box",
+      border: "none",
+      outline: "none",
+      background: "#17262d",
+      borderRadius: "6px",
+      color: "#e8eef1",
+      padding:
+        "8px 10px",
+      fontSize: "11px",
+      textAlign: "right",
+    },
+
+    purchaseSummary: {
+      marginTop: "16px",
+      border:
+        "1px solid #273a43",
+      borderRadius: "9px",
+      background: "#0b161b",
+      overflow: "hidden",
+    },
+
+    purchaseHeader: {
+      padding:
+        "12px 15px",
+      borderBottom:
+        "1px solid #24363e",
+      color: "#8da5b3",
+      fontSize: "10px",
+      fontWeight: "600",
+      letterSpacing: "0.5px",
+      textTransform: "uppercase",
+    },
+
+    purchaseRows: {
+      padding:
+        "4px 15px",
+    },
+
+    purchaseRow: {
+      display: "flex",
+      justifyContent:
+        "space-between",
+      alignItems: "center",
+      padding:
+        "11px 0",
+      borderBottom:
+        "1px solid #1c2c33",
+    },
+
+    purchaseRowLast: {
+      display: "flex",
+      justifyContent:
+        "space-between",
+      alignItems: "center",
+      padding:
+        "13px 0",
+    },
+
+    purchaseLabel: {
+      color: "#8299a7",
+      fontSize: "11px",
+    },
+
+    purchaseCredits: {
+      color: "#f1f6f8",
+      fontSize: "13px",
+      fontWeight: "650",
+    },
+
+    purchasePrice: {
+      color: "#00c897",
+      fontSize: "19px",
+      fontWeight: "700",
+    },
+
+    purchaseRate: {
+      color: "#7d95a2",
+      fontSize: "10px",
+    },
+
+    purchaseButton: {
+      width: "100%",
+      marginTop: "13px",
+      border: "none",
+      background:
+        "linear-gradient(90deg, #6d3ee8, #7447ef)",
+      color: "#ffffff",
+      borderRadius: "7px",
+      padding:
+        "12px 15px",
+      fontSize: "12px",
+      fontWeight: "600",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "7px",
+    },
+
+    secureText: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "6px",
+      marginTop: "9px",
+      color: "#687f8c",
+      fontSize: "9px",
+    },
+
+    transactionPanel: {
+      background: "#0e1a20",
+      border:
+        "1px solid #20313a",
+      borderRadius: "10px",
+      overflow: "hidden",
+    },
+
+    transactionHeader: {
+      padding:
+        "20px 22px",
+      borderBottom:
+        "1px solid #20313a",
+    },
+
+    transactionTitle: {
+      margin: 0,
+      fontSize: "16px",
+      color: "#edf3f5",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+    },
+
+    transactionDescription: {
+      margin:
+        "6px 0 0",
+      fontSize: "11px",
+      color: "#78919f",
+    },
+
+    emptyTransactions: {
+      padding:
+        "50px 20px",
+      textAlign: "center",
+      color: "#6e8795",
+    },
+  };
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
-    <div className="billing-page">
+    <div style={styles.page}>
 
       {/* ======================================================
-          PAGE HEADER
+          HEADER
       ====================================================== */}
 
-      <div className="billing-header">
+      <div style={styles.header}>
 
         <div>
 
           <button
-            className="billing-back-button"
             type="button"
+            style={styles.back}
           >
             ← Back
           </button>
 
-          <h1>
+          <h1 style={styles.title}>
             Billing &amp; Credits
           </h1>
 
-          <p>
-            Monitor call transactions, balances, and load top-up
-            calling credits.
+          <p style={styles.subtitle}>
+            Monitor call transactions, balances,
+            and load top-up calling credits.
           </p>
 
         </div>
 
         <button
-          className="billing-refresh-button"
           type="button"
           onClick={handleRefresh}
           disabled={loadingCredits}
+          style={{
+            ...styles.refreshButton,
+            opacity: loadingCredits
+              ? 0.6
+              : 1,
+          }}
         >
-
-          <FaSyncAlt />
+          <FaSyncAlt
+            style={{
+              animation:
+                loadingCredits
+                  ? "spin 1s linear infinite"
+                  : "none",
+            }}
+          />
 
           {loadingCredits
             ? "Refreshing..."
             : "Refresh"}
-
         </button>
 
       </div>
 
       {/* ======================================================
-          ERROR MESSAGE
+          ERROR
       ====================================================== */}
 
       {creditError && (
-        <div
-          style={{
-            marginBottom: "20px",
-            padding: "12px 16px",
-            borderRadius: "8px",
-            background: "#fff1f2",
-            border: "1px solid #fecdd3",
-            color: "#be123c",
-            fontSize: "14px",
-          }}
-        >
+        <div style={styles.error}>
           {creditError}
         </div>
       )}
 
       {/* ======================================================
-          SUMMARY CARDS
+          SUMMARY
       ====================================================== */}
 
-      <div className="billing-summary">
+      <div style={styles.summaryGrid}>
 
-        {/* CURRENT BALANCE */}
+        {/* BALANCE */}
 
-        <div className="billing-summary-card">
+        <div style={styles.summaryCard}>
 
-          <div className="billing-summary-icon">
-            <FaCreditCard />
+          <div style={styles.summaryIcon}>
+            <FaCreditCard size={15} />
           </div>
 
-          <div className="billing-summary-content">
+          <div>
 
-            <span>
+            <span style={styles.summaryLabel}>
               Current Balance
             </span>
 
-            <strong>
+            <strong style={styles.summaryNumber}>
               {loadingCredits
                 ? "..."
-                : creditBalance.toLocaleString("en-IN")}
+                : formatNumber(
+                    creditBalance
+                  )}
             </strong>
 
-            <small>
+            <span style={styles.summaryUnit}>
               credits
-            </small>
+            </span>
 
           </div>
 
         </div>
 
-        {/* TOTAL USED */}
+        {/* USED */}
 
-        <div className="billing-summary-card">
+        <div style={styles.summaryCard}>
 
-          <div className="billing-summary-icon">
-            <FaChartLine />
+          <div style={styles.summaryIcon}>
+            <FaChartLine size={15} />
           </div>
 
-          <div className="billing-summary-content">
+          <div>
 
-            <span>
+            <span style={styles.summaryLabel}>
               Total Credits Used
             </span>
 
-            <strong>
+            <strong style={styles.summaryNumber}>
               {loadingCredits
                 ? "..."
-                : totalCreditsUsed.toLocaleString("en-IN")}
+                : formatNumber(
+                    totalCreditsUsed
+                  )}
             </strong>
 
-            <small>
+            <span style={styles.summaryUnit}>
               credits
-            </small>
+            </span>
 
           </div>
 
         </div>
 
-        {/* TOTAL PURCHASED */}
+        {/* PURCHASED */}
 
-        <div className="billing-summary-card">
+        <div style={styles.summaryCard}>
 
-          <div className="billing-summary-icon">
-            <FaArrowUp />
+          <div style={styles.summaryIcon}>
+            <FaArrowUp size={15} />
           </div>
 
-          <div className="billing-summary-content">
+          <div>
 
-            <span>
+            <span style={styles.summaryLabel}>
               Total Credits Purchased
             </span>
 
-            <strong>
+            <strong style={styles.summaryNumber}>
               {loadingCredits
                 ? "..."
-                : totalCreditsPurchased.toLocaleString("en-IN")}
+                : formatNumber(
+                    totalCreditsPurchased
+                  )}
             </strong>
 
-            <small>
+            <span style={styles.summaryUnit}>
               credits
-            </small>
+            </span>
 
           </div>
 
@@ -736,54 +1167,62 @@ function BillingPage() {
       </div>
 
       {/* ======================================================
-          CREDIT INFORMATION + ADD BALANCE
+          MAIN
       ====================================================== */}
 
-      <div className="billing-main-grid">
+      <div style={styles.mainGrid}>
 
         {/* ==================================================
             PAY AS YOU GO
         ================================================== */}
 
-        <div className="billing-panel">
+        <div style={styles.panel}>
 
-          <h2>
+          <h2 style={styles.panelTitle}>
             Pay-As-You-Go Credits
           </h2>
 
-          <p className="billing-description">
-            AzentmartAI utilizes a simple usage credit balance
-            to fund phone conversations managed by your AI Voice
-            Agents.
+          <p style={styles.description}>
+            AzentmartAI utilizes a simple usage
+            credit balance to fund phone
+            conversations managed by your AI
+            Voice Agents.
           </p>
 
-          <div className="billing-rate-box">
+          <div style={styles.rateBox}>
 
-            <div className="billing-check-icon">
-              <FaCheckCircle />
+            <div style={styles.rateIcon}>
+              <FaCheckCircle size={14} />
             </div>
 
             <div>
 
-              <h3>
+              <h3 style={styles.rateTitle}>
                 Rate Structure
               </h3>
 
-              <p>
-                Each credit corresponds to exactly ₹1.00.
-                Credits are deducted continuously per second
-                of call connection time based on your agent&apos;s
-                active model rates.
+              <p style={styles.rateText}>
+                Each credit corresponds to exactly
+                ₹1.00. Credits are deducted
+                continuously per second of call
+                connection time based on your
+                agent&apos;s active model rates.
               </p>
 
             </div>
 
           </div>
 
-          <p className="billing-description billing-bottom-text">
-            Credits do not expire as long as your account remains
-            in good standing. You can add credits manually at any
-            time using a supported payment method.
+          <p
+            style={{
+              ...styles.description,
+              marginTop: "20px",
+            }}
+          >
+            Credits do not expire as long as your
+            account remains in good standing. You
+            can add credits manually at any time
+            using a supported payment method.
           </p>
 
         </div>
@@ -792,122 +1231,220 @@ function BillingPage() {
             ADD BALANCE
         ================================================== */}
 
-        <div className="billing-panel">
+        <div style={styles.panel}>
 
-          <h2>
-            <FaCreditCard className="billing-heading-icon" />
+          <h2 style={styles.panelTitle}>
+            <FaCreditCard
+              style={{
+                color: "#8b5cf6",
+                marginRight: "8px",
+                fontSize: "15px",
+              }}
+            />
+
             Add Balance (Credits)
           </h2>
 
-          <p className="billing-description">
-            Buy credits to fund voice calls. Minimum top-up is
-            250 credits (₹250).
+          <p style={styles.description}>
+            Buy credits to fund voice calls.
+            Minimum top-up is 250 credits (₹250).
           </p>
 
           {/* CREDIT OPTIONS */}
 
-          <div className="credit-options">
+          <div style={styles.optionGrid}>
 
-            {creditOptions.map((option) => (
+            {creditOptions.map(
+              (option) => {
+                const isSelected =
+                  selectedCredits ===
+                    option.credits &&
+                  !customAmount;
 
-              <button
-                key={option.credits}
-                type="button"
-                className={
-                  selectedCredits === option.credits &&
-                  !customAmount
-                    ? "credit-option selected"
-                    : "credit-option"
-                }
-                onClick={() => {
-                  setSelectedCredits(option.credits);
-                  setCustomAmount("");
-                }}
-              >
+                return (
+                  <button
+                    key={option.credits}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCredits(
+                        option.credits
+                      );
 
-                <strong>
-                  {option.label}
-                </strong>
+                      setCustomAmount("");
+                    }}
+                    style={{
+                      ...styles.option,
+                      ...(isSelected
+                        ? styles.selectedOption
+                        : {}),
+                    }}
+                  >
 
-                <span>
-                  ₹{option.price.toLocaleString("en-IN")}
-                </span>
+                    <strong
+                      style={
+                        styles.optionLabel
+                      }
+                    >
+                      {option.label}
+                    </strong>
 
-              </button>
+                    <span
+                      style={
+                        styles.optionPrice
+                      }
+                    >
+                      ₹
+                      {formatNumber(
+                        option.price
+                      )}
+                    </span>
 
-            ))}
+                  </button>
+                );
+              }
+            )}
 
           </div>
 
-          {/* CUSTOM AMOUNT */}
+          {/* CUSTOM */}
 
-          <div className="custom-amount-box">
+          <div style={styles.customBox}>
 
-            <div>
-
-              <span>
-                Custom Amount
-              </span>
-
-            </div>
+            <span style={styles.customLabel}>
+              Custom Amount
+            </span>
 
             <input
               type="number"
               min="250"
               placeholder="Enter amount"
               value={customAmount}
-              onChange={(e) =>
-                handleCustomAmount(e.target.value)
+              onChange={(event) =>
+                handleCustomAmount(
+                  event.target.value
+                )
               }
+              style={styles.customInput}
             />
 
           </div>
 
-          {/* PURCHASE SUMMARY */}
+          {/* ==================================================
+              IMPROVED PURCHASE SUMMARY
+          ================================================== */}
 
-          <div className="purchase-summary">
+          <div style={styles.purchaseSummary}>
 
-            <div>
-
-              <span>
-                PURCHASE AMOUNT
-              </span>
-
-              <strong>
-                {displayCredits.toLocaleString("en-IN")} credits
-              </strong>
-
+            <div style={styles.purchaseHeader}>
+              Purchase Summary
             </div>
 
-            <div className="purchase-price">
+            <div style={styles.purchaseRows}>
 
-              <span>
-                PRICE
-              </span>
+              {/* CREDITS */}
 
-              <strong>
-                ₹{displayPrice.toLocaleString("en-IN")}
-              </strong>
+              <div style={styles.purchaseRow}>
+
+                <span
+                  style={
+                    styles.purchaseLabel
+                  }
+                >
+                  Credits
+                </span>
+
+                <strong
+                  style={
+                    styles.purchaseCredits
+                  }
+                >
+                  {formatNumber(
+                    displayCredits
+                  )}{" "}
+                  credits
+                </strong>
+
+              </div>
+
+              {/* RATE */}
+
+              <div style={styles.purchaseRow}>
+
+                <span
+                  style={
+                    styles.purchaseLabel
+                  }
+                >
+                  Rate
+                </span>
+
+                <span
+                  style={
+                    styles.purchaseRate
+                  }
+                >
+                  1 credit = ₹1
+                </span>
+
+              </div>
+
+              {/* AMOUNT */}
+
+              <div
+                style={
+                  styles.purchaseRowLast
+                }
+              >
+
+                <span
+                  style={{
+                    color: "#a9bac4",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                >
+                  Total Amount
+                </span>
+
+                <strong
+                  style={
+                    styles.purchasePrice
+                  }
+                >
+                  ₹
+                  {formatNumber(
+                    displayPrice
+                  )}
+                </strong>
+
+              </div>
 
             </div>
 
           </div>
 
-          {/* PURCHASE BUTTON */}
+          {/* PURCHASE */}
 
           <button
             type="button"
-            className="add-credits-button"
             onClick={handleAddCredits}
+            style={styles.purchaseButton}
           >
 
-            <FaPlus />
+            <FaPlus size={11} />
 
             Purchase{" "}
-            {displayCredits.toLocaleString("en-IN")}{" "}
+            {formatNumber(
+              displayCredits
+            )}{" "}
             Credits
 
           </button>
+
+          <div style={styles.secureText}>
+            <FaShieldAlt size={9} />
+            Secure payment powered by Razorpay
+          </div>
 
         </div>
 
@@ -917,155 +1454,226 @@ function BillingPage() {
           TRANSACTION HISTORY
       ====================================================== */}
 
-      <div className="transaction-panel">
+      <div style={styles.transactionPanel}>
 
-        <div className="transaction-header">
+        <div style={styles.transactionHeader}>
 
-          <div>
+          <h2
+            style={
+              styles.transactionTitle
+            }
+          >
+            <FaCalendarAlt size={13} />
 
-            <h2>
-              <FaCalendarAlt />
-              Transaction History
-            </h2>
+            Transaction History
+          </h2>
 
-            <p>
-              All your billing, plan subscriptions, and top-up
-              transactions.
+          <p
+            style={
+              styles.transactionDescription
+            }
+          >
+            All your billing, plan
+            subscriptions, and top-up
+            transactions.
+          </p>
+
+        </div>
+
+        {transactions.length === 0 ? (
+
+          <div
+            style={
+              styles.emptyTransactions
+            }
+          >
+
+            <FaCalendarAlt
+              size={30}
+              style={{
+                marginBottom: "12px",
+                opacity: 0.4,
+              }}
+            />
+
+            <h3
+              style={{
+                margin:
+                  "0 0 7px",
+                fontSize: "14px",
+                color: "#b5c4cc",
+              }}
+            >
+              No transactions yet
+            </h3>
+
+            <p
+              style={{
+                margin: 0,
+                fontSize: "11px",
+                color: "#6e8795",
+              }}
+            >
+              Your billing and credit
+              transactions will appear
+              here once credits are
+              purchased or used.
             </p>
 
           </div>
 
-        </div>
+        ) : (
 
-        <div className="transaction-table-wrapper">
+          <div
+            style={{
+              overflowX: "auto",
+            }}
+          >
 
-          {transactions.length === 0 ? (
-
-            <div
+            <table
               style={{
-                padding: "50px 20px",
-                textAlign: "center",
+                width: "100%",
+                borderCollapse:
+                  "collapse",
               }}
             >
-
-              <FaCalendarAlt
-                style={{
-                  fontSize: "32px",
-                  marginBottom: "12px",
-                  opacity: 0.45,
-                }}
-              />
-
-              <h3>
-                No transactions yet
-              </h3>
-
-              <p>
-                Your billing and credit transactions will appear
-                here once credits are purchased or used.
-              </p>
-
-            </div>
-
-          ) : (
-
-            <table className="transaction-table">
 
               <thead>
 
                 <tr>
-                  <th>DATE &amp; TIME</th>
-                  <th>TRANSACTION ID</th>
-                  <th>TYPE / CALL REFERENCE</th>
-                  <th>CREDITS TRANSACTION</th>
-                  <th>REMAINING BALANCE</th>
+
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "13px 18px",
+                      fontSize: "10px",
+                      color: "#718996",
+                    }}
+                  >
+                    DATE &amp; TIME
+                  </th>
+
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "13px 18px",
+                      fontSize: "10px",
+                      color: "#718996",
+                    }}
+                  >
+                    TRANSACTION ID
+                  </th>
+
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "13px 18px",
+                      fontSize: "10px",
+                      color: "#718996",
+                    }}
+                  >
+                    TYPE
+                  </th>
+
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "13px 18px",
+                      fontSize: "10px",
+                      color: "#718996",
+                    }}
+                  >
+                    CREDITS
+                  </th>
+
+                  <th
+                    style={{
+                      textAlign: "left",
+                      padding: "13px 18px",
+                      fontSize: "10px",
+                      color: "#718996",
+                    }}
+                  >
+                    BALANCE
+                  </th>
+
                 </tr>
 
               </thead>
 
               <tbody>
 
-                {transactions.map((transaction) => (
+                {transactions.map(
+                  (transaction) => (
+                    <tr
+                      key={
+                        transaction.id
+                      }
+                    >
 
-                  <tr key={transaction.id}>
-
-                    <td>
-
-                      <div className="transaction-date">
-
-                        <FaCalendarAlt />
-
+                      <td>
                         {transaction.date}
+                      </td>
 
-                      </div>
-
-                    </td>
-
-                    <td>
-
-                      <span className="transaction-id">
+                      <td>
                         {transaction.id}
-                      </span>
+                      </td>
 
-                    </td>
+                      <td>
+                        {transaction.type}
+                      </td>
 
-                    <td>
-
-                      <div className="transaction-type">
-
-                        <span>
-                          {transaction.type}
-                        </span>
-
-                        <span className="transaction-reference">
-                          {transaction.reference}
-                        </span>
-
-                      </div>
-
-                    </td>
-
-                    <td>
-
-                      <span
-                        className={
-                          transaction.credits < 0
-                            ? "credit-change negative"
-                            : "credit-change"
-                        }
-                      >
-
-                        {transaction.credits < 0
-                          ? "↘ "
-                          : "↗ "}
-
+                      <td>
                         {transaction.credits}
+                      </td>
 
-                      </span>
+                      <td>
+                        {transaction.balance}
+                      </td>
 
-                    </td>
-
-                    <td>
-
-                      <strong className="remaining-balance">
-                        {transaction.balance} credits
-                      </strong>
-
-                    </td>
-
-                  </tr>
-
-                ))}
+                    </tr>
+                  )
+                )}
 
               </tbody>
 
             </table>
 
-          )}
+          </div>
 
-        </div>
+        )}
 
       </div>
+
+      {/* ======================================================
+          RESPONSIVE CSS
+      ====================================================== */}
+
+      <style>
+        {`
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+
+            to {
+              transform: rotate(360deg);
+            }
+          }
+
+          @media (max-width: 1000px) {
+            .billing-main-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          @media (max-width: 750px) {
+            .billing-summary {
+              grid-template-columns: 1fr;
+            }
+          }
+        `}
+      </style>
 
     </div>
   );
