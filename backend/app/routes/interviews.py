@@ -1,15 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.interview import InterviewSession
 from app.models.user import User
+from app.models.subscription import Subscription
 
 from app.schemas.interview import (
     InterviewSessionCreate,
     InterviewSessionResponse
 )
-
 
 router = APIRouter(
     prefix="/api/interviews",
@@ -25,7 +25,7 @@ def create_interview_session(
     session_data: InterviewSessionCreate,
     db: Session = Depends(get_db)
 ):
-
+    # 1. Verify User Exists
     user = (
         db.query(User)
         .filter(User.id == session_data.user_id)
@@ -38,6 +38,30 @@ def create_interview_session(
             detail="User not found"
         )
 
+    # 2. Check Free Session Limit (4 Free Sessions Max for non-subscribers)
+    active_subscription = (
+        db.query(Subscription)
+        .filter(
+            Subscription.user_id == session_data.user_id,
+            Subscription.status == "active"
+        )
+        .first()
+    )
+
+    if not active_subscription:
+        existing_sessions_count = (
+            db.query(InterviewSession)
+            .filter(InterviewSession.user_id == session_data.user_id)
+            .count()
+        )
+
+        if existing_sessions_count >= 4:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Free limit reached! You have used all 4 free sessions. Please upgrade your plan or buy credits to continue."
+            )
+
+    # 3. Create Session with Resume and Document IDs context
     new_session = InterviewSession(
         user_id=session_data.user_id,
         company=session_data.company,
@@ -46,7 +70,9 @@ def create_interview_session(
         model=session_data.model,
         language=session_data.language,
         resume_added=session_data.resume_added,
+        resume_id=getattr(session_data, "resume_id", None),
         documents_added=session_data.documents_added,
+        document_ids=getattr(session_data, "document_ids", []),
         extra_context_added=session_data.extra_context_added,
         auto_answer=session_data.auto_answer,
         save_transcript=session_data.save_transcript,
@@ -54,9 +80,7 @@ def create_interview_session(
     )
 
     db.add(new_session)
-
     db.commit()
-
     db.refresh(new_session)
 
     return new_session
@@ -70,7 +94,6 @@ def get_user_interview_sessions(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-
     user = (
         db.query(User)
         .filter(User.id == user_id)
@@ -105,7 +128,6 @@ def get_interview_session(
     session_id: int,
     db: Session = Depends(get_db)
 ):
-
     session = (
         db.query(InterviewSession)
         .filter(
@@ -132,7 +154,6 @@ def update_interview_session(
     session_data: InterviewSessionCreate,
     db: Session = Depends(get_db)
 ):
-
     session = (
         db.query(InterviewSession)
         .filter(
@@ -154,17 +175,16 @@ def update_interview_session(
     session.language = session_data.language
 
     session.resume_added = session_data.resume_added
+    session.resume_id = getattr(session_data, "resume_id", session.resume_id)
     session.documents_added = session_data.documents_added
-    session.extra_context_added = (
-        session_data.extra_context_added
-    )
-
-    session.auto_answer = session_data.auto_answer
+    session.document_ids = getattr(session_data, "document_ids", session.document_ids)
+    
+    session.extra_context_added = session_data.extra_context_added
+    session.auto_answer = session_data.auto_update if hasattr(session_data, "auto_update") else session_data.auto_answer
     session.save_transcript = session_data.save_transcript
     session.status = session_data.status
 
     db.commit()
-
     db.refresh(session)
 
     return session
@@ -177,7 +197,6 @@ def delete_interview_session(
     session_id: int,
     db: Session = Depends(get_db)
 ):
-
     session = (
         db.query(InterviewSession)
         .filter(
@@ -193,7 +212,6 @@ def delete_interview_session(
         )
 
     db.delete(session)
-
     db.commit()
 
     return {

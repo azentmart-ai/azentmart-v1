@@ -76,6 +76,7 @@ const UpgradePage = () => {
             name: "Basic",
             priceINR: "₹3,690",
             priceUSD: "$39.00",
+            amountINR: 3690,
             credits: "3 Call Credits",
             extra: "",
             popular: false,
@@ -85,6 +86,7 @@ const UpgradePage = () => {
             name: "Plus",
             priceINR: "₹7,380",
             priceUSD: "$78.00",
+            amountINR: 7380,
             credits: "6 Call Credits",
             extra: "+ 2 free",
             popular: true,
@@ -94,6 +96,7 @@ const UpgradePage = () => {
             name: "Pro",
             priceINR: "₹11,070",
             priceUSD: "$117.00",
+            amountINR: 11070,
             credits: "9 Call Credits",
             extra: "+ 6 free",
             popular: false,
@@ -187,20 +190,111 @@ const UpgradePage = () => {
     };
 
     /* =====================================================
+       RAZORPAY SCRIPT LOADER HELPER
+    ===================================================== */
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            if (window.Razorpay) {
+                resolve(true);
+                return;
+            }
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.async = true;
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
+    /* =====================================================
+       GENERIC RAZORPAY PAYMENT TRIGGER FUNCTION
+    ===================================================== */
+    const triggerRazorpayPayment = async (itemDetails) => {
+        const loaded = await loadRazorpayScript();
+        if (!loaded) {
+            alert("Unable to load Razorpay Checkout. Please check your internet connection.");
+            return;
+        }
+
+        try {
+            // Call backend API to create an order
+            const response = await fetch("/api/razorpay/create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    amount: itemDetails.amountINR,
+                    name: itemDetails.name
+                }),
+            });
+
+            const data = await response.json();
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || "Failed to create Razorpay order.");
+            }
+
+            const options = {
+                key: data.keyId,
+                amount: data.amount,
+                currency: data.currency || "INR",
+                name: "AzentMart AI",
+                description: itemDetails.name,
+                order_id: data.orderId,
+                handler: async function (paymentResponse) {
+                    try {
+                        const verifyRes = await fetch("/api/razorpay/verify-payment", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                razorpay_order_id: paymentResponse.razorpay_order_id,
+                                razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                                razorpay_signature: paymentResponse.razorpay_signature,
+                                itemName: itemDetails.name,
+                                amount: itemDetails.amountINR,
+                            }),
+                        });
+                        const verifyData = await verifyRes.json();
+                        if (!verifyRes.ok || !verifyData.success) {
+                            alert("Payment completed, but verification failed.");
+                            return;
+                        }
+                        alert(`Successfully subscribed/purchased: ${itemDetails.name}!`);
+                        setPaymentOpen(false);
+                        setCheckoutOpen(false);
+                        setSelectedPlan(null);
+                    } catch (err) {
+                        console.error("Verification error:", err);
+                        alert("Payment verification request failed.");
+                    }
+                },
+                prefill: {
+                    email: "user@gmail.com",
+                    contact: ""
+                },
+                theme: { color: "#2563eb" },
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.on("payment.failed", function (resp) {
+                alert(`Payment failed: ${resp.error.description}`);
+            });
+            rzp.open();
+        } catch (error) {
+            console.error("Razorpay error:", error);
+            alert(error.message || "Unable to start Razorpay checkout.");
+        }
+    };
+
+    /* =====================================================
        SUBSCRIBE HANDLER
     ===================================================== */
 
     const handleSubscribe = (planType) => {
         const plan = plans[planType];
-
         setSelectedPlan(plan);
-
         setDiscountCode("");
-
         setPaymentMethod("upi");
-
         setSaveInformation(false);
-
         setCheckoutOpen(true);
     };
 
@@ -210,7 +304,6 @@ const UpgradePage = () => {
 
     const closeCheckout = () => {
         setCheckoutOpen(false);
-
         setSelectedPlan(null);
     };
 
@@ -220,7 +313,6 @@ const UpgradePage = () => {
 
     const handleCurrencyPayment = () => {
         setCheckoutOpen(false);
-
         setPaymentOpen(true);
     };
 
@@ -230,7 +322,6 @@ const UpgradePage = () => {
 
     const handleBackToCheckout = () => {
         setPaymentOpen(false);
-
         setCheckoutOpen(true);
     };
 
@@ -240,43 +331,20 @@ const UpgradePage = () => {
 
     const closePayment = () => {
         setPaymentOpen(false);
-
         setSelectedPlan(null);
-
         setPaymentMethod("upi");
-
         setSaveInformation(false);
     };
 
     /* =====================================================
-       FINAL PAYMENT
+       FINAL PAYMENT (TRIGGERS RAZORPAY)
     ===================================================== */
 
     const handleFinalSubscribe = () => {
         if (!selectedPlan) {
             return;
         }
-
-        /*
-          IMPORTANT:
-    
-          This is only a frontend placeholder.
-    
-          Replace this with your Razorpay / Stripe / backend
-          payment integration when your payment API is ready.
-        */
-
-        console.log("Selected plan:", selectedPlan);
-
-        console.log("Payment method:", paymentMethod);
-
-        console.log("Save information:", saveInformation);
-
-        console.log("Discount code:", discountCode);
-
-        alert(
-            `Payment selected\n\n${selectedPlan.name}\n${selectedPlan.priceINR}\nPayment: ${paymentMethod.toUpperCase()}`
-        );
+        triggerRazorpayPayment(selectedPlan);
     };
 
     return (
@@ -461,9 +529,11 @@ const UpgradePage = () => {
                                             : "pricing-button light"
                                     }
                                     onClick={() => {
-                                        alert(
-                                            `Selected ${plan.name}\n${plan.priceINR}\n${plan.credits}`
-                                        );
+                                        triggerRazorpayPayment({
+                                            id: plan.id,
+                                            name: `AzentMart AI ${plan.name} (${plan.credits})`,
+                                            amountINR: plan.amountINR
+                                        });
                                     }}
                                 >
                                     Get credits
@@ -478,7 +548,17 @@ const UpgradePage = () => {
 
                     {/* ONE CREDIT OPTION */}
 
-                    <div className="weekly-link credit-single-link">
+                    <div
+                        className="weekly-link credit-single-link"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            triggerRazorpayPayment({
+                                id: "single-credit",
+                                name: "AzentMart AI Single Call Credit",
+                                amountINR: 2360
+                            });
+                        }}
+                    >
 
                         or, just need 1 call?
 
@@ -609,7 +689,17 @@ const UpgradePage = () => {
 
                     {/* WEEKLY */}
 
-                    <div className="weekly-link">
+                    <div
+                        className="weekly-link"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            triggerRazorpayPayment({
+                                id: "weekly",
+                                name: "AzentMart AI Weekly Subscription",
+                                amountINR: 4980
+                            });
+                        }}
+                    >
 
                         or, only need a week?
 
@@ -1237,8 +1327,8 @@ const UpgradePage = () => {
 
                         <div
                             className={`faq-item ${openFaq === index
-                                    ? "open"
-                                    : ""
+                                ? "open"
+                                : ""
                                 }`}
                             key={index}
                         >

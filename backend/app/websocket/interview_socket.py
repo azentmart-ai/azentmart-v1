@@ -2,6 +2,8 @@ from fastapi import WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
 
 from app.models.interview import InterviewSession
+from app.models.resume import Resume
+from app.models.document import Document
 from app.services.llm_service import generate_ai_answer
 
 
@@ -31,6 +33,22 @@ async def interview_websocket(
         await websocket.close()
 
         return
+
+    # ==========================================
+    # FETCH RESUME & DOCUMENT CONTEXT FROM DB
+    # ==========================================
+    resume_text = ""
+    if getattr(session, "resume_id", None):
+        resume_obj = db.query(Resume).filter(Resume.id == session.resume_id).first()
+        if resume_obj:
+            resume_text = getattr(resume_obj, "summary", "") or getattr(resume_obj, "experience", "")
+
+    documents_text = ""
+    doc_ids = getattr(session, "document_ids", None)
+    if doc_ids and isinstance(doc_ids, list):
+        docs = db.query(Document).filter(Document.id.in_(doc_ids)).all()
+        doc_contents = [doc.content for doc in docs if getattr(doc, "content", None)]
+        documents_text = "\n---\n".join(doc_contents)
 
     try:
 
@@ -65,7 +83,9 @@ async def interview_websocket(
                     question=text,
                     company=session.company,
                     job_description=session.job_description,
-                    language=session.language
+                    language=session.language,
+                    resume_text=resume_text,
+                    documents_text=documents_text
                 )
 
                 await websocket.send_json({
@@ -94,7 +114,9 @@ async def interview_websocket(
                     question=question,
                     company=session.company,
                     job_description=session.job_description,
-                    language=session.language
+                    language=session.language,
+                    resume_text=resume_text,
+                    documents_text=documents_text
                 )
 
                 await websocket.send_json({

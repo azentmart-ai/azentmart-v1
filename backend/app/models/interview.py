@@ -5,7 +5,8 @@ from sqlalchemy import (
     Text,
     Boolean,
     DateTime,
-    ForeignKey
+    ForeignKey,
+    JSON
 )
 
 from sqlalchemy.sql import func
@@ -65,10 +66,21 @@ class InterviewSession(Base):
         nullable=False
     )
 
+    # Added resume_id & document_ids columns here
+    resume_id = Column(
+        Integer,
+        nullable=True
+    )
+
     documents_added = Column(
         Boolean,
         default=False,
         nullable=False
+    )
+
+    document_ids = Column(
+        JSON,
+        nullable=True
     )
 
     extra_context_added = Column(
@@ -95,13 +107,18 @@ class InterviewSession(Base):
         nullable=False
     )
 
+    transcript_text = Column(
+        Text,
+        nullable=True
+    )
+
     created_at = Column(
-        DateTime,
+        DateTime(timezone=True),
         server_default=func.now()
     )
 
     updated_at = Column(
-        DateTime,
+        DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now()
     )

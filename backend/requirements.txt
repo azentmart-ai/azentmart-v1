@@ -9,3 +9,7 @@ openai
 google-genai
 anthropic
 python-multipart
+requests
+beautifulsoup4
+pypdf
+razorpay

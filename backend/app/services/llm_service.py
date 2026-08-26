@@ -88,7 +88,9 @@ async def generate_ai_answer(
     question: str,
     company: str | None = None,
     job_description: str | None = None,
-    language: str = "English"
+    language: str = "English",
+    resume_text: str | None = None,
+    documents_text: str | None = None
 ) -> str:
 
     if not question.strip():
@@ -106,7 +108,6 @@ async def generate_ai_answer(
     actual_model = config["model"]
 
     context = f"""
-
 Company:
 {company or "Not provided"}
 
@@ -115,6 +116,12 @@ Job Description:
 
 Language:
 {language}
+
+Candidate Resume:
+{resume_text or "Not provided"}
+
+Supporting Documents:
+{documents_text or "Not provided"}
 
 Interview Question:
 {question}

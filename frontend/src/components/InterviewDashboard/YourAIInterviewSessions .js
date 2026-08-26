@@ -15,6 +15,7 @@ import {
   FiArrowRight,
   FiClock,
   FiCreditCard,
+  FiExternalLink,
 } from "react-icons/fi";
 
 import {
@@ -24,7 +25,7 @@ import {
   uploadResumeFile,
 } from "../../services/interviewApi";
 
-const YourAIInterviewSessions = () => {
+const YourAIInterviewSessions = ({ setActivePage }) => {
   // =====================================================
   // MODAL STATES
   // =====================================================
@@ -42,6 +43,12 @@ const YourAIInterviewSessions = () => {
   const [uploadingResume, setUploadingResume] = useState(false);
   const resumeUploadInputRef = useRef(null);
 
+  // Documents selector state for Create Session (Added)
+  const [showDocSelector, setShowDocSelector] = useState(false);
+  const [availableDocs, setAvailableDocs] = useState([]);
+  const [selectedDocs, setSelectedDocs] = useState([]);
+  const [loadingDocs, setLoadingDocs] = useState(false);
+
   // =====================================================
   // LIVE INTERVIEW STATE
   // =====================================================
@@ -57,23 +64,13 @@ const YourAIInterviewSessions = () => {
     useState("Google Meet");
 
   const [sharedStream, setSharedStream] = useState(null);
+
   // =====================================================
-  // FLOATING SCREEN STATE
+  // PICTURE-IN-PICTURE (PiP) FLOATING SCREEN STATE
   // =====================================================
 
-  const [showFloatingScreen] = useState(true);
-
-  const [isFloatingMinimized, setIsFloatingMinimized] =
-    useState(false);
-
-  const [floatingPosition, setFloatingPosition] = useState({
-    x: window.innerWidth - 450,
-    y: window.innerHeight - 550,
-  });
-
-  const floatingVideoRef = useRef(null);
-  const floatingWindowRef = useRef(null);
-
+  const [isPiPActive, setIsPiPActive] = useState(false);
+  const pipWindowRef = useRef(null);
 
   const recognitionRef = useRef(null);
   const isConnectedRef = useRef(false);
@@ -83,14 +80,11 @@ const YourAIInterviewSessions = () => {
 
 
   // =====================================================
-  // CREATE SESSION FORM
+  // CREATE SESSION FORM & SESSIONS LIST
   // =====================================================
 
-  // Add active tab state inside YourAIInterviewSessions component
   const [activeTab, setActiveTab] = useState("all");
-
-  // Example sessions list or dynamic count
-  const sessionsList = []; // Unga sessions array
+  const [sessionsList, setSessionsList] = useState([]);
 
   const [sessionType, setSessionType] =
     useState("interview");
@@ -122,6 +116,34 @@ const YourAIInterviewSessions = () => {
     useState(false);
 
   // =====================================================
+  // LOAD SESSIONS ON MOUNT
+  // =====================================================
+
+  const getUser = () => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const loadUserSessions = async () => {
+    const user = getUser();
+    if (!user?.id) return;
+    try {
+      const res = await fetch(`http://localhost:8000/api/interviews/user/${user.id}`);
+      const data = await res.json();
+      setSessionsList(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to load interview sessions:", err);
+    }
+  };
+
+  useEffect(() => {
+    loadUserSessions();
+  }, []);
+
+  // =====================================================
   // OPEN CREATE SESSION
   // =====================================================
 
@@ -137,18 +159,6 @@ const YourAIInterviewSessions = () => {
 
   const closeCreateSession = () => {
     setShowCreateSession(false);
-  };
-
-  // =====================================================
-  // CREATE SESSION
-  // =====================================================
-
-  const getUser = () => {
-    try {
-      return JSON.parse(localStorage.getItem("user")) || null;
-    } catch {
-      return null;
-    }
   };
 
   // =====================================================
@@ -262,7 +272,45 @@ const YourAIInterviewSessions = () => {
   };
 
   // =====================================================
-  // CREATE SESSION
+  // DOCUMENTS SELECTOR (Added)
+  // =====================================================
+
+  const loadAvailableDocuments = async () => {
+    setLoadingDocs(true);
+    try {
+      const user = getUser();
+      if (!user?.id) return;
+      const res = await fetch(`http://localhost:8000/api/documents/user/${user.id}`);
+      const data = await res.json();
+      setAvailableDocs(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to load documents:", err);
+    } finally {
+      setLoadingDocs(false);
+    }
+  };
+
+  const openDocSelector = async () => {
+    setShowDocSelector(true);
+    await loadAvailableDocuments();
+  };
+
+  const handleToggleDocSelection = (doc) => {
+    setSelectedDocs((prev) => {
+      const exists = prev.some((d) => d.id === doc.id);
+      if (exists) {
+        const filtered = prev.filter((d) => d.id !== doc.id);
+        if (filtered.length === 0) setDocumentsAdded(false);
+        return filtered;
+      } else {
+        setDocumentsAdded(true);
+        return [...prev, doc];
+      }
+    });
+  };
+
+  // =====================================================
+  // CREATE SESSION (With 4 Free Sessions Limit & IDs)
   // =====================================================
 
   const handleCreateSession = async () => {
@@ -274,7 +322,7 @@ const YourAIInterviewSessions = () => {
 
     try {
       const user = getUser();
-      const userId = user ? user.id : 1; // fallback for dev
+      const userId = user ? user.id : 1;
 
       const session = await createInterviewSession({
         user_id: userId,
@@ -287,6 +335,7 @@ const YourAIInterviewSessions = () => {
         resume_id: selectedResume?.id || null,
         resume_title: selectedResume?.title || null,
         documents_added: documentsAdded,
+        document_ids: selectedDocs.map((d) => d.id),
         extra_context_added: extraContextAdded,
         auto_answer: autoAnswer,
         save_transcript: saveTranscript,
@@ -296,9 +345,15 @@ const YourAIInterviewSessions = () => {
       setSessionId(session.id);
       setShowCreateSession(false);
       setShowRealInterview(true);
+      await loadUserSessions();
     } catch (err) {
       console.error("Failed to create session:", err);
-      alert("Failed to create session: " + err.message);
+      if (err.message && (err.message.includes("403") || err.message.includes("free limit"))) {
+        alert("Free limit reached! You have used all 4 free sessions. Redirecting to Upgrade page.");
+        if (setActivePage) setActivePage("upgrade");
+      } else {
+        alert("Failed to create session: " + err.message);
+      }
     } finally {
       setCreatingSession(false);
     }
@@ -327,10 +382,320 @@ const YourAIInterviewSessions = () => {
   // =====================================================
 
   const handleBuyCredits = () => {
-    console.log("Buy credits clicked");
-
-    // Add your payment page/navigation later.
+    if (setActivePage) setActivePage("upgrade");
   };
+
+  // =====================================================
+  // OPEN DOCUMENT PICTURE-IN-PICTURE (BIGGER & SCROLLABLE UI)
+  // =====================================================
+
+  const openDocumentPiP = async () => {
+    if (!('documentPictureInPicture' in window)) {
+      alert("Picture-in-Picture is not supported in this browser. Please use Google Chrome.");
+      return;
+    }
+
+    try {
+      if (isPiPActive && pipWindowRef.current) {
+        return;
+      }
+
+      // Much larger PiP window size (width: 600px, height: 560px)
+      const pipWindow = await window.documentPictureInPicture.requestWindow({
+        width: 1000,
+        height: 500,
+      });
+
+      pipWindowRef.current = pipWindow;
+      setIsPiPActive(true);
+
+      // Copy main stylesheets
+      Array.from(document.styleSheets).forEach((styleSheet) => {
+        try {
+          const cssRules = Array.from(styleSheet.cssRules)
+            .map((rule) => rule.cssText)
+            .join("");
+          const style = pipWindow.document.createElement("style");
+          style.textContent = cssRules;
+          pipWindow.document.head.appendChild(style);
+        } catch (e) {
+          const link = pipWindow.document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = styleSheet.href;
+          pipWindow.document.head.appendChild(link);
+        }
+      });
+
+      // Custom PiP styles with custom custom scrollbar and bigger readable text
+      const customStyle = pipWindow.document.createElement("style");
+      customStyle.textContent = `
+        body { 
+          background: #090d16 !important; 
+          color: #f1f5f9 !important; 
+          margin: 0; 
+          padding: 16px; 
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+          overflow: hidden; 
+        }
+        
+        .pip-main-wrapper { 
+          display: flex; 
+          flex-direction: column; 
+          gap: 12px; 
+          height: 100%; 
+          box-sizing: border-box; 
+        }
+
+        /* Top Pill Toolbar */
+        .pip-topbar { 
+          display: flex; 
+          align-items: center; 
+          gap: 8px; 
+          background: rgba(17, 24, 39, 0.75); 
+          backdrop-filter: blur(12px);
+          padding: 8px 12px; 
+          border-radius: 32px; 
+          border: 1px solid rgba(255, 255, 255, 0.08); 
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .pip-pill-btn { 
+          display: flex; 
+          align-items: center; 
+          gap: 6px; 
+          background: rgba(31, 41, 55, 0.8); 
+          border: 1px solid rgba(255, 255, 255, 0.06); 
+          color: #e2e8f0; 
+          padding: 7px 12px; 
+          border-radius: 20px; 
+          font-size: 12px; 
+          font-weight: 500; 
+          cursor: pointer; 
+          transition: all 0.2s ease;
+        }
+        .pip-pill-btn:hover {
+          background: #374151;
+          border-color: rgba(56, 189, 248, 0.3);
+        }
+        .pip-pill-btn kbd { 
+          background: #0b0f19; 
+          color: #94a3b8; 
+          padding: 2px 5px; 
+          border-radius: 4px; 
+          font-size: 10px; 
+          border: 1px solid #374151; 
+        }
+
+        .pip-icon-btn { 
+          background: rgba(31, 41, 55, 0.8); 
+          border: 1px solid rgba(255, 255, 255, 0.06); 
+          color: #e2e8f0; 
+          width: 30px; 
+          height: 30px; 
+          border-radius: 50%; 
+          cursor: pointer; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          font-size: 14px; 
+          transition: all 0.2s ease;
+        }
+        .pip-icon-btn:hover {
+          background: #374151;
+        }
+        .pip-close-x { 
+          background: rgba(239, 68, 68, 0.2) !important; 
+          border-color: rgba(239, 68, 68, 0.4) !important;
+          color: #fca5a5 !important; 
+        }
+        .pip-close-x:hover {
+          background: #ef4444 !important;
+          color: #ffffff !important;
+        }
+        
+        /* Sections / Cards */
+        .pip-section { 
+          background: rgba(17, 24, 39, 0.6); 
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.05); 
+          border-radius: 14px; 
+          padding: 12px; 
+          display: flex; 
+          flex-direction: column; 
+          gap: 6px; 
+        }
+        
+        .pip-label { 
+          color: #38bdf8; 
+          font-size: 11px; 
+          font-weight: 700; 
+          text-transform: uppercase; 
+          letter-spacing: 0.8px; 
+        }
+        
+        .pip-scroll { 
+          max-height: 85px; 
+          overflow-y: auto; 
+          color: #94a3b8; 
+          font-size: 13.5px; 
+          line-height: 1.5; 
+        }
+        
+        .pip-answer-box { 
+          flex-grow: 1; 
+          overflow-y: auto; 
+          max-height: 230px; 
+          border-color: rgba(56, 189, 248, 0.15);
+          background: linear-gradient(145deg, rgba(17, 24, 39, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+        
+        .pip-answer-text { 
+          color: #f8fafc; 
+          font-size: 14.5px; 
+          line-height: 1.6; 
+          font-weight: 400; 
+        }
+
+        /* Custom Modern Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        /* Input Box */
+        .pip-input-box { 
+          display: flex; 
+          align-items: center; 
+          background: rgba(17, 24, 39, 0.8); 
+          border: 1px solid rgba(255, 255, 255, 0.08); 
+          border-radius: 14px; 
+          padding: 8px 12px; 
+          gap: 10px; 
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pip-main-input { 
+          flex-grow: 1; 
+          background: transparent; 
+          border: none; 
+          color: #ffffff; 
+          font-size: 13.5px; 
+          outline: none; 
+        }
+        .pip-main-input::placeholder { 
+          color: #64748b; 
+        }
+        
+        .pip-send-btn { 
+          background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%); 
+          border: none; 
+          color: white; 
+          padding: 7px 14px; 
+          border-radius: 8px; 
+          cursor: pointer; 
+          font-size: 12px; 
+          font-weight: 600; 
+          box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+          transition: all 0.2s ease;
+        }
+        .pip-send-btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
+        }
+      `;
+      pipWindow.document.head.appendChild(customStyle);
+
+      const container = pipWindow.document.createElement("div");
+      container.className = "pip-main-wrapper";
+      container.innerHTML = `
+        <div class="pip-topbar">
+          <button class="pip-pill-btn" id="pip-btn-answer"><span>Answer</span> <kbd>⌘ ↵</kbd></button>
+          <button class="pip-pill-btn" id="pip-clear"><span>Clear Transcript</span></button>
+          <div style="flex-grow: 1;"></div>
+          <button class="pip-icon-btn" id="pip-min" title="Minimize / Expand">🗕</button>
+          <button class="pip-icon-btn pip-close-x" id="pip-close" title="End Call & Close">✕</button>
+        </div>
+
+        <div class="pip-section">
+          <span class="pip-label">💬 Transcript / Question</span>
+          <div id="pip-question" class="pip-scroll">${transcript || "Waiting for question..."}</div>
+        </div>
+
+        <div class="pip-section pip-answer-box">
+          <span class="pip-label">⭐ AI Answer</span>
+          <div id="pip-answer" class="pip-answer-text">${aiAnswer || "AI answer will appear here..."}</div>
+        </div>
+
+        <div class="pip-input-box">
+          <input id="pip-input" class="pip-main-input" type="text" placeholder="Type a manual question to LLM..." />
+          <button class="pip-send-btn" id="pip-send">Send</button>
+        </div>
+      `;
+
+      pipWindow.document.body.appendChild(container);
+
+      // X button ends the call and closes window
+      pipWindow.document.getElementById("pip-close").addEventListener("click", () => {
+        stopLiveInterview();
+      });
+
+      let isMin = false;
+      pipWindow.document.getElementById("pip-min").addEventListener("click", () => {
+        isMin = !isMin;
+        const qBox = pipWindow.document.getElementById("pip-question").parentElement;
+        const aBox = pipWindow.document.getElementById("pip-answer").parentElement;
+        const iBox = pipWindow.document.getElementById("pip-input").parentElement;
+        qBox.style.display = isMin ? "none" : "flex";
+        aBox.style.display = isMin ? "none" : "flex";
+        iBox.style.display = isMin ? "none" : "flex";
+        pipWindow.resizeTo(600, isMin ? 90 : 560);
+      });
+
+      pipWindow.document.getElementById("pip-clear").addEventListener("click", () => {
+        clearTranscript();
+      });
+
+      const handlePiPSend = () => {
+        const inputElem = pipWindow.document.getElementById("pip-input");
+        const val = inputElem?.value?.trim();
+        if (val && socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+          socketRef.current.send(JSON.stringify({ type: "manual_question", question: val }));
+          inputElem.value = "";
+        }
+      };
+
+      pipWindow.document.getElementById("pip-send").addEventListener("click", handlePiPSend);
+      pipWindow.document.getElementById("pip-btn-answer").addEventListener("click", () => {
+        generateAnswer();
+      });
+      pipWindow.document.getElementById("pip-input").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handlePiPSend();
+      });
+
+      pipWindow.addEventListener("unload", () => {
+        setIsPiPActive(false);
+        pipWindowRef.current = null;
+        if (isConnected) {
+          stopLiveInterview();
+        }
+      });
+
+    } catch (err) {
+      console.error("Failed to open PiP window:", err);
+    }
+  };
+
+  // Synchronize PiP content in real-time
+  useEffect(() => {
+    if (isPiPActive && pipWindowRef.current) {
+      try {
+        const qElem = pipWindowRef.current.document.getElementById("pip-question");
+        const aElem = pipWindowRef.current.document.getElementById("pip-answer");
+        if (qElem) qElem.textContent = transcript || "Waiting for question...";
+        if (aElem) aElem.textContent = aiAnswer || "AI answer will appear here...";
+      } catch (e) { }
+    }
+  }, [transcript, aiAnswer, isPiPActive]);
 
   // =====================================================
   // CONNECT TAB
@@ -347,7 +712,7 @@ const YourAIInterviewSessions = () => {
 
       const stream =
         await navigator.mediaDevices.getDisplayMedia({
-          video: true,
+          video: { displaySurface: "browser" },
           audio: true,
         });
 
@@ -377,8 +742,13 @@ const YourAIInterviewSessions = () => {
 
       isConnectedRef.current = true;
 
-      // Start listening after the tab is shared.
+      // Start listening after tab share
       startListening();
+
+      // Automatically launch the floating PiP window over all apps
+      setTimeout(() => {
+        openDocumentPiP();
+      }, 500);
 
       const videoTrack =
         stream.getVideoTracks()[0];
@@ -395,109 +765,9 @@ const YourAIInterviewSessions = () => {
       );
     }
   };
-  // =====================================================
-  // FLOATING SCREEN VIDEO
-  // =====================================================
-
-  useEffect(() => {
-    const videoElement = floatingVideoRef.current;
-
-    if (!videoElement || !sharedStream) {
-      return;
-    }
-
-    videoElement.srcObject = sharedStream;
-
-    videoElement
-      .play()
-      .catch((error) => {
-        console.log(
-          "Floating video play error:",
-          error
-        );
-      });
-
-    return () => {
-      videoElement.srcObject = null;
-    };
-  }, [sharedStream]);
-
 
   // =====================================================
-  // DRAG FLOATING WINDOW
-  // =====================================================
-
-  const handleFloatingDragStart = (event) => {
-    if (event.target.closest("button")) {
-      return;
-    }
-
-    if (!floatingWindowRef.current) {
-      return;
-    }
-
-    const rect =
-      floatingWindowRef.current.getBoundingClientRect();
-
-    const offsetX =
-      event.clientX - rect.left;
-
-    const offsetY =
-      event.clientY - rect.top;
-
-    const handleMouseMove = (moveEvent) => {
-      const width =
-        floatingWindowRef.current?.offsetWidth || 430;
-
-      const height =
-        floatingWindowRef.current?.offsetHeight || 520;
-
-      const x = Math.max(
-        8,
-        Math.min(
-          moveEvent.clientX - offsetX,
-          window.innerWidth - width - 8
-        )
-      );
-
-      const y = Math.max(
-        8,
-        Math.min(
-          moveEvent.clientY - offsetY,
-          window.innerHeight - height - 8
-        )
-      );
-
-      setFloatingPosition({
-        x,
-        y,
-      });
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener(
-        "mousemove",
-        handleMouseMove
-      );
-
-      document.removeEventListener(
-        "mouseup",
-        handleMouseUp
-      );
-    };
-
-    document.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
-
-    document.addEventListener(
-      "mouseup",
-      handleMouseUp
-    );
-  };
-  // =====================================================
-  // START SPEECH RECOGNITION
+  // START SPEECH RECOGNITION (Duplicate Filtered)
   // =====================================================
 
   const startListening = () => {
@@ -533,7 +803,6 @@ const YourAIInterviewSessions = () => {
 
     recognition.onresult = (event) => {
       let finalText = "";
-      let interimText = "";
 
       for (
         let i = event.resultIndex;
@@ -542,17 +811,17 @@ const YourAIInterviewSessions = () => {
       ) {
         if (event.results[i].isFinal) {
           finalText += event.results[i][0].transcript;
-        } else {
-          interimText += event.results[i][0].transcript;
         }
       }
 
       if (finalText.trim()) {
         const text = finalText.trim();
 
-        setTranscript((previous) =>
-          previous ? `${previous} ${text}` : text
-        );
+        // Prevent duplicate consecutive appending
+        setTranscript((previous) => {
+          if (previous.endsWith(text)) return previous;
+          return previous ? `${previous} ${text}` : text;
+        });
 
         // Send finalized speech to AI via WebSocket
         if (
@@ -563,13 +832,6 @@ const YourAIInterviewSessions = () => {
             JSON.stringify({ type: "transcript", text })
           );
         }
-      } else if (interimText.trim()) {
-        // Interim results just update UI, not sent to AI
-        setTranscript((previous) =>
-          previous
-            ? `${previous} ${interimText.trim()}`
-            : interimText.trim()
-        );
       }
     };
 
@@ -635,6 +897,11 @@ const YourAIInterviewSessions = () => {
   const stopLiveInterview = () => {
     stopListening();
 
+    if (pipWindowRef.current) {
+      pipWindowRef.current.close();
+      pipWindowRef.current = null;
+    }
+
     // Gracefully end the WebSocket session
     if (
       socketRef.current &&
@@ -658,6 +925,7 @@ const YourAIInterviewSessions = () => {
     setSharedStream(null);
     setIsConnected(false);
     setShowConnectModal(false);
+    setIsPiPActive(false);
   };
 
   // =====================================================
@@ -805,32 +1073,88 @@ const YourAIInterviewSessions = () => {
 
 
       {/* =================================================
-          EMPTY STATE
+          SESSION LISTING OR EMPTY STATE
       ================================================= */}
 
-      <div className="yourai-empty-state">
+      {sessionsList.length === 0 ? (
+        <div className="yourai-empty-state">
 
-        <h2>
-          You have no upcoming sessions
-        </h2>
+          <h2>
+            You have no upcoming sessions
+          </h2>
 
-        <p>
-          Your upcoming interview sessions
-          will appear here once you create one.
-        </p>
+          <p>
+            Your upcoming interview sessions
+            will appear here once you create one.
+          </p>
 
-        <button
-          className="yourai-create-session-btn"
-          onClick={openCreateSession}
+          <button
+            className="yourai-create-session-btn"
+            onClick={openCreateSession}
+          >
+            <FiPlus />
+
+            <span>
+              Create Session
+            </span>
+          </button>
+
+        </div>
+      ) : (
+        <div
+          className="yourai-sessions-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 340px))",
+            gap: "20px",
+            marginTop: "20px",
+          }}
         >
-          <FiPlus />
+          {sessionsList
+            .filter((s) => (activeTab === "all" ? true : s.status === activeTab))
+            .map((session) => (
+              <div
+                key={session.id}
+                className="yourai-session-card"
+                style={{
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  padding: "22px 24px",
+                  borderRadius: "18px",
+                  border: "1.5px solid #e2e8f0",
+                  boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "160px",
+                  position: "relative",
+                  boxSizing: "border-box"
+                }}
+              >
+                <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                    <span style={{ fontSize: "12px", color: "#94a3b8", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                      {session.created_at ? new Date(session.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }).toUpperCase() : "AUG 26, 2026"}
+                    </span>
+                  </div>
+                  <h3 style={{ margin: "0 0 16px 0", fontSize: "18px", fontWeight: "700", color: "#1e293b", lineHeight: "1.3" }}>
+                    {session.company}
+                  </h3>
+                  <div style={{ marginBottom: "16px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "#f1f5f9", color: "#475569", fontSize: "12.5px", fontWeight: "600", padding: "6px 12px", borderRadius: "8px" }}>
+                      <FiBriefcase size={12} /> {session.status.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
 
-          <span>
-            Create Session
-          </span>
-        </button>
-
-      </div>
+                <div style={{ marginTop: "auto", paddingTop: "14px", borderTop: "1px solid #f1f5f9", fontSize: "13px", color: "#1e293b", fontWeight: "600", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Model: {session.model || "Gemini"}</span>
+                  <span>{session.language || "English"}</span>
+                </div>
+              </div>
+            ))}
+        </div>
+      )}
 
 
       {/* =================================================
@@ -1063,6 +1387,7 @@ const YourAIInterviewSessions = () => {
                   </div>
 
 
+                  {/* Documents Selector Trigger */}
                   <button
                     type="button"
                     className={
@@ -1070,16 +1395,12 @@ const YourAIInterviewSessions = () => {
                         ? "yourai-context-btn added"
                         : "yourai-context-btn"
                     }
-                    onClick={() =>
-                      setDocumentsAdded(
-                        !documentsAdded
-                      )
-                    }
+                    onClick={openDocSelector}
                   >
                     <FiPlus />
 
                     {documentsAdded
-                      ? "Documents Added"
+                      ? `${selectedDocs.length} Documents Added`
                       : "Add Documents"}
                   </button>
 
@@ -1447,6 +1768,81 @@ const YourAIInterviewSessions = () => {
                 onClick={closeResumeSelector}
               >
                 {selectedResume ? "Use Resume" : "Select Resume"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      {/* =================================================
+          DOCUMENTS SELECTOR MODAL
+      ================================================= */}
+
+      {showDocSelector && (
+        <div
+          className="yourai-resume-selector-overlay"
+          onClick={() => setShowDocSelector(false)}
+        >
+          <div
+            className="yourai-resume-selector-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="yourai-resume-selector-header">
+              <div>
+                <h2>Knowledge Documents</h2>
+                <p>Select multiple documents to be used as context by the AI.</p>
+              </div>
+              <button
+                type="button"
+                className="yourai-resume-selector-close"
+                onClick={() => setShowDocSelector(false)}
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <div className="yourai-resume-selector-body" style={{ maxHeight: "250px", overflowY: "auto" }}>
+              {loadingDocs ? (
+                <div>Loading documents...</div>
+              ) : availableDocs.length > 0 ? (
+                availableDocs.map((doc) => {
+                  const isChecked = selectedDocs.some((d) => d.id === doc.id);
+                  return (
+                    <div
+                      key={doc.id}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "10px",
+                        gap: "12px",
+                        cursor: "pointer",
+                        borderBottom: "1px solid #f1f5f9"
+                      }}
+                      onClick={() => handleToggleDocSelection(doc)}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => { }}
+                      />
+                      <FiFileText />
+                      <span>{doc.title}</span>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>No documents found. Add documents in the Documents tab first.</div>
+              )}
+            </div>
+
+            <div className="yourai-resume-selector-footer">
+              <button
+                type="button"
+                className="yourai-resume-selector-confirm"
+                onClick={() => setShowDocSelector(false)}
+              >
+                Done
               </button>
             </div>
           </div>
@@ -2029,7 +2425,7 @@ const YourAIInterviewSessions = () => {
 
             {/* QUESTION / ANSWER */}
 
-            <div className="yourai-answer-area">
+            <data className="yourai-answer-area">
 
               <div className="yourai-question-box">
 
@@ -2071,7 +2467,7 @@ const YourAIInterviewSessions = () => {
 
               </div>
 
-            </div>
+            </data>
 
 
             {/* MANUAL MESSAGE */}
@@ -2143,316 +2539,6 @@ const YourAIInterviewSessions = () => {
             </div>
 
           </div>
-
-        </div>
-      )}
-      {/* =================================================
-    FLOATING AI ASSISTANT
-================================================= */}
-
-      {sharedStream && showFloatingScreen && (
-        <div
-          ref={floatingWindowRef}
-          className={`yourai-floating-assistant ${isFloatingMinimized
-            ? "yourai-floating-assistant-minimized"
-            : ""
-            }`}
-          style={{
-            left: `${floatingPosition.x}px`,
-            top: `${floatingPosition.y}px`,
-          }}
-        >
-
-          {/* ============================================
-        TOP CONTROL BAR
-    ============================================ */}
-
-          <div
-            className="yourai-floating-topbar"
-            onMouseDown={handleFloatingDragStart}
-          >
-
-            {/* Answer */}
-
-            <button
-              type="button"
-              className="yourai-floating-main-btn"
-              onClick={generateAnswer}
-            >
-              <span>Answer</span>
-
-              <kbd>⌘ ↵</kbd>
-            </button>
-
-
-            {/* Screenshot */}
-
-            <button
-              type="button"
-              className="yourai-floating-main-btn"
-            >
-              <span>Screenshot</span>
-
-              <kbd>⌘ ⇧ ↵</kbd>
-            </button>
-
-
-            {/* Chat */}
-
-            <button
-              type="button"
-              className="yourai-floating-main-btn"
-            >
-              <span>Chat</span>
-
-              <kbd>⌘ ⇧ ⌫</kbd>
-            </button>
-
-
-            <div className="yourai-floating-spacer" />
-
-
-            {/* Move */}
-
-            <button
-              type="button"
-              className="yourai-floating-icon-btn"
-              title="Move"
-            >
-              ↔
-            </button>
-
-
-            {/* Minimize */}
-
-            <button
-              type="button"
-              className="yourai-floating-icon-btn"
-              onClick={() =>
-                setIsFloatingMinimized(
-                  (previous) => !previous
-                )
-              }
-            >
-              {isFloatingMinimized ? "□" : "↗"}
-            </button>
-
-
-            {/* More */}
-
-            <button
-              type="button"
-              className="yourai-floating-icon-btn"
-            >
-              ⋮
-            </button>
-
-
-            {/* End */}
-
-            <button
-              type="button"
-              className="yourai-floating-end-btn"
-              onClick={stopLiveInterview}
-            >
-              End
-            </button>
-
-          </div>
-
-
-          {!isFloatingMinimized && (
-
-            <>
-
-              {/* ==========================================
-            TRANSCRIPT / QUESTION BAR
-        ========================================== */}
-
-              <div className="yourai-floating-questionbar">
-
-                {/* Listening */}
-
-                <div
-                  className={`yourai-floating-listening ${isListening
-                    ? "active"
-                    : ""
-                    }`}
-                >
-
-                  <span className="yourai-wave">
-
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-
-                  </span>
-
-                </div>
-
-
-                {/* Question */}
-
-                <div className="yourai-floating-question-scroll">
-
-                  {transcript ? (
-                    <span>
-                      {transcript}
-                    </span>
-                  ) : (
-                    <span className="yourai-floating-placeholder">
-                      Waiting for question...
-                    </span>
-                  )}
-
-                </div>
-
-
-                {/* Clear */}
-
-                <button
-                  type="button"
-                  className="yourai-floating-clear-btn"
-                  onClick={clearTranscript}
-                >
-                  Clear
-
-                  <kbd>⌘ ⌫</kbd>
-                </button>
-
-
-                {/* Expand */}
-
-                <button
-                  type="button"
-                  className="yourai-floating-expand-btn"
-                >
-                  ↗
-                </button>
-
-              </div>
-
-
-              {/* ==========================================
-            QUESTION / ANSWER AREA
-        ========================================== */}
-
-              <div className="yourai-floating-content">
-
-                {/* QUESTION */}
-
-                <div className="yourai-floating-question-row">
-
-                  <span className="yourai-floating-question-icon">
-                    💬
-                  </span>
-
-                  <strong>
-                    Question:
-                  </strong>
-
-                  <span className="yourai-floating-question-text">
-
-                    {manualQuestion ||
-                      transcript ||
-                      "Waiting for question..."}
-
-                  </span>
-
-                  <button
-                    type="button"
-                    className="yourai-floating-copy-btn"
-                    onClick={() => {
-                      const text =
-                        manualQuestion ||
-                        transcript ||
-                        "";
-
-                      if (text) {
-                        navigator.clipboard.writeText(text);
-                      }
-                    }}
-                  >
-                    ⧉
-                  </button>
-
-                </div>
-
-
-                {/* ANSWER */}
-
-                <div className="yourai-floating-answer-row">
-
-                  <span className="yourai-floating-star">
-                    ⭐
-                  </span>
-
-                  <strong>
-                    Answer:
-                  </strong>
-
-                  <div className="yourai-floating-answer-text">
-
-                    {aiAnswer ? (
-
-                      <>
-                        <p>
-                          {aiAnswer}
-                        </p>
-                      </>
-
-                    ) : (
-
-                      <span className="yourai-floating-answer-placeholder">
-                        AI answer will appear here...
-                      </span>
-
-                    )}
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              {/* ==========================================
-            MANUAL QUESTION INPUT
-        ========================================== */}
-
-              <div className="yourai-floating-inputbar">
-
-                <input
-                  type="text"
-                  value={manualQuestion}
-                  onChange={(event) =>
-                    setManualQuestion(
-                      event.target.value
-                    )
-                  }
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      generateAnswer();
-                    }
-                  }}
-                  placeholder="Ask AI..."
-                />
-
-
-                <button
-                  type="button"
-                  onClick={generateAnswer}
-                >
-                  Send
-                </button>
-
-              </div>
-
-            </>
-
-          )}
 
         </div>
       )}

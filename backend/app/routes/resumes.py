@@ -1,276 +1,154 @@
 import os
 import shutil
-
-from dotenv import load_dotenv
-from fastapi import (
-    APIRouter,
-    Depends,
-    HTTPException,
-    UploadFile,
-    File,
-    Form
-)
-
+from typing import List
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Query
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.resume import Resume
-from app.schemas.resume import (
-    ResumeCreate,
-    ResumeUpdate,
-    ResumeResponse
-)
+from app.schemas.resume import ResumeCreate, ResumeUpdate, ResumeRename, ResumeResponse
+from app.services.pdf_service import parse_pdf_resume
 
-UPLOAD_DIR = os.getenv(
-    "UPLOAD_DIR",
-    "uploads/resumes"
-)
+router = APIRouter(prefix="/api/resumes", tags=["Resumes"])
 
-os.makedirs(
-    UPLOAD_DIR,
-    exist_ok=True
-)
-router = APIRouter(
-    prefix="/api/resumes",
-    tags=["Resumes"]
-)
-load_dotenv()
+UPLOAD_DIR = "uploads/resumes"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+@router.get("/user/{user_id}", response_model=List[ResumeResponse])
+def get_user_resumes(user_id: int, db: Session = Depends(get_db)):
+    return db.query(Resume).filter(Resume.user_id == user_id).order_by(Resume.created_at.desc()).all()
 
+@router.post("/", response_model=ResumeResponse)
+def create_resume(data: ResumeCreate, db: Session = Depends(get_db)):
+    new_resume = Resume(**data.dict())
+    db.add(new_resume)
+    db.commit()
+    db.refresh(new_resume)
+    return new_resume
 
-
-# =====================================================
-# GET ALL RESUMES
-# =====================================================
-
-@router.get(
-    "/",
-    response_model=list[ResumeResponse]
-)
-def get_resumes(
-    db: Session = Depends(get_db)
-):
-
-    return db.query(Resume).all()
-
-
-# =====================================================
-# GET USER RESUMES
-# =====================================================
-
-@router.get(
-    "/user/{user_id}",
-    response_model=list[ResumeResponse]
-)
-def get_user_resumes(
-    user_id: int,
-    db: Session = Depends(get_db)
-):
-
-    resumes = db.query(Resume).filter(
-        Resume.user_id == user_id
-    ).all()
-
-    return resumes
-
-
-# =====================================================
-# GET SINGLE RESUME
-# =====================================================
-
-@router.get(
-    "/{resume_id}",
-    response_model=ResumeResponse
-)
-def get_resume(
-    resume_id: int,
-    db: Session = Depends(get_db)
-):
-
-    resume = db.query(Resume).filter(
-        Resume.id == resume_id
-    ).first()
-
+@router.put("/{resume_id}", response_model=ResumeResponse)
+def update_resume(resume_id: int, data: ResumeUpdate, db: Session = Depends(get_db)):
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
-        raise HTTPException(
-            status_code=404,
-            detail="Resume not found"
-        )
-
-    return resume
-
-
-# =====================================================
-# CREATE RESUME
-# =====================================================
-
-@router.post(
-    "/",
-    response_model=ResumeResponse
-)
-def create_resume(
-    resume_data: ResumeCreate,
-    db: Session = Depends(get_db)
-):
-
-    resume = Resume(
-        user_id=resume_data.user_id,
-
-        title=resume_data.title,
-        name=resume_data.name,
-        email=resume_data.email,
-        phone=resume_data.phone,
-        linkedin=resume_data.linkedin,
-        location=resume_data.location,
-
-        summary=resume_data.summary,
-        skills=resume_data.skills,
-        experience=resume_data.experience,
-        education=resume_data.education,
-        certifications=resume_data.certifications,
-
-        file_name=resume_data.file_name,
-        file_path=resume_data.file_path,
-        extracted_text=resume_data.extracted_text
-    )
-
-    db.add(resume)
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
+    for key, value in data.dict(exclude_unset=True).items():
+        setattr(resume, key, value)
+        
     db.commit()
     db.refresh(resume)
-
     return resume
 
-
-# =====================================================
-# UPDATE RESUME
-# =====================================================
-
-@router.put(
-    "/{resume_id}",
-    response_model=ResumeResponse
-)
-def update_resume(
-    resume_id: int,
-    resume_data: ResumeUpdate,
-    db: Session = Depends(get_db)
-):
-
-    resume = db.query(Resume).filter(
-        Resume.id == resume_id
-    ).first()
-
-    if not resume:
-        raise HTTPException(
-            status_code=404,
-            detail="Resume not found"
-        )
-
-    update_data = resume_data.model_dump(
-        exclude_unset=True
-    )
-
-    for key, value in update_data.items():
-        setattr(
-            resume,
-            key,
-            value
-        )
-
-    db.commit()
-    db.refresh(resume)
-
-    return resume
-
-
-# =====================================================
-# UPLOAD RESUME FILE
-# =====================================================
-
-@router.post("/upload")
-def upload_resume(
+@router.post("/upload", response_model=dict)
+def upload_resume_file(
     user_id: int = Form(...),
     file: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
+    file_location = os.path.join(UPLOAD_DIR, file.filename)
+    with open(file_location, "wb+") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+        
+    title_clean = os.path.splitext(file.filename)[0]
+    
+    # Parse PDF text to populate form summary automatically
+    parsed_data = parse_pdf_resume(file_location)
 
-    allowed_extensions = {
-        ".pdf",
-        ".doc",
-        ".docx"
+    new_resume = Resume(
+        user_id=user_id,
+        title=title_clean,
+        file_path=file_location,
+        file_name=file.filename,
+        summary=parsed_data.get("summary")
+    )
+    db.add(new_resume)
+    db.commit()
+    db.refresh(new_resume)
+    
+    return {
+        "resume_id": new_resume.id, 
+        "filename": file.filename,
+        "summary": new_resume.summary
     }
 
-    extension = os.path.splitext(
-        file.filename
-    )[1].lower()
-
-    if extension not in allowed_extensions:
-        raise HTTPException(
-            status_code=400,
-            detail="Only PDF, DOC and DOCX files are allowed"
-        )
-
-    safe_filename = file.filename.replace(
-        " ",
-        "_"
-    )
-
-    file_path = os.path.join(
-        UPLOAD_DIR,
-        safe_filename
-    )
-
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(
-            file.file,
-            buffer
-        )
-
-    resume = Resume(
-        user_id=user_id,
-        file_name=file.filename,
-        file_path=file_path
-    )
-
-    db.add(resume)
+@router.put("/{resume_id}/rename", response_model=ResumeResponse)
+def rename_resume(resume_id: int, data: ResumeRename, db: Session = Depends(get_db)):
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
+    if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    resume.title = data.title
     db.commit()
     db.refresh(resume)
-
-    return {
-        "message": "Resume uploaded successfully",
-        "resume_id": resume.id,
-        "filename": file.filename,
-        "file_path": file_path
-    }
-
-
-# =====================================================
-# DELETE RESUME
-# =====================================================
+    return resume
 
 @router.delete("/{resume_id}")
-def delete_resume(
-    resume_id: int,
-    db: Session = Depends(get_db)
-):
-
-    resume = db.query(Resume).filter(
-        Resume.id == resume_id
-    ).first()
-
+def delete_resume(resume_id: int, db: Session = Depends(get_db)):
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
-        raise HTTPException(
-            status_code=404,
-            detail="Resume not found"
-        )
-
-    if resume.file_path and os.path.exists(
-        resume.file_path
-    ):
-        os.remove(resume.file_path)
-
+        raise HTTPException(status_code=404, detail="Resume not found")
+        
+    if resume.file_path and os.path.exists(resume.file_path):
+        try:
+            os.remove(resume.file_path)
+        except Exception:
+            pass
+            
     db.delete(resume)
     db.commit()
+    return {"message": "Resume deleted successfully"}
 
+@router.get("/{resume_id}/download")
+def download_resume(
+    resume_id: int, 
+    download: bool = Query(False), 
+    db: Session = Depends(get_db)
+):
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
+    if not resume or not resume.file_path or not os.path.exists(resume.file_path):
+        raise HTTPException(status_code=404, detail="PDF file not found on server")
+    
+    filename = resume.file_name or "resume.pdf"
+    disposition = "attachment" if download else "inline"
+    
+    return FileResponse(
+        path=resume.file_path, 
+        filename=filename, 
+        content_disposition_type=disposition
+    )
+
+    @router.post("/upload", response_model=dict)
+    def upload_resume_file(
+    user_id: int = Form(...),
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
+    ):
+     file_location = os.path.join(UPLOAD_DIR, file.filename)
+    with open(file_location, "wb+") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+        
+    title_clean = os.path.splitext(file.filename)[0]
+    
+    # Parse PDF contents
+    parsed_data = parse_pdf_resume(file_location)
+
+    new_resume = Resume(
+        user_id=user_id,
+        title=title_clean,
+        file_path=file_location,
+        file_name=file.filename,
+        summary=parsed_data.get("summary"),
+        email=parsed_data.get("email"),
+        phone=parsed_data.get("phone")
+    )
+    db.add(new_resume)
+    db.commit()
+    db.refresh(new_resume)
+    
     return {
-        "message": "Resume deleted successfully"
+        "resume_id": new_resume.id, 
+        "filename": file.filename,
+        "summary": new_resume.summary,
+        "email": new_resume.email,
+        "phone": new_resume.phone
     }

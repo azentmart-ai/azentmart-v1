@@ -1,67 +1,39 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Any
+from datetime import datetime
 
+class ResumeBase(BaseModel):
+    title: str
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    linkedin: Optional[str] = None
+    location: Optional[str] = None
+    summary: Optional[str] = None
+    skills: Optional[str] = None
+    experience: Optional[str] = None
+    education: Optional[str] = None
+    certifications: Optional[str] = None
+    other_experience: Optional[str] = None
+    education_entries: Optional[List[Any]] = None
+    job_entries: Optional[List[Any]] = None
+    other_entries: Optional[List[Any]] = None
 
-class ResumeCreate(BaseModel):
-
+class ResumeCreate(ResumeBase):
     user_id: int
 
-    title: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    linkedin: Optional[str] = None
-    location: Optional[str] = None
+class ResumeUpdate(ResumeBase):
+    pass
 
-    summary: Optional[str] = None
-    skills: Optional[str] = None
-    experience: Optional[str] = None
-    education: Optional[str] = None
-    certifications: Optional[str] = None
+class ResumeRename(BaseModel):
+    title: str
 
-    file_name: Optional[str] = None
-    file_path: Optional[str] = None
-    extracted_text: Optional[str] = None
-
-
-class ResumeUpdate(BaseModel):
-
-    title: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    linkedin: Optional[str] = None
-    location: Optional[str] = None
-
-    summary: Optional[str] = None
-    skills: Optional[str] = None
-    experience: Optional[str] = None
-    education: Optional[str] = None
-    certifications: Optional[str] = None
-
-
-class ResumeResponse(BaseModel):
-
+class ResumeResponse(ResumeBase):
     id: int
     user_id: int
-
-    title: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    linkedin: Optional[str] = None
-    location: Optional[str] = None
-
-    summary: Optional[str] = None
-    skills: Optional[str] = None
-    experience: Optional[str] = None
-    education: Optional[str] = None
-    certifications: Optional[str] = None
-
-    file_name: Optional[str] = None
     file_path: Optional[str] = None
-    extracted_text: Optional[str] = None
+    file_name: Optional[str] = None
+    created_at: Optional[datetime] = None
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        from_attributes = True
