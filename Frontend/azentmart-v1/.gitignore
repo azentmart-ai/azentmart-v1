@@ -1,36 +1,3 @@
-# Environment / secrets
-.env
-.env.*
-!.env.example
-
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# React / Next
-.next/
-build/
-dist/
-
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-env/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
