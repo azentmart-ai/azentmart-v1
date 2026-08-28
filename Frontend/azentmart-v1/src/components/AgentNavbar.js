@@ -44,7 +44,7 @@ function Navbar({ showMarketplace = true }) {
 
 
             <li className="nav-item">
-              <Link to="/whatsapp-ai-agent/whatsapp-agent-dashboard" className="login-btn">Login</Link>
+              <Link to="/signin" className="login-btn">Login</Link>
             </li>
             <li className="nav-item">
                 <Link to="/signin" className="signin-btn">Book a Demo</Link>
