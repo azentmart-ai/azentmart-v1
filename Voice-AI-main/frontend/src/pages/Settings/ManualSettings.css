@@ -1,0 +1,90 @@
+.manual-page {
+  width: 100%;
+  color: #fff;
+}
+
+.manual-card {
+  width: 600px;
+  padding: 20px;
+  background: #101f46;
+  border: 1px solid #243e69;
+  border-radius: 8px;
+}
+
+.analysis-setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #203c5f;
+}
+
+.analysis-setting h3 {
+  margin: 0 0 5px;
+  font-size: 12px;
+}
+
+.analysis-setting p {
+  max-width: 500px;
+  margin: 0;
+  color: #7891aa;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.toggle {
+  width: 38px;
+  height: 21px;
+  padding: 2px;
+  border: none;
+  border-radius: 20px;
+  background: #d6dce2;
+  cursor: pointer;
+}
+
+.toggle span {
+  display: block;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.toggle.on {
+  background: #7654ff;
+}
+
+.toggle.on span {
+  transform: translateX(17px);
+}
+
+.manual-field {
+  margin-top: 18px;
+}
+
+.manual-field label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.manual-field textarea {
+  width: 100%;
+  min-height: 105px;
+  padding: 11px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #29476d;
+  border-radius: 6px;
+  outline: none;
+  background: #0b1b3e;
+  color: #fff;
+  font-size: 11px;
+}
+
+.manual-field textarea:focus {
+  border-color: #7654ff;
+}

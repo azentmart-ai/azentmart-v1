@@ -1,0 +1,515 @@
+/* =========================================================
+   DASHBOARD LAYOUT
+========================================================= */
+
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  background: #081b32;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 205px;
+  background: #081b32;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.dashboard-topbar {
+  position: relative;
+  height: 66px;
+  margin: 8px 22px 0;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #0d2543;
+  border: 1px solid #173a5d;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-title {
+  color: #76a4d4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+
+/* =========================================================
+   CREDITS
+========================================================= */
+
+.credits-info {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.credits-info span {
+  color: #7891aa;
+}
+
+.credits-info strong {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.credits-info small {
+  color: #7891aa;
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.topbar-user {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding-left: 14px;
+
+  border-left: 1px solid #234766;
+}
+
+.topbar-avatar {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #5c9df0;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.topbar-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topbar-user-info strong {
+  max-width: 125px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.topbar-user-info span {
+  max-width: 125px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #7891aa;
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   SETTINGS BUTTON
+========================================================= */
+
+.settings-trigger {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #7d94ac;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.settings-trigger:hover {
+  background: #163758;
+  color: #ffffff;
+}
+
+.settings-trigger-active {
+  background: #173d63;
+  color: #ffffff;
+}
+
+.settings-trigger svg {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SETTINGS PANEL
+========================================================= */
+
+.settings-panel {
+  position: absolute;
+
+  top: calc(100% + 10px);
+  right: 0;
+
+  width: 250px;
+
+  padding: 12px;
+
+  background: #0d2140;
+
+  border: 1px solid #2873d8;
+  border-radius: 12px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(72, 145, 240, 0.08);
+
+  z-index: 99999;
+
+  animation: settingsDrop 0.18s ease-out;
+}
+
+@keyframes settingsDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.settings-panel-header {
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 4px 8px;
+
+  border-bottom: 1px solid #1b3d60;
+}
+
+.settings-panel-header > span {
+  color: #89a9ca;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+.settings-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settings-panel-actions button {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #819ab4;
+
+  cursor: pointer;
+}
+
+.settings-panel-actions button:hover {
+  background: #173858;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   GROUP
+========================================================= */
+
+.settings-group {
+  padding: 10px 0;
+
+  border-bottom: 1px solid #193653;
+}
+
+.settings-group-title {
+  padding: 0 7px 6px;
+
+  color: #6685a5;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+
+/* =========================================================
+   SETTINGS ITEM
+========================================================= */
+
+.settings-item {
+  width: 100%;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0 8px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #d4dfec;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.settings-item:hover {
+  background: #153758;
+  color: #ffffff;
+}
+
+.settings-item-icon {
+  width: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #86a7c8;
+}
+
+.settings-item:hover .settings-item-icon {
+  color: #6ea8ff;
+}
+
+.settings-item-icon svg {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.settings-logout {
+  width: 100%;
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 8px;
+  padding: 0 8px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #ed7474;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.settings-logout:hover {
+  background: rgba(224, 75, 75, 0.10);
+  color: #ff8c8c;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.dashboard-content {
+  width: 100%;
+  min-height: calc(100vh - 74px);
+
+  padding: 16px 22px 40px;
+
+  box-sizing: border-box;
+}
+
+.dashboard-content > * {
+  width: 100%;
+  max-width: none;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .dashboard-main {
+    margin-left: 75px;
+  }
+
+  .dashboard-topbar {
+    margin: 8px 12px 0;
+  }
+
+  .dashboard-content {
+    padding: 16px 12px 30px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .dashboard-topbar {
+    height: auto;
+    min-height: 66px;
+
+    padding: 12px 14px;
+
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .credits-info {
+    display: none;
+  }
+
+  .dashboard-content {
+    padding: 14px 10px 25px;
+  }
+
+  .settings-panel {
+    right: -5px;
+    width: 240px;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .topbar-title {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .topbar-user-info {
+    display: none;
+  }
+
+  .settings-panel {
+    width: 225px;
+  }
+
+}
