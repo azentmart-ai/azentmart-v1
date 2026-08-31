@@ -12,7 +12,7 @@ import {
   Bar,
 } from "recharts";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://feature-instagram-agent.d1teziqxcf0044.amplifyapp.com";
 
 export default function InstaDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -143,9 +143,7 @@ export default function InstaDashboard() {
     try {
       setLoadingLeads(true);
 
-      const res = await fetch(
-        "http://localhost:3000/api/leads"
-      );
+      const res = await fetch(`${API_BASE_URL}/api/leads`);
 
       if (!res.ok) {
         throw new Error("Failed to fetch leads");
