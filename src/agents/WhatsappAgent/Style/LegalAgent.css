@@ -1,0 +1,810 @@
+/* ===========================
+   Legal Agent Login
+=========================== */
+
+.legal-login-page {
+    min-height: 100vh;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: "Inter", sans-serif;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-icon {
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.login-logo h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.login-logo p {
+    color: #6b7280;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.login-card {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    padding: 45px;
+    border-radius: 22px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.06);
+}
+
+.login-card h2 {
+    font-size: 46px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.welcome-text {
+    color: #6b7280;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+/* Labels */
+
+.login-card label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Inputs */
+
+.login-card .form-control {
+    height: 58px;
+    border-radius: 14px;
+    border: 1px solid #d6d9df;
+    font-size: 17px;
+    padding: 0 18px;
+    box-shadow: none;
+}
+
+.login-card .form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Password */
+
+.password-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.password-label a {
+    text-decoration: none;
+    color: #2563eb;
+    font-size: 14px;
+}
+
+.password-label a:hover {
+    text-decoration: underline;
+}
+
+.password-box {
+    position: relative;
+}
+
+.eye-btn {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #8b8b8b;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Sign In Button */
+
+.signin-btn2 {
+    width: 100%;
+    height: 58px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 14px;
+    background: #0f172a;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.signin-btn:hover {
+    background: #1d4ed8;
+}
+
+/* Divider */
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 35px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.divider span {
+    margin: 0 18px;
+    color: #9ca3af;
+    font-size: 15px;
+}
+
+/* Google Button */
+
+.google-btn {
+    width: 100%;
+    height: 58px;
+    border-radius: 14px;
+    border: 1px solid #d6d9df;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.google-btn:hover {
+    background: #f8fafc;
+    border-color: #2563eb;
+}
+
+.google-btn img {
+    width: 24px;
+}
+
+/* Signup */
+
+.signup-link {
+    text-align: center;
+    margin-top: 30px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.signup-link a {
+    margin-left: 6px;
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width:768px) {
+
+    .login-card {
+        padding: 30px;
+    }
+
+    .login-logo h1 {
+        font-size: 36px;
+    }
+
+    .login-card h2 {
+        font-size: 34px;
+    }
+
+    .welcome-text {
+        font-size: 16px;
+    }
+
+    .signin-btn,
+    .google-btn,
+    .login-card .form-control {
+        height: 54px;
+    }
+}
+
+@media (max-width:576px) {
+
+    .legal-login-page {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 25px;
+        border-radius: 18px;
+    }
+
+    .login-logo h1 {
+        font-size: 30px;
+    }
+
+    .login-card h2 {
+        font-size: 28px;
+    }
+
+    .welcome-text {
+        font-size: 15px;
+    }
+
+    .google-btn {
+        font-size: 16px;
+    }
+}
+
+/* ============================
+   LEGAL AGENT DASHBOARD
+============================ */
+
+.legalAgentDashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f6f8fb;
+    font-family:'Inter',sans-serif;
+}
+
+/* Sidebar */
+
+.legalAgentSidebar{
+    width:270px;
+    background:#111827;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    padding:30px 20px;
+}
+
+.legalAgentLogo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:35px;
+}
+
+.legalAgentLogo svg{
+    color:#3b82f6;
+    font-size:28px;
+}
+
+.legalAgentNewChat{
+    width:100%;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+    margin-bottom:35px;
+}
+
+.legalAgentNewChat:hover{
+    background:#1d4ed8;
+}
+
+.legalAgentMenu{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.legalAgentMenuItem{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.3s;
+    color:#d1d5db;
+}
+
+.legalAgentMenuItem:hover{
+    background:#1f2937;
+}
+
+.legalAgentMenuItem.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+/* Main */
+
+.legalAgentMain{
+    flex:1;
+    padding:35px 50px;
+}
+
+/* Top */
+
+.legalAgentTopBar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:50px;
+}
+
+.legalAgentMenuBtn{
+    border:none;
+    background:#fff;
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    cursor:pointer;
+}
+
+.legalAgentMenuBtn svg{
+    font-size:18px;
+}
+
+.legalAgentProfile{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.legalAgentProfile svg{
+    font-size:28px;
+    color:#2563eb;
+}
+
+/* Welcome */
+
+.legalAgentWelcome{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.legalAgentWelcome h1{
+    font-size:42px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:15px;
+}
+
+.legalAgentWelcome p{
+    font-size:18px;
+    color:#6b7280;
+}
+
+/* Search */
+
+.legalAgentSearchBox{
+    background:#fff;
+    border-radius:18px;
+    padding:20px;
+    display:flex;
+    align-items:flex-end;
+    gap:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+    margin-bottom:45px;
+}
+
+.legalAgentSearchBox textarea{
+    flex:1;
+    border:none;
+    resize:none;
+    outline:none;
+    min-height:90px;
+    font-size:16px;
+    color:#111827;
+}
+
+.legalAgentSearchBox button{
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:14px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.legalAgentSearchBox button:hover{
+    background:#1d4ed8;
+}
+
+.legalAgentSearchBox svg{
+    font-size:18px;
+}
+
+/* Suggestions */
+
+.legalAgentSuggestionTitle{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:25px;
+    color:#111827;
+}
+
+.legalAgentSuggestions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.legalAgentSuggestionCard{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:18px;
+    font-size:15px;
+    font-weight:500;
+    color:#374151;
+    cursor:pointer;
+    transition:.3s;
+    text-align:left;
+}
+
+.legalAgentSuggestionCard:hover{
+    border-color:#2563eb;
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(37,99,235,.12);
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#d1d5db;
+    border-radius:20px;
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+    .legalAgentSidebar{
+        width:90px;
+        padding:25px 10px;
+    }
+
+    .legalAgentLogo span,
+    .legalAgentMenuItem{
+        font-size:0;
+    }
+
+    .legalAgentMenuItem svg{
+        font-size:20px;
+    }
+
+    .legalAgentNewChat{
+        font-size:0;
+        padding:14px;
+    }
+
+    .legalAgentNewChat svg{
+        font-size:18px;
+    }
+
+    .legalAgentMain{
+        padding:30px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .legalAgentDashboard{
+        flex-direction:column;
+    }
+
+    .legalAgentSidebar{
+        width:100%;
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .legalAgentMenu{
+        display:none;
+    }
+
+    .legalAgentWelcome h1{
+        font-size:30px;
+    }
+
+    .legalAgentSearchBox{
+        flex-direction:column;
+    }
+
+    .legalAgentSearchBox button{
+        width:100%;
+    }
+
+}
+.legalSidebar{
+    width:370px;
+    min-height:100vh;
+    background:#fff;
+    border-right:1px solid #e6e6e6;
+    display:flex;
+    flex-direction:column;
+    padding:18px;
+}
+
+.legalSidebarTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.legalLogo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.legalLogo img{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+}
+
+.legalLogo span{
+    font-size:20px;
+    font-weight:700;
+}
+
+.collapseIcon{
+    cursor:pointer;
+    font-size:20px;
+    color:#888;
+}
+
+.newResearchBtn{
+    width:100%;
+    border:none;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:14px;
+    border-radius:14px;
+    font-size:18px;
+    cursor:pointer;
+    margin-bottom:18px;
+}
+
+.newResearchBtn:hover{
+    background:#f4f6f8;
+}
+
+.legalMenu{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.legalMenuItem{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:14px 16px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:.25s;
+    font-size:17px;
+}
+
+.legalMenuItem svg{
+    font-size:20px;
+}
+
+.legalMenuItem:hover{
+    background:#f4f6f8;
+}
+
+.legalMenuItem.active{
+    background:#eef2f6;
+    font-weight:600;
+}
+
+.legalMenuItem small{
+    margin-left:auto;
+    background:#efe4ff;
+    color:#7c3aed;
+    padding:2px 8px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.recentTitle{
+    margin-top:25px;
+    color:#777;
+    border-top:1px solid #e5e5e5;
+    padding-top:20px;
+}
+
+.legalProfile{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:#e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.profileInfo{
+    flex:1;
+}
+
+.profileInfo h5{
+    margin:0;
+    font-size:17px;
+}
+
+.profileInfo p{
+    margin:2px 0 0;
+    color:#777;
+    font-size:14px;
+}
+
+.settingsIcon{
+    cursor:pointer;
+    color:#666;
+}
+/* ===========================
+   RESEARCH PAGE
+=========================== */
+
+.legalResearch{
+    max-width:900px;
+    margin:40px auto;
+}
+
+.legalResearchHeader{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.legalResearchHeader h1{
+    font-size:56px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.legalResearchHeader p{
+    font-size:22px;
+    color:#6b7280;
+}
+
+.legalPromptBox{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:26px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.legalPromptBox textarea{
+    width:100%;
+    border:none;
+    outline:none;
+    resize:none;
+    min-height:150px;
+    font-size:18px;
+    background:transparent;
+}
+
+.legalPromptFooter{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.legalCredits{
+    color:#9ca3af;
+    font-size:14px;
+}
+
+.sendBtn{
+    width:52px;
+    height:52px;
+    border:none;
+    border-radius:50%;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.sendBtn:hover{
+    background:#1d4ed8;
+}
+
+.legalSuggestionContainer{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:35px;
+}
+
+.legalSuggestionChip{
+    border:1px solid #d1d5db;
+    background:#fff;
+    border-radius:30px;
+    padding:12px 22px;
+    font-size:15px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.legalSuggestionChip:hover{
+    background:#2563eb;
+    color:#fff;
+    border-color:#2563eb;
+}
