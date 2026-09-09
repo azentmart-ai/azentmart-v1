@@ -24,12 +24,18 @@
     "recharts": "^3.8.1",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+ "scripts": {
+  "start": "react-scripts start",
+  "build:main": "react-scripts build",
+
+  "build:instagram": "cd instagram-frontend && npm install && npm run build",
+  "build:interview": "cd interview-frontend && npm install && npm run build",
+  "build:voice": "cd voice-frontend && npm install && npm run build",
+  "build:whatsapp": "cd whatsapp-frontend && npm install && npm run build",
+
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
