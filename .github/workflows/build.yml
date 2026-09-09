@@ -1,0 +1,43 @@
+name: Build and Push Instagram Agent
+
+on:
+  push:
+    branches:
+      - feature/instagram-agent
+
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 950102956942.dkr.ecr.ap-south-1.amazonaws.com
+
+      - name: Build Docker image
+        run: |
+          cd Backend
+          docker build -t azentmart-instagram-agent .
+
+      - name: Tag Docker image
+        run: |
+          docker tag azentmart-instagram-agent:latest \
+          950102956942.dkr.ecr.ap-south-1.amazonaws.com/azentmart-instagram-agent:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push \
+          950102956942.dkr.ecr.ap-south-1.amazonaws.com/azentmart-instagram-agent:latest
