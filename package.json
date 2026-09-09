@@ -26,8 +26,8 @@
   },
  "scripts": {
   "start": "react-scripts start",
+  "build": "node scripts/combine-build.js",
   "build:main": "react-scripts build",
-
   "build:instagram": "cd instagram-frontend && npm install && npm run build",
   "build:interview": "cd interview-frontend && npm install && npm run build",
   "build:voice": "cd voice-frontend && npm install && npm run build",
