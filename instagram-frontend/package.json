@@ -2,6 +2,8 @@
   "name": "azent-mart",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/instagram",
+
   "dependencies": {
     "@supabase/ssr": "^0.12.5",
     "@supabase/supabase-js": "^2.112.4",
