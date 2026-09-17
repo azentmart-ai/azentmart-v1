@@ -1,0 +1,38 @@
+services:
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: marketing
+      POSTGRES_PASSWORD: marketing
+      POSTGRES_DB: marketing_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+
+  backend:
+    build: ./backend
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+      DATABASE_URL: postgresql+psycopg://marketing:marketing@postgres:5432/marketing_ai
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    ports:
+      - "8001:8000"
+    depends_on:
+      - postgres
+
+  mcp-server:
+    build: ./mcp_server
+    environment:
+      DATABASE_URL: postgresql+psycopg://marketing:marketing@postgres:5432/marketing_ai
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
