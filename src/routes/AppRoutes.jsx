@@ -4,6 +4,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import Marketplace from "../pages/Marketplace";
 import SignIn from "../pages/SignIn";
 import CreateAccount from "../pages/CreateAccount";
+import CompanyPage from "../pages/CompanyPage";
 
 function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ function AppRoutes() {
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/marketplace" element={<Marketplace />} />
+      <Route path="/company/:section" element={<CompanyPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
