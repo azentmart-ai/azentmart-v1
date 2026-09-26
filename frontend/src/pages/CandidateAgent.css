@@ -1,0 +1,846 @@
+/* =========================================================
+   CANDIDATE AGENT
+========================================================= */
+
+.candidate-agent-page {
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 28px 30px 40px;
+  background: #f7f9fc;
+  color: #172033;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.candidate-agent-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 22px;
+}
+
+.candidate-agent-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  color: #155eef;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.candidate-agent-header h1 {
+  margin: 0;
+  font-size: 27px;
+  line-height: 1.15;
+  font-weight: 750;
+  color: #172033;
+}
+
+.candidate-agent-header p {
+  max-width: 700px;
+  margin: 7px 0 0;
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.agent-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid #abefc6;
+  border-radius: 8px;
+  background: #f6fef9;
+  color: #027a48;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.agent-status span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #12b76a;
+}
+
+
+/* =========================================================
+   MAIN CONSOLE
+========================================================= */
+
+.agent-console {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 285px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+
+/* =========================================================
+   LEFT TOOLS
+========================================================= */
+
+.agent-tools {
+  width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.tools-heading {
+  padding: 3px 2px 13px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.tools-heading span {
+  display: block;
+  margin-bottom: 4px;
+  color: #98a2b3;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+
+.tools-heading h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   MODES
+========================================================= */
+
+.agent-mode-list {
+  padding: 7px 0 0;
+}
+
+.agent-mode {
+  width: 100%;
+  min-height: 61px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px;
+  margin-bottom: 3px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #475467;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background .15s ease,
+    color .15s ease;
+}
+
+.agent-mode:hover {
+  background: #f8faff;
+}
+
+.agent-mode.active {
+  background: #eef4ff;
+  color: #155eef;
+}
+
+.agent-mode-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #f2f4f7;
+  color: #667085;
+}
+
+.agent-mode.active .agent-mode-icon {
+  background: #ffffff;
+  color: #155eef;
+}
+
+.agent-mode-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.agent-mode-content strong {
+  display: block;
+  color: #344054;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.agent-mode.active
+.agent-mode-content strong {
+  color: #155eef;
+}
+
+.agent-mode-content small {
+  display: block;
+  margin-top: 3px;
+  color: #98a2b3;
+  font-size: 8.5px;
+  line-height: 1.35;
+}
+
+.agent-mode-arrow {
+  flex: 0 0 auto;
+  color: #98a2b3;
+}
+
+
+/* =========================================================
+   CONTEXT
+========================================================= */
+
+.agent-context {
+  margin-top: 13px;
+  padding-top: 14px;
+  border-top: 1px solid #eaecf0;
+}
+
+.context-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.context-heading span {
+  display: block;
+  margin-bottom: 3px;
+  color: #98a2b3;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+
+.context-heading label {
+  display: block;
+  color: #344054;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.context-heading > svg {
+  color: #98a2b3;
+}
+
+
+/* =========================================================
+   CONTEXT SEARCH
+========================================================= */
+
+.context-search {
+  width: 100%;
+  height: 34px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  margin-bottom: 7px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.context-search:focus-within {
+  border-color: #84adf7;
+  box-shadow: 0 0 0 3px #eef4ff;
+}
+
+.context-search svg {
+  flex: 0 0 auto;
+  color: #98a2b3;
+}
+
+.context-search input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #344054;
+  font-size: 9px;
+}
+
+.context-search input::placeholder {
+  color: #98a2b3;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.agent-context select {
+  width: 100%;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #344054;
+  font-size: 9px;
+  outline: none;
+  cursor: pointer;
+}
+
+.agent-context select:focus {
+  border-color: #84adf7;
+  box-shadow: 0 0 0 3px #eef4ff;
+}
+
+.agent-context select:disabled {
+  background: #f9fafb;
+  color: #98a2b3;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   COUNT
+========================================================= */
+
+.candidate-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  color: #98a2b3;
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.candidate-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid #fecdca;
+  border-radius: 7px;
+  background: #fef3f2;
+  color: #b42318;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.candidate-error button {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #b42318;
+  cursor: pointer;
+}
+
+.context-note {
+  display: block;
+  margin-top: 7px;
+  color: #98a2b3;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   SELECTED CANDIDATE
+========================================================= */
+
+.context-candidate-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 13px;
+  padding: 9px;
+  border: 1px solid #e0eaff;
+  border-radius: 9px;
+  background: #f8faff;
+}
+
+.context-avatar {
+  width: 31px;
+  height: 31px;
+  flex: 0 0 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #dbe8ff;
+  color: #155eef;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.context-candidate-info {
+  min-width: 0;
+}
+
+.context-candidate-info strong {
+  display: block;
+  overflow: hidden;
+  color: #344054;
+  font-size: 9px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.context-candidate-info span,
+.context-candidate-info small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+  overflow: hidden;
+  color: #667085;
+  font-size: 7.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.context-candidate-info small {
+  color: #98a2b3;
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.agent-chat {
+  min-width: 0;
+  min-height: 650px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+}
+
+
+/* =========================================================
+   CHAT HEADER
+========================================================= */
+
+.chat-head {
+  min-height: 67px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.chat-agent-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-bot-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #eef4ff;
+  color: #155eef;
+}
+
+.chat-agent-info strong {
+  display: block;
+  color: #172033;
+  font-size: 12px;
+}
+
+.chat-agent-info small {
+  display: block;
+  margin-top: 3px;
+  color: #98a2b3;
+  font-size: 8.5px;
+}
+
+.chat-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 99px;
+  background: #ecfdf3;
+  color: #027a48;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.chat-live span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #12b76a;
+}
+
+
+/* =========================================================
+   CHAT CONTEXT
+========================================================= */
+
+.chat-context-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 12px 15px 0;
+  padding: 9px 11px;
+  border: 1px solid #e0eaff;
+  border-radius: 8px;
+  background: #f8faff;
+}
+
+.chat-context-avatar {
+  width: 29px;
+  height: 29px;
+  flex: 0 0 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: #dbe8ff;
+  color: #155eef;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.chat-context-bar > div:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.chat-context-bar strong {
+  display: block;
+  color: #344054;
+  font-size: 9px;
+}
+
+.chat-context-bar span {
+  display: block;
+  margin-top: 2px;
+  color: #98a2b3;
+  font-size: 8px;
+}
+
+.chat-context-stage {
+  padding: 4px 7px;
+  border-radius: 99px;
+  background: #eef4ff;
+  color: #155eef;
+  font-size: 7px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.chat-messages {
+  flex: 1;
+  min-height: 350px;
+  padding: 20px 17px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  max-width: 78%;
+  margin-bottom: 17px;
+}
+
+.chat-message.user {
+  margin-left: auto;
+  text-align: right;
+}
+
+.message-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  color: #98a2b3;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.chat-message.user
+.message-label {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  display: inline-block;
+  padding: 11px 13px;
+  border: 1px solid #eaecf0;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #344054;
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.chat-message.user
+.message-bubble {
+  border-color: #d7e5ff;
+  background: #eef4ff;
+  color: #175cd3;
+}
+
+.message-bubble.thinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #667085;
+}
+
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+.suggestions {
+  padding: 0 15px 12px;
+}
+
+.suggestions > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #98a2b3;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.suggestion-list button {
+  max-width: 100%;
+  padding: 7px 9px;
+  border: 1px solid #dbe3ef;
+  border-radius: 99px;
+  background: #ffffff;
+  color: #475467;
+  font-size: 8.5px;
+  cursor: pointer;
+  transition:
+    border-color .15s ease,
+    color .15s ease,
+    background .15s ease;
+}
+
+.suggestion-list button:hover {
+  border-color: #b8cffb;
+  background: #f8faff;
+  color: #155eef;
+}
+
+.suggestion-list button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #eaecf0;
+}
+
+.chat-input-field {
+  flex: 1;
+  min-width: 0;
+  height: 39px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 11px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.chat-input-field:focus-within {
+  border-color: #84adf7;
+  box-shadow: 0 0 0 3px #eef4ff;
+}
+
+.chat-input-field svg {
+  flex: 0 0 auto;
+  color: #98a2b3;
+}
+
+.chat-input-field input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #344054;
+  font-size: 10px;
+}
+
+.chat-input-field input::placeholder {
+  color: #98a2b3;
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.send-button {
+  height: 39px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 8px;
+  background: #155eef;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background: #004eeb;
+}
+
+.send-button:disabled {
+  background: #b2ccf5;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+.spin {
+  animation: candidate-agent-spin 1s linear infinite;
+}
+
+@keyframes candidate-agent-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 950px) {
+  .candidate-agent-page {
+    padding: 22px 20px 35px;
+  }
+
+  .agent-console {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-tools {
+    width: 100%;
+  }
+
+  .agent-mode-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .agent-context {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .candidate-agent-page {
+    padding: 18px 14px 30px;
+  }
+
+  .candidate-agent-header {
+    flex-direction: column;
+  }
+
+  .agent-status {
+    align-self: flex-start;
+  }
+
+  .agent-mode-list {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-message {
+    max-width: 90%;
+  }
+
+  .chat-input {
+    flex-direction: column;
+  }
+
+  .send-button {
+    width: 100%;
+  }
+
+  .suggestion-list {
+    flex-direction: column;
+  }
+
+  .suggestion-list button {
+    width: 100%;
+    text-align: left;
+  }
+}

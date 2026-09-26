@@ -1,0 +1,1164 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #f7f9fc;
+  color: #172033;
+}
+
+
+/* =========================================================
+   APP SHELL
+========================================================= */
+
+.shell {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+
+  overflow: hidden;
+
+  background: #f7f9fc;
+
+  color: #172033;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+  width: 230px;
+  min-width: 230px;
+
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-right: 1px solid #e4e8ef;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 20px 18px 17px;
+
+  color: #172033;
+
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 650;
+
+  line-height: 1.15;
+}
+
+.brand b {
+  font-weight: 800;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #155eef;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 10px
+    rgba(21, 94, 239, 0.18);
+}
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 22px;
+
+  color: #98a2b3;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* =========================================================
+   SIDEBAR SCROLL
+========================================================= */
+
+.sidebar-scroll {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 2px 10px 8px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #d0d5dd
+    transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #d0d5dd;
+
+  border-radius: 99px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #98a2b3;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+========================================================= */
+
+.sidebar-nav {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+
+/* =========================================================
+   NORMAL NAV ITEM
+========================================================= */
+
+.nav-item {
+  width: 100%;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 12px;
+
+  border-radius: 8px;
+
+  color: #475467;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 550;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.nav-item svg {
+  flex: 0 0 auto;
+
+  color: #667085;
+}
+
+.nav-item:hover {
+  background: #f5f7fa;
+
+  color: #155eef;
+}
+
+.nav-item:hover svg {
+  color: #155eef;
+}
+
+.nav-item.active {
+  background: #eef4ff;
+
+  color: #155eef;
+
+  font-weight: 700;
+}
+
+.nav-item.active svg {
+  color: #155eef;
+}
+
+
+/* =========================================================
+   NAV GROUP
+========================================================= */
+
+.nav-group {
+  width: 100%;
+}
+
+
+/* =========================================================
+   NAV PARENT
+========================================================= */
+
+.nav-parent {
+  width: 100%;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 12px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #475467;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.nav-parent:hover {
+  background: #f5f7fa;
+
+  color: #155eef;
+}
+
+.nav-parent-left {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.nav-parent-left svg {
+  color: #667085;
+}
+
+.nav-parent:hover .nav-parent-left svg {
+  color: #155eef;
+}
+
+
+/* =========================================================
+   SUB NAV
+========================================================= */
+
+.subnav {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1px;
+
+  margin-left: 27px;
+
+  padding-left: 11px;
+
+  border-left: 1px solid #e5e7eb;
+}
+
+.subnav-item {
+  min-height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 8px;
+
+  border-radius: 6px;
+
+  color: #667085;
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.subnav-item:hover {
+  background: #f5f7fa;
+
+  color: #155eef;
+}
+
+.subnav-item.active {
+  background: #eef4ff;
+
+  color: #155eef;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   AI HELP CARD
+========================================================= */
+
+.side-help {
+  flex: 0 0 auto;
+
+  margin: 7px 12px 10px;
+
+  padding: 13px;
+
+  border: 1px solid #dbe6ff;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f3f7ff,
+      #ffffff
+    );
+}
+
+.help-icon {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  border-radius: 8px;
+
+  background: #e0eaff;
+
+  color: #155eef;
+}
+
+.side-help strong {
+  display: block;
+
+  color: #344054;
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.side-help p {
+  margin: 5px 0 8px;
+
+  color: #667085;
+
+  font-size: 8px;
+
+  line-height: 1.45;
+}
+
+.side-help a {
+  color: #155eef;
+
+  font-size: 8px;
+  font-weight: 750;
+
+  text-decoration: none;
+}
+
+.side-help a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #f7f9fc;
+
+  /*
+    IMPORTANT:
+    Main application content can scroll.
+  */
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #cbd5e1
+    transparent;
+}
+
+.main::-webkit-scrollbar {
+  width: 7px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 20px;
+}
+
+.main::-webkit-scrollbar-thumb:hover {
+  background: #98a2b3;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+  flex: 0 0 58px;
+
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 25px;
+
+  border-bottom: 1px solid #e4e8ef;
+
+  background: #ffffff;
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
+}
+
+.crumb {
+  color: #344054;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-left: auto;
+}
+
+
+/* =========================================================
+   TOP AVATAR
+========================================================= */
+
+.top-avatar {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #e7efff;
+
+  color: #155eef;
+
+  font-family: inherit;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.top-avatar:hover {
+  background: #dbe8ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MOBILE BRAND
+========================================================= */
+
+.mobile-brand {
+  display: none;
+}
+
+.mobile-brand a {
+  color: #172033;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mobile-brand b {
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PROFILE MODAL OVERLAY
+========================================================= */
+
+.profile-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(
+      16,
+      24,
+      40,
+      0.42
+    );
+
+  backdrop-filter:
+    blur(3px);
+}
+
+
+/* =========================================================
+   PROFILE MODAL
+========================================================= */
+
+.profile-modal {
+  width: 100%;
+
+  max-width: 520px;
+
+  overflow: hidden;
+
+  border: 1px solid #e4e8ef;
+
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 25px 70px
+    rgba(16, 24, 40, 0.2);
+
+  animation:
+    profileModalIn
+    0.18s ease;
+}
+
+@keyframes profileModalIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(8px)
+      scale(.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.profile-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #edf0f4;
+}
+
+.profile-modal-title {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.profile-modal-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eef4ff;
+
+  color: #155eef;
+}
+
+.profile-modal-header h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.profile-modal-header p {
+  margin: 4px 0 0;
+
+  color: #667085;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+.profile-modal-close {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #f2f4f7;
+
+  color: #667085;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.profile-modal-close:hover {
+  background: #e4e7ec;
+
+  color: #344054;
+}
+
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.profile-modal-body {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 16px;
+
+  padding: 20px;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.profile-form-field {
+  min-width: 0;
+}
+
+.profile-form-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #344054;
+
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.profile-form-field small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #98a2b3;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.profile-input-wrap {
+  position: relative;
+
+  width: 100%;
+}
+
+.profile-input-wrap svg {
+  position: absolute;
+
+  left: 11px;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color: #98a2b3;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.profile-input-wrap input {
+  width: 100%;
+
+  height: 40px;
+
+  padding:
+    0 10px 0 35px;
+
+  border: 1px solid #d0d5dd;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.profile-input-wrap input::placeholder {
+  color: #98a2b3;
+}
+
+.profile-input-wrap input:focus {
+  border-color: #84aefc;
+
+  box-shadow:
+    0 0 0 3px #eef4ff;
+}
+
+
+/* =========================================================
+   DISABLED INPUT
+========================================================= */
+
+.profile-input-wrap.disabled input {
+  background: #f2f4f7;
+
+  color: #98a2b3;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.profile-modal-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 14px 20px;
+
+  border-top: 1px solid #edf0f4;
+}
+
+.profile-modal-footer-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   MODAL BUTTONS
+========================================================= */
+
+.profile-cancel-btn,
+.profile-save-btn,
+.profile-logout-modal-btn {
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 0 13px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+.profile-cancel-btn {
+  border: 1px solid #d0d5dd;
+
+  background: #ffffff;
+
+  color: #344054;
+}
+
+.profile-cancel-btn:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+.profile-save-btn {
+  border: 1px solid #155eef;
+
+  background: #155eef;
+
+  color: #ffffff;
+}
+
+.profile-save-btn:hover {
+  border-color: #0f4ac9;
+
+  background: #0f4ac9;
+}
+
+.profile-save-btn:disabled {
+  opacity: .6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LOGOUT IN MODAL
+========================================================= */
+
+.profile-logout-modal-btn {
+  border: 1px solid #fecdca;
+
+  background: #fff6f5;
+
+  color: #b42318;
+}
+
+.profile-logout-modal-btn:hover {
+  border-color: #fda29b;
+
+  background: #fee4e2;
+
+  color: #b42318;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 900
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 210px;
+
+    min-width: 210px;
+  }
+
+  .brand {
+    padding-left: 15px;
+
+    padding-right: 15px;
+  }
+
+  .workspace {
+    padding-left: 17px;
+
+    padding-right: 17px;
+  }
+
+  .side-help {
+    margin-left: 9px;
+
+    margin-right: 9px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 760
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .sidebar {
+    width: 190px;
+
+    min-width: 190px;
+  }
+
+  .side-help {
+    display: none;
+  }
+
+  .profile-modal-body {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE - 620
+========================================================= */
+
+@media (max-width: 620px) {
+
+  .shell {
+    display: block;
+
+    overflow: auto;
+
+    min-height: 100vh;
+
+    height: auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    width: 100%;
+
+    min-height: 100vh;
+
+    height: auto;
+
+    overflow: visible;
+  }
+
+  .topbar {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    height: 55px;
+
+    padding: 0 15px;
+  }
+
+  .mobile-brand {
+    display: block;
+  }
+
+  .crumb {
+    display: none;
+  }
+
+  .profile-modal-overlay {
+    padding: 12px;
+  }
+
+  .profile-modal-body {
+    grid-template-columns: 1fr;
+
+    padding: 16px;
+  }
+
+  .profile-modal-footer {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .profile-logout-modal-btn {
+    width: 100%;
+  }
+
+  .profile-modal-footer-right {
+    width: 100%;
+  }
+
+  .profile-cancel-btn,
+  .profile-save-btn {
+    flex: 1;
+  }
+
+}
