@@ -1,0 +1,431 @@
+/* =========================================================
+   AZENTMART AI SIDEBAR
+   ========================================================= */
+
+.az-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 218px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 16px 12px;
+
+  background: linear-gradient(
+    180deg,
+    #061a33 0%,
+    #071d37 100%
+  );
+
+  border-right: 1px solid #17385d;
+
+  color: #ffffff;
+
+  z-index: 1000;
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.az-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.az-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.az-sidebar::-webkit-scrollbar-thumb {
+  background: #21476d;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.sidebar-brand {
+  min-height: 54px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 4px 5px 15px;
+
+  border-bottom: 1px solid #17385d;
+
+  box-sizing: border-box;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  color: #061a33;
+
+  border-radius: 10px;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 9px;
+
+  line-height: 1;
+}
+
+.brand-text strong {
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.brand-text span {
+  margin-top: 4px;
+
+  color: #6f89a8;
+
+  font-size: 6px;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 700;
+}
+
+.sidebar-collapse {
+  width: 29px;
+  height: 29px;
+
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #234766;
+
+  border-radius: 7px;
+
+  background: #0a2342;
+
+  color: #8ca5c0;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   USER
+   ========================================================= */
+
+.sidebar-user {
+  min-height: 59px;
+
+  margin: 12px 0;
+
+  padding: 9px;
+
+  display: flex;
+  align-items: center;
+
+  background: #0a2342;
+
+  border: 1px solid #173b60;
+
+  border-radius: 9px;
+
+  box-sizing: border-box;
+}
+
+.sidebar-user-avatar {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #6ea8ff;
+
+  color: #061a33;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.sidebar-user-info {
+  min-width: 0;
+
+  margin-left: 9px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-user-info strong {
+  max-width: 112px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #ffffff;
+
+  font-size: 9px;
+}
+
+.sidebar-user-info span {
+  margin-top: 3px;
+
+  color: #7189a6;
+
+  font-size: 7px;
+}
+
+.sidebar-user-menu {
+  margin-left: auto;
+
+  color: #7089a5;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.sidebar-section {
+  margin-bottom: 8px;
+}
+
+.sidebar-section-title {
+  padding: 8px 8px 6px;
+
+  color: #607b99;
+
+  font-size: 7px;
+
+  font-weight: 750;
+
+  letter-spacing: 1.3px;
+}
+
+/* =========================================================
+   NAV ITEM
+   ========================================================= */
+
+.sidebar-nav-item {
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+
+  margin: 2px 0;
+
+  padding: 0 9px;
+
+  border-radius: 7px;
+
+  color: #9aadc3;
+
+  text-decoration: none;
+
+  font-size: 9px;
+
+  font-weight: 550;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+
+  box-sizing: border-box;
+}
+
+.sidebar-nav-item:hover {
+  background: #0c2a4b;
+
+  color: #ffffff;
+}
+
+.sidebar-nav-item.active {
+  background: linear-gradient(
+    90deg,
+    rgba(76, 143, 232, 0.23),
+    rgba(76, 143, 232, 0.09)
+  );
+
+  color: #ffffff;
+
+  border-left: 2px solid #6ea8ff;
+
+  padding-left: 7px;
+}
+
+.sidebar-nav-icon {
+  width: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  color: #7591ae;
+
+  font-size: 13px;
+
+  flex-shrink: 0;
+}
+
+.sidebar-nav-item.active .sidebar-nav-icon {
+  color: #6ea8ff;
+}
+
+.sidebar-nav-label {
+  flex: 1;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   BETA
+   ========================================================= */
+
+.sidebar-badge {
+  padding: 3px 6px;
+
+  border-radius: 10px;
+
+  background: #6ea8ff;
+
+  color: #061a33;
+
+  font-size: 6px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+}
+
+/* =========================================================
+   BOTTOM
+   ========================================================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding-top: 10px;
+
+  border-top: 1px solid #17385d;
+}
+
+/* =========================================================
+   DASHBOARD OFFSET
+   ========================================================= */
+
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  background: #061a33;
+
+  color: #ffffff;
+
+  box-sizing: border-box;
+}
+
+.dashboard-layout .dashboard-main {
+  margin-left: 218px;
+
+  flex: 1;
+
+  min-width: 0;
+
+  min-height: 100vh;
+
+  background: #061a33;
+
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .az-sidebar {
+    width: 75px;
+
+    padding: 12px 8px;
+  }
+
+  .brand-text,
+  .sidebar-user-info,
+  .sidebar-user-menu,
+  .sidebar-section-title,
+  .sidebar-nav-label,
+  .sidebar-badge {
+    display: none;
+  }
+
+  .sidebar-brand {
+    justify-content: center;
+  }
+
+  .sidebar-collapse {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .sidebar-user {
+    justify-content: center;
+  }
+
+  .sidebar-nav-item {
+    justify-content: center;
+
+    padding: 0 !important;
+  }
+
+  .sidebar-nav-icon {
+    width: auto;
+
+    justify-content: center;
+  }
+
+  .dashboard-layout .dashboard-main {
+    margin-left: 75px;
+  }
+}
