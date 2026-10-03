@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "https://InterviewAgent-env.eba-pyp2ps8r.ap-south-1.elasticbeanstalk.com";
 
 /* =====================================================
    USER AUTH
@@ -245,7 +245,7 @@ export function connectInterviewCopilot(
     onClose
 ) {
     const socket = new WebSocket(
-        `ws://localhost:8000/ws/interview/${sessionId}`
+        `wss://InterviewAgent-env.eba-pyp2ps8r.ap-south-1.elasticbeanstalk.com/ws/interview/${sessionId}`
     );
 
     socket.onopen = () => {

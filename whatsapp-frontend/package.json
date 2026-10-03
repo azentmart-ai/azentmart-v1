@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:3000",
+  "proxy": "https://Whatsapp-agent-prod-env.eba-zugtjcau.ap-south-1.elasticbeanstalk.com",
   "name": "azent-mart",
   "version": "0.1.0",
   "private": true,

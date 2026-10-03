@@ -496,7 +496,7 @@ function AIChat() {
      ========================================================= */
 
   const API_BASE_URL =
-    "http://127.0.0.1:8000";
+    "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com";
 
 
   /* =========================================================

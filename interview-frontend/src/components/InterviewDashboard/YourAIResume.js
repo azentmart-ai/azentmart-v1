@@ -32,7 +32,7 @@ import {
   getUserResumes,
 } from "../../services/interviewApi";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "https://InterviewAgent-env.eba-pyp2ps8r.ap-south-1.elasticbeanstalk.com";
 
 const EMPTY_RESUME = {
   title: "",

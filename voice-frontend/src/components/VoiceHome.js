@@ -357,7 +357,7 @@ function VoiceHome() {
         : "ws:";
 
     let url =
-      `${protocol}//127.0.0.1:8000/api/voice/live`;
+      `${protocol}//Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com/api/voice/live`;
 
     const token =
       localStorage.getItem(

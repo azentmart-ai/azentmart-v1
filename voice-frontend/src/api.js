@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com";
 
 export function getToken() {
   return localStorage.getItem("access_token");

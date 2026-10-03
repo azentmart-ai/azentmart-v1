@@ -18,7 +18,7 @@ function Sidebar() {
         }
 
         const response = await fetch(
-          "http://127.0.0.1:8000/api/auth/me",
+          "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com/api/auth/me",
           {
             method: "GET",
             headers: {

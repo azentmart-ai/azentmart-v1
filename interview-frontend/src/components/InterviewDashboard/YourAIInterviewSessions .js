@@ -131,7 +131,7 @@ const YourAIInterviewSessions = ({ setActivePage }) => {
     const user = getUser();
     if (!user?.id) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/interviews/user/${user.id}`);
+      const res = await fetch(`https://InterviewAgent-env.eba-pyp2ps8r.ap-south-1.elasticbeanstalk.com/api/interviews/user/${user.id}`);
       const data = await res.json();
       setSessionsList(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -280,7 +280,7 @@ const YourAIInterviewSessions = ({ setActivePage }) => {
     try {
       const user = getUser();
       if (!user?.id) return;
-      const res = await fetch(`http://localhost:8000/api/documents/user/${user.id}`);
+      const res = await fetch(`https://InterviewAgent-env.eba-pyp2ps8r.ap-south-1.elasticbeanstalk.com/api/documents/user/${user.id}`);
       const data = await res.json();
       setAvailableDocs(Array.isArray(data) ? data : []);
     } catch (err) {

@@ -19,7 +19,7 @@ function BookDemo() {
   // BACKEND URL
   // =========================================================
 
-  const API_URL = "http://127.0.0.1:8000";
+  const API_URL = "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com";
 
   // =========================================================
   // HANDLE INPUT CHANGE

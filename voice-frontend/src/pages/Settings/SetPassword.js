@@ -12,7 +12,7 @@ import "./SetPassword.css";
 function SetPassword() {
   const navigate = useNavigate();
 
-  const API_URL = "http://127.0.0.1:8000";
+  const API_URL = "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com";
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

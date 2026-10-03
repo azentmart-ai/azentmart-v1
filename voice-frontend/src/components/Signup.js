@@ -19,7 +19,7 @@ function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL = "http://127.0.0.1:8000";
+  const API_URL = "https://Voiceagent-prod-env.eba-ztsbugwe.ap-south-1.elasticbeanstalk.com";
 
   const handleChange = (e) => {
     const { name, value } = e.target;

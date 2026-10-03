@@ -25,7 +25,7 @@ import * as pdfjsLib from "pdfjs-dist";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://Whatsapp-agent-prod-env.eba-zugtjcau.ap-south-1.elasticbeanstalk.com";
 
 function ContactsPage() {
   // ============================================================
