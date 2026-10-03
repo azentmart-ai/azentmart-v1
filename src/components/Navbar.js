@@ -92,7 +92,7 @@ function Navbar({ showMarketplace = true }) {
             <div className="az-nav-mega az-nav-mega-agents">
               <div className="az-nav-mega-intro"><span>AGENTS</span><h3>Ready-to-use AI agents.</h3><p>Access the existing AzentMart AI agent applications directly.</p></div>
               <div className="az-nav-mega-grid az-agent-nav-grid">
-                <a href={agentUrls.instagram} target="_blank" rel="noreferrer"><strong>Instagram Agent</strong><small>AI-powered Instagram workflows.</small></a>
+                <a href="/agents/instagram/" target="_blank" rel="noreferrer"><strong>Instagram Agent</strong><small>AI-powered Instagram workflows.</small></a>
                 <a href={agentUrls.interview} target="_blank" rel="noreferrer"><strong>Interview Agent</strong><small>Interview and recruitment workflows.</small></a>
                 <a href={agentUrls.whatsapp} target="_blank" rel="noreferrer"><strong>WhatsApp Agent</strong><small>Customer conversations and support.</small></a>
                 <a href={agentUrls.voice} target="_blank" rel="noreferrer"><strong>Voice Agent</strong><small>Voice-based AI interactions.</small></a>
