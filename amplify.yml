@@ -11,7 +11,7 @@ frontend:
         - npm run build
 
   artifacts:
-    baseDirectory: final-build
+    baseDirectory: build
     files:
       - '**/*'
 
