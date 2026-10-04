@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import agentUrls from "../config/agentUrls";
 
 import {
@@ -80,6 +81,7 @@ const industryIcons = {
 function MarketplaceAgents() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
 
   const agentsPerPage = 9;
@@ -122,7 +124,7 @@ function MarketplaceAgents() {
 
               <div
                 className="agent-card w-100"
-                onClick={() => { window.location.href = agent.url; }}
+                onClick={() => { navigate(agent.url); }}
                 style={{ cursor: "pointer" }}
               >
 
@@ -162,7 +164,7 @@ function MarketplaceAgents() {
                     className="details-btn"
                     onClick={(e) => {
                       e.stopPropagation(); // prevent card click
-                      window.location.href = agent.url;
+                      navigate(agent.url);
                     }}
                   >
                     View Details
@@ -172,7 +174,7 @@ function MarketplaceAgents() {
                   className="activate-btn"
                   onClick={(e) => {
                     e.stopPropagation(); // prevent card click
-                    window.location.href = "/#pricing";
+                    window.location.href = "/demo";
                   }}
                 >
                   Activate
@@ -189,7 +191,7 @@ function MarketplaceAgents() {
       </div>
 
       {/* PAGINATION */}
-      <div className="pagination">
+      {totalPages > 1 && <div className="pagination">
 
         <button
           disabled={currentPage === 1}
@@ -215,7 +217,7 @@ function MarketplaceAgents() {
           Next
         </button>
 
-      </div>
+      </div>}
 
     </section>
   );

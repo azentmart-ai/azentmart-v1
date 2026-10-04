@@ -1,0 +1,1788 @@
+.agent-shell-instagram .nav-link{
+  position: relative;
+  color: #0a2540;
+  font-weight: 500;
+  padding-bottom: 5px;
+  background: none;
+  border: none;
+}
+
+/* underline */
+.agent-shell-instagram .nav-link::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, orange, purple);
+  transition: width 0.3s ease;
+}
+
+/* active underline */
+.agent-shell-instagram .nav-link.active::after{
+  width: 100%;
+}
+
+/* INSTAGRAM hero section */
+.agent-shell-instagram .insta-hero{
+  /* min-height: 100vh; */
+  padding-top: 150px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 40%, #f3e8ff 100%);
+  font-family: "Inter", sans-serif;
+}
+
+/* BACKGROUND GLOW */
+.agent-shell-instagram .insta-bg1{
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle,
+    #feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+  filter: blur(120px);
+  opacity: 0.35;
+  top: -100px;
+  right: -100px;
+}
+
+.agent-shell-instagram .insta-bg2{
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,#ff9a9e,#fad0c4);
+  filter: blur(120px);
+  opacity: 0.3;
+  bottom: -120px;
+  left: -120px;
+}
+
+/* LEFT */
+.agent-shell-instagram .insta-tag{
+  color: #ff4db8;
+  font-weight: 600;
+}
+
+.agent-shell-instagram .insta-title{
+  font-size: 58px;
+  font-weight: 700;
+  color: #1c1c3c;
+}
+
+.agent-shell-instagram .insta-desc{
+  margin: 20px 0;
+  color: #555;
+}
+
+.agent-shell-instagram .insta-primary{
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+}
+
+.agent-shell-instagram .insta-secondary{
+  border: 1px solid #ddd;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: white;
+}
+
+.agent-shell-instagram .insta-free{
+  margin-top: 10px;
+  color: #7b3ff2;
+}
+
+/* RIGHT */
+.agent-shell-instagram .insta-right{
+  position: relative;
+  width: 530px;
+  height: 620px;
+}
+.agent-shell-instagram .insta-left{
+  transform: translateY(-10px);
+}
+
+/* OUTER CHAT CARD */
+.agent-shell-instagram .insta-chatCard{
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 360px;
+  padding: 12px;
+  background: white;
+  border-radius: 25px;
+  border: 2px solid #ff4db8;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  z-index: 2;
+}
+
+/* INNER */
+.agent-shell-instagram .insta-chatInner{
+  background: #f8f6fb;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+/* USER */
+.agent-shell-instagram .insta-user{
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.agent-shell-instagram .insta-avatar{
+  width: 32px;
+  height: 32px;
+  background: #ddd;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.agent-shell-instagram .insta-bubble.white{
+  background: #fff;
+  padding: 12px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+/* AI */
+.agent-shell-instagram .insta-ai{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  padding: 16px;
+  border-radius: 18px;
+  color: white;
+}
+
+.agent-shell-instagram .insta-typing::after{
+  content: "|";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* PRODUCTS */
+.agent-shell-instagram .insta-products{
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.agent-shell-instagram .insta-product{
+  background: #fff;
+  border-radius: 14px;
+  padding: 10px;
+  width: 140px;
+  text-align: center;
+}
+
+.agent-shell-instagram .insta-product img{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.agent-shell-instagram .insta-product p{
+  font-size: 13px;
+  margin: 6px 0;
+}
+
+.agent-shell-instagram .insta-product button{
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* GIRL */
+.agent-shell-instagram .insta-girl{
+  position: absolute;
+  right: -130px;   /* 👉 push more outside */
+  bottom: -40px;   /* 👉 move down */
+  width: 420px;    /* keep size */
+  z-index: 3;
+}
+
+/* ICON */
+.agent-shell-instagram .insta-icon{
+  position: absolute;
+  bottom: 140px;
+  right: 110px;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(45deg,
+    #feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  z-index: 4;
+}
+
+/* META */
+.agent-shell-instagram .insta-meta{
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  background: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  z-index: 4;
+}
+.agent-shell-instagram .demo-section{
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #0d0d2b, #1a1446);
+  color: white;
+  text-align: center;
+}
+
+/* TITLE */
+.agent-shell-instagram .demo-title{
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.agent-shell-instagram .demo-highlight{
+  color: #ffcc00;
+}
+
+.agent-shell-instagram .demo-sub{
+  margin: 10px 0 30px;
+  color: #ccc;
+}
+
+/* TABS */
+.agent-shell-instagram .demo-tabs{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.agent-shell-instagram .demo-tabs button{
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #2a2a5c;
+  color: white;
+  cursor: pointer;
+}
+
+.agent-shell-instagram .demo-tabs .active{
+  background: linear-gradient(90deg, #ff7a18, #ff3cac);
+}
+
+/* CARD */
+.agent-shell-instagram .demo-card{
+  max-width: 1100px;
+  margin: auto;
+  background: #e8e8ec;
+  border-radius: 25px;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* LEFT */
+.agent-shell-instagram .demo-left{
+  text-align: left;
+  color: #1c1c3c;
+}
+
+.agent-shell-instagram .demo-options{
+  margin-top: 20px;
+}
+
+.agent-shell-instagram .demo-option{
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.agent-shell-instagram .demo-option.active{
+  border: 2px solid #7b3ff2;
+}
+
+/* RIGHT */
+.agent-shell-instagram .demo-right{
+  display: flex;
+  align-items: center;
+}
+
+/* PHONE MOCK */
+.agent-shell-instagram .phone{
+  width: 250px;
+  height: 450px;
+  background: black;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+/* CHAT */
+.agent-shell-instagram .chat{
+  color: white;
+}
+
+.agent-shell-instagram .msg{
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.agent-shell-instagram .msg.user{
+  background: #333;
+}
+
+.agent-shell-instagram .msg.ai{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+}
+
+/* =========================
+   SECTION
+========================= */
+.agent-shell-instagram .insta-flow{
+  padding: 120px 20px;
+  background: linear-gradient(135deg, #ffffff, #f3e8ff);
+  text-align: center;
+}
+
+/* =========================
+   TITLE
+========================= */
+.agent-shell-instagram .flow-title{
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 80px;
+  color: #1c1c3c;
+}
+
+.agent-shell-instagram .flow-title span{
+  background: linear-gradient(90deg, #ff7a18, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   STEPS CONTAINER
+========================= */
+.agent-shell-instagram .insta-steps{
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* CONNECTOR LINE */
+.agent-shell-instagram .insta-steps::before{
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff7a18, #d946ef);
+  opacity: 0.25;
+}
+
+/* =========================
+   STEP
+========================= */
+.agent-shell-instagram .flow-step{
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* STEP NUMBER */
+.agent-shell-instagram .step-number{
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  z-index: 2;
+  box-shadow: 0 10px 25px rgba(123,63,242,0.3);
+}
+
+/* =========================
+   CARD
+========================= */
+.agent-shell-instagram .step-card{
+  width: 100%;
+  min-height: 260px;
+
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.agent-shell-instagram .step-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* TEXT */
+.agent-shell-instagram .step-card h3{
+  margin: 14px 0 6px;
+  font-size: 20px;
+}
+
+.agent-shell-instagram .step-card p{
+  font-size: 14px;
+  color: #555;
+}
+
+/* =========================
+   CONNECT UI
+========================= */
+.agent-shell-instagram .mini-ui.connect{
+  background: #f5f0ff;
+  padding: 16px;
+  border-radius: 14px;
+}
+
+.agent-shell-instagram .mini-ui.connect p{
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.agent-shell-instagram .mini-ui.connect button{
+  width: 100%;
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* =========================
+   TRAIN UI
+========================= */
+.agent-shell-instagram .train-header{
+  font-size: 13px;
+  color: #7b3ff2;
+  margin-bottom: 10px;
+}
+
+.agent-shell-instagram .train-progress{
+  height: 6px;
+  background: #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.agent-shell-instagram .train-fill{
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+}
+
+.agent-shell-instagram .train-items{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.agent-shell-instagram .chip{
+  background: #f3e8ff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* =========================
+   CHAT UI
+========================= */
+.agent-shell-instagram .mini-ui.chat{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.agent-shell-instagram .mini-ui .msg{
+  padding: 10px;
+  border-radius: 12px;
+  margin: 6px 0;
+  font-size: 13px;
+}
+
+.agent-shell-instagram .mini-ui .msg.user{
+  background: #ffffff;
+  color: #333;
+}
+
+.agent-shell-instagram .mini-ui .msg.ai{
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .agent-shell-instagram .insta-steps{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .agent-shell-instagram .insta-steps::before{
+    display: none;
+  }
+}
+/* ========================= */
+/* CONNECT UI */
+/* ========================= */
+.agent-shell-instagram .mini-ui{
+  border-radius: 15px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.agent-shell-instagram .connect{
+  background: #f8f7fc;
+}
+
+.agent-shell-instagram .connect p{
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.agent-shell-instagram .connect button{
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* 🔥 PREMIUM TRAIN CARD */
+/* ========================= */
+.agent-shell-instagram .premium-train{
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 20px 40px rgba(123, 63, 242, 0.08);
+}
+
+/* HEADER */
+.agent-shell-instagram .train-header{
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  padding: 6px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+/* PROGRESS */
+.agent-shell-instagram .train-progress{
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.agent-shell-instagram .train-fill{
+  height: 100%;
+  width: 70%;
+  background: linear-gradient(90deg, #7b3ff2, #d946ef);
+  border-radius: 10px;
+  animation: load 2s ease-in-out;
+}
+
+@keyframes load {
+  from {
+    width: 20%;
+  }
+  to {
+    width: 70%;
+  }
+}
+
+/* CHIPS */
+.agent-shell-instagram .train-items{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.agent-shell-instagram .chip{
+  background: #f3e8ff;
+  color: #7b3ff2;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* GLOW EFFECT */
+.agent-shell-instagram .premium-train::before{
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(217,70,239,0.2), transparent);
+  top: -50px;
+  right: -50px;
+}
+
+/* ========================= */
+/* CHAT UI */
+/* ========================= */
+.agent-shell-instagram .chat{
+  background: #111;
+  color: white;
+}
+
+.agent-shell-instagram .msg{
+  padding: 6px;
+  border-radius: 8px;
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.agent-shell-instagram .msg.user{
+  background: #333;
+}
+
+.agent-shell-instagram .msg.ai{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+}
+
+/* ========================= */
+/* RESPONSIVE IMPROVEMENTS */
+/* ========================= */
+
+/* Tablet spacing */
+@media (max-width: 991px) {
+  .agent-shell-instagram .flow-title{
+    font-size: 32px;
+  }
+
+  .agent-shell-instagram .step-card{
+    max-width: 100%;
+  }
+}
+
+/* Mobile spacing */
+@media (max-width: 576px) {
+  .agent-shell-instagram .insta-flow{
+    padding: 70px 10px;
+  }
+
+  .agent-shell-instagram .flow-title{
+    font-size: 26px;
+    margin-bottom: 40px;
+  }
+
+  .agent-shell-instagram .step-number{
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+/* SECTION */
+.agent-shell-instagram .insta-dual{
+  padding: 100px 0;
+  background: #0f1b4d;
+}
+
+/* CARD */
+.agent-shell-instagram .insta-card{
+  background: #f5f6fb;
+  border-radius: 26px;
+  padding: 30px;
+}
+
+/* TITLE */
+.agent-shell-instagram .insta-card h3{
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.agent-shell-instagram .insta-card h3 span{
+  background: linear-gradient(90deg, #ff4d6d, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* DESC */
+.agent-shell-instagram .insta-card p{
+  color: #4b5563;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* VISUAL */
+.agent-shell-instagram .insta-visual{
+  position: relative;
+  height: 260px;
+  border-radius: 20px;
+  padding: 15px;
+  overflow: hidden;
+}
+
+.agent-shell-instagram .pink{
+  background: linear-gradient(135deg, #ff4d8d, #ff7a18);
+}
+
+.agent-shell-instagram .purple{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+}
+
+/* BACK STACK */
+.agent-shell-instagram .dm-stack{
+  position: absolute;
+  width: 180px;
+  height: 220px;
+  border-radius: 20px;
+  background: white;
+  top: 30px;
+  left: 30px;
+}
+
+.agent-shell-instagram .stack1{
+  transform: rotate(-8deg);
+  opacity: 0.6;
+}
+
+.agent-shell-instagram .stack2{
+  transform: rotate(-3deg);
+  left: 45px;
+  opacity: 0.8;
+}
+
+/* CHAT */
+.agent-shell-instagram .insta-chat{
+  position: relative;
+  z-index: 2;
+  background: white;
+  border-radius: 20px;
+  padding: 12px;
+  width: 220px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* HEADER */
+.agent-shell-instagram .insta-header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* AVATAR */
+.agent-shell-instagram .avatar{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, orange, pink);
+}
+
+.agent-shell-instagram .avatar.small{
+  width: 22px;
+  height: 22px;
+}
+
+/* CHAT AREA */
+.agent-shell-instagram .chat-area{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* MSG */
+.agent-shell-instagram .msg{
+  padding: 7px 10px;
+  border-radius: 18px;
+  font-size: 13px;
+  max-width: 75%;
+}
+
+.agent-shell-instagram .msg.left{
+  background: #f1f1f1;
+  align-self: flex-start;
+}
+
+.agent-shell-instagram .msg.right{
+  align-self: flex-end;
+}
+
+.agent-shell-instagram .msg.gradient{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  color: white;
+}
+
+.agent-shell-instagram .msg.small{
+  font-size: 12px;
+}
+
+/* BUTTON */
+.agent-shell-instagram .insta-btn{
+  align-self: flex-end;
+  border: none;
+  background: #efefef;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* FLOAT MSG */
+.agent-shell-instagram .floating-msg{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* GIRL */
+.agent-shell-instagram .insta-girl.premium{
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 150px;
+  z-index: 3;
+}
+
+/* COMMENT CARD */
+.agent-shell-instagram .comment-card{
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  width: 230px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* COMMENT */
+.agent-shell-instagram .comment{
+  display: flex;
+  gap: 8px;
+}
+
+.agent-shell-instagram .comment p{
+  margin: 0;
+  font-size: 13px;
+}
+
+/* REPLY */
+.agent-shell-instagram .reply-box{
+  background: #f3e8ff;
+  padding: 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* DM POPUP */
+.agent-shell-instagram .dm-popup.premium{
+  position: absolute;
+  right: 30px;
+  bottom: 40px;
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* EMOJI */
+.agent-shell-instagram .emoji{
+  position: absolute;
+  bottom: 20px;
+  left: 120px;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .agent-shell-instagram .insta-visual{
+    height: auto;
+  }
+
+  .agent-shell-instagram .insta-chat, .agent-shell-instagram .comment-card{
+    width: 100%;
+  }
+
+  .agent-shell-instagram .insta-girl{
+    display: none;
+  }
+}
+/* ================= WIDE CARD ================= */
+/* ================= CLEAN INSTAGRAM BG ================= */
+.agent-shell-instagram .insta-wide-card{
+  position: relative;
+  background: linear-gradient(135deg, #f6d365, #f97316);
+  border-radius: 28px;
+  padding: 70px 60px;
+  overflow: hidden;
+}
+
+/* BIG SOFT INSTAGRAM LOGO */
+.agent-shell-instagram .insta-wide-card::before{
+  content: "";
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: 10%;
+  top: 50%;
+
+  transform: translateY(-50%) rotate(-10deg);
+
+  background: url("https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png") no-repeat center;
+  background-size: contain;
+
+  opacity: 0.08; /* very soft like reference */
+  filter: blur(2px);
+
+  z-index: 0;
+}
+
+/* OPTIONAL SECOND LIGHT SHAPE (adds depth 🔥) */
+.agent-shell-instagram .insta-wide-card::after{
+  content: "";
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  left: 5%;
+  bottom: 10%;
+
+  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+  border-radius: 50%;
+
+  z-index: 0;
+}
+
+/* KEEP CONTENT ABOVE */
+.agent-shell-instagram .insta-wide-card *{
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= HEADER ================= */
+.agent-shell-instagram .insta-wide-header{
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.agent-shell-instagram .insta-wide-header h2{
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.agent-shell-instagram .insta-wide-header span{
+  background: linear-gradient(90deg, #ff4d6d, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= BODY ================= */
+.agent-shell-instagram .insta-wide-.agent-shell-instagram{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ================= LEFT ================= */
+.agent-shell-instagram .lead-left{
+  width: 420px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+
+  transform: scale(1.05);
+  margin-right: -40px;
+  z-index: 2;
+}
+
+/* ================= RIGHT ================= */
+.agent-shell-instagram .lead-chat{
+  width: 380px;
+  background: #fff;
+  border-radius: 26px;
+  padding: 25px;
+
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  transform: translateX(-40px) scale(1.08);
+  z-index: 2;
+}
+
+/* ================= CENTER FLOW ================= */
+.agent-shell-instagram .lead-center{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= DOT LINE ================= */
+.agent-shell-instagram .flow-line{
+  width: 120px;
+  height: 2px;
+  position: relative;
+}
+
+/* DOTTED ANIMATION */
+.agent-shell-instagram .flow-line::before{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+
+  background-image: linear-gradient(90deg, #ff4d6d 50%, transparent 50%);
+  background-size: 12px 2px;
+
+  animation: moveDots 1s linear infinite;
+}
+
+@keyframes moveDots {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 12px 0;
+  }
+}
+
+/* ================= FLOW STEPS ================= */
+.agent-shell-instagram .flow-step{
+  background: white;
+  padding: 10px 18px;
+  border-radius: 22px;
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.agent-shell-instagram .flow-step.highlight{
+  background: linear-gradient(90deg, #ff4d6d, #d946ef);
+  color: white;
+}
+
+/* ================= MOVING EMAIL ================= */
+.agent-shell-instagram .floating-email{
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translateY(-50%);
+  z-index: 4;
+
+  background: linear-gradient(90deg, #ff4d6d, #d946ef);
+  color: white;
+
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+
+  animation: moveEmail 3s ease-in-out infinite;
+}
+
+/* EMAIL ANIMATION */
+@keyframes moveEmail {
+  0% {
+    left: 35%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    left: 50%;
+  }
+  80% {
+    left: 65%;
+    opacity: 1;
+  }
+  100% {
+    left: 65%;
+    opacity: 0;
+  }
+}
+
+/* ================= CHAT ================= */
+.agent-shell-instagram .msg{
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.agent-shell-instagram .msg.left{
+  background: #f1f1f1;
+}
+
+.agent-shell-instagram .msg.right{
+  background: linear-gradient(135deg, #7b3ff2, #d946ef);
+  color: white;
+  margin-left: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .agent-shell-instagram .insta-wide-.agent-shell-instagram{
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .agent-shell-instagram .lead-left, .agent-shell-instagram .lead-chat{
+    width: 100%;
+    transform: none;
+    margin: 0;
+  }
+
+  .agent-shell-instagram .lead-center, .agent-shell-instagram .floating-email{
+    display: none;
+  }
+}
+/* ================= SECTION ================= */
+.agent-shell-instagram .insta-faq{
+  padding: 100px 0;
+  background: #f5f7fb;
+}
+
+.agent-shell-instagram .insta-faq h2{
+  text-align: center;
+  font-size: 38px;
+  margin-bottom: 60px;
+  font-weight: 700;
+  color: #0a2540;
+}
+
+.agent-shell-instagram .insta-faq span{
+  background: linear-gradient(90deg, #ff4d6d, #7b3ff2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= LAYOUT ================= */
+.agent-shell-instagram .faq-container{
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 0 20px;
+}
+
+/* ================= LEFT ================= */
+.agent-shell-instagram .faq-left{
+  flex: 1;
+}
+
+.agent-shell-instagram .faq-item{
+  padding: 22px 0;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.agent-shell-instagram .faq-item h4{
+  font-size: 20px;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+.agent-shell-instagram .faq-item.active h4{
+  color: #7b3ff2;
+}
+
+.agent-shell-instagram .faq-item p{
+  margin-top: 10px;
+  color: #6b7280;
+}
+
+/* ================= RIGHT ================= */
+.agent-shell-instagram .faq-right{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* ================= PHONE ================= */
+.agent-shell-instagram .insta-phone{
+  width: 300px;
+  height: 600px;
+  background: #000;
+  border-radius: 40px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+/* ================= HEADER ================= */
+.agent-shell-instagram .insta-header{
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  color: #111;
+}
+
+/* ================= CHAT AREA (WHITE) ================= */
+.agent-shell-instagram .insta-chat{
+  flex: 1;
+  padding: 12px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= MESSAGE ================= */
+.agent-shell-instagram .msg{
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  max-width: 75%;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* USER MESSAGE (LEFT - GREY) */
+.agent-shell-instagram .msg.left{
+  background: #efefef;
+  color: #111;
+  align-self: flex-start;
+}
+
+/* BOT MESSAGE (RIGHT - BLUE LIKE INSTAGRAM) */
+.agent-shell-instagram .msg.right{
+  background: #3797f0;
+  color: white;
+  align-self: flex-end;
+}
+
+/* CTA MESSAGE (GRADIENT INSTAGRAM STYLE) */
+.agent-shell-instagram .msg.gradient{
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: white;
+}
+
+/* ================= BUTTON ================= */
+.agent-shell-instagram .insta-btn{
+  align-self: flex-end;
+  background: #efefef;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* ================= COMMENTS ================= */
+.agent-shell-instagram .comment{
+  background: #f2f2f2;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.agent-shell-instagram .reply{
+  color: #0095f6;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* ================= PRODUCT ================= */
+.agent-shell-instagram .product-card{
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+}
+
+.agent-shell-instagram .product-card img{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.agent-shell-instagram .product-card p{
+  font-size: 13px;
+  margin: 6px 0;
+}
+
+.agent-shell-instagram .product-card button{
+  padding: 6px 10px;
+  border: none;
+  background: #0095f6;
+  color: white;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* ================= OPTIONS ================= */
+.agent-shell-instagram .options{
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.agent-shell-instagram .options span{
+  background: #efefef;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* ================= HOVER ================= */
+.agent-shell-instagram .faq-item:hover{
+  transform: translateX(4px);
+  transition: 0.3s;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .agent-shell-instagram .faq-container{
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .agent-shell-instagram .insta-phone{
+    width: 260px;
+    height: 540px;
+  }
+}
+
+@media (max-width: 576px) {
+  .agent-shell-instagram .insta-faq h2{
+    font-size: 28px;
+  }
+}
+/* ================= SECTION ================= */
+.agent-shell-instagram .insta-testimonials{
+  background: #0b0f2a;
+  padding: 100px 0;
+  color: white;
+}
+
+/* ================= HEADING ================= */
+.agent-shell-instagram .insta-testimonials h2{
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.agent-shell-instagram .insta-testimonials h2 span{
+  background: linear-gradient(90deg, #ff4d6d, #7b3ff2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================= CARD ================= */
+.agent-shell-instagram .testimonial-card{
+  background: #121633;
+  border-radius: 20px;
+  padding: 25px;
+  height: 100%;
+  position: relative;
+  transition: 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.agent-shell-instagram .testimonial-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* ================= QUOTE ================= */
+.agent-shell-instagram .quote{
+  font-size: 50px;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  opacity: 0.1;
+}
+
+/* ================= TEXT ================= */
+.agent-shell-instagram .testimonial-card p{
+  font-size: 15px;
+  line-height: 1.6;
+  color: #d1d5db;
+  margin-bottom: 20px;
+}
+
+/* ================= USER ================= */
+.agent-shell-instagram .user{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agent-shell-instagram .avatar{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d6d, #7b3ff2);
+}
+
+.agent-shell-instagram .user h5{
+  margin: 0;
+  font-size: 15px;
+}
+
+.agent-shell-instagram .user span{
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .agent-shell-instagram .insta-testimonials h2{
+    font-size: 28px;
+  }
+}
+/* PAGE BACKGROUND */
+.agent-shell-instagram .insta-connect-page{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  padding: 20px;
+}
+
+/* CARD */
+.agent-shell-instagram .insta-connect-card{
+  background: white;
+  padding: 50px 40px;
+  border-radius: 20px;
+  width: 420px;
+  max-width: 100%;
+  text-align: center;
+
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+.agent-shell-instagram .insta-logo{
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 10px 25px rgba(221, 42, 123, 0.3);
+}
+/* TITLE */
+.agent-shell-instagram .insta-connect-card h2{
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+/* DESCRIPTION */
+.agent-shell-instagram .insta-connect-card p{
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* FEATURES */
+.agent-shell-instagram .insta-features{
+  text-align: left;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.agent-shell-instagram .insta-features div{
+  margin-bottom: 8px;
+}
+
+/* BUTTON */
+.agent-shell-instagram .insta-connect-btn{
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+  color: white;
+
+  transition: 0.3s ease;
+}
+
+.agent-shell-instagram .insta-connect-btn:hover{
+  transform: translateY(-2px);
+}
+
+/* DISABLED */
+.agent-shell-instagram .insta-connect-btn:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* NOTE */
+.agent-shell-instagram .insta-note{
+  margin-top: 15px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+/* WRAPPER */
+.agent-shell-instagram .pd-wrapper{
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f1b4d, #1a2a6c);
+  color: white;
+  font-family: sans-serif;
+}
+
+/* SIDEBAR */
+.agent-shell-instagram .pd-sidebar{
+  width: 220px;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+}
+
+.agent-shell-instagram .pd-sidebar ul{
+  list-style: none;
+  padding: 0;
+}
+
+.agent-shell-instagram .pd-sidebar li{
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.agent-shell-instagram .pd-sidebar li.active, .agent-shell-instagram .pd-sidebar li:hover{
+  background: rgba(255,255,255,0.1);
+}
+
+/* MAIN */
+.agent-shell-instagram .pd-main{
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* TOP */
+.agent-shell-instagram .pd-top{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* BUTTON */
+.agent-shell-instagram .upgrade-btn{
+  background: linear-gradient(90deg, #ff4d6d, #7b3ff2);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: white;
+}
+
+/* STATS */
+.agent-shell-instagram .pd-stats{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.agent-shell-instagram .pd-card{
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* ANALYTICS */
+.agent-shell-instagram .pd-analytics{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.agent-shell-instagram .pd-chart-card{
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* CHAT */
+.agent-shell-instagram .pd-grid{
+  display: flex;
+  gap: 20px;
+}
+
+.agent-shell-instagram .pd-chat-list{
+  width: 220px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+
+.agent-shell-instagram .pd-chat-item{
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.agent-shell-instagram .pd-chat-item.active{
+  background: rgba(255,255,255,0.2);
+}
+
+.agent-shell-instagram .avatar{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d6d, #7b3ff2);
+}
+
+.agent-shell-instagram .pd-chat-window{
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.agent-shell-instagram .msg{
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  max-width: 60%;
+}
+
+.agent-shell-instagram .msg.left{
+  background: #eee;
+  color: black;
+}
+
+.agent-shell-instagram .msg.right{
+  background: #3797f0;
+  margin-left: auto;
+}
+
+.agent-shell-instagram .msg.gradient{
+  background: linear-gradient(135deg, #ff4d6d, #7b3ff2);
+}
+
+/* LEADS */
+.agent-shell-instagram .pd-leads{
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.agent-shell-instagram .lead-row{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+/* SETTINGS */
+.agent-shell-instagram .pd-settings{
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.agent-shell-instagram .pd-settings input{
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.agent-shell-instagram .save-btn{
+  background: linear-gradient(90deg, #ff4d6d, #7b3ff2);
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .agent-shell-instagram .pd-stats{
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .agent-shell-instagram .pd-analytics{
+    grid-template-columns: 1fr;
+  }
+
+  .agent-shell-instagram .pd-grid{
+    flex-direction: column;
+  }
+}
+.agent-shell-instagram .pd-logo{
+  width: 140px;
+  margin-bottom: 30px;
+}

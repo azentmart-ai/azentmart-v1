@@ -2,7 +2,7 @@
    GLOBAL RESET
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   background-color: #ffffff;
   color: #111827;
 }
@@ -46,7 +46,7 @@ body {
 
   z-index: 1000;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 }
 
 
@@ -142,7 +142,7 @@ body {
 .nav-links button {
   text-decoration: none;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 14px;
   font-weight: 500;
@@ -224,7 +224,7 @@ body {
 
   color: #475569 !important;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 14px;
   font-weight: 500;
@@ -277,7 +277,7 @@ body {
 
   color: #ffffff !important;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 14px;
   font-weight: 600;
@@ -458,8 +458,8 @@ body {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -530,6 +530,8 @@ body {
   color: #111827;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -573,8 +575,8 @@ body {
   color: #475569;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 13px;
 
@@ -618,8 +620,8 @@ body {
   border-radius: 6px;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 13px;
 
@@ -783,6 +785,8 @@ body {
   color: #14213d;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -806,8 +810,8 @@ body {
   color: #526581;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -1295,7 +1299,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #0a66c2;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 800;
   line-height: 1;
@@ -1374,7 +1378,7 @@ body {
   border-radius: 14px;
   background: #ffffff;
   color: #14213d;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 1;
@@ -1608,8 +1612,8 @@ body {
   color: #14213d;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 13px;
 
@@ -1631,8 +1635,8 @@ body {
   color: #718096;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 9px;
 
@@ -1703,6 +1707,8 @@ body {
   color: #263a59;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -1737,8 +1743,8 @@ body {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 11px;
 
@@ -1821,8 +1827,8 @@ body {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 11px;
 
@@ -1906,6 +1912,8 @@ body {
   color: #718096;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -1962,8 +1970,8 @@ body {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -2582,7 +2590,7 @@ body {
 .testimonial-section p,
 .cta-section p,
 .footer p {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 13.5px;
   line-height: 1.75;
   color: #475569;
@@ -2668,7 +2676,7 @@ body {
 
   color: #0a66c2;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-weight: 500;
 
@@ -2687,7 +2695,7 @@ body {
 
   color: #111827;
 
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: clamp(38px, 5vw, 52px);
   font-weight: 300;
 
@@ -2708,7 +2716,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 13px;
   line-height: 1.8;
 }
@@ -2786,7 +2794,7 @@ body {
 
   color: #0a66c2;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 9px;
   letter-spacing: 0.15em;
 
@@ -2814,7 +2822,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 1.75;
 }
@@ -2918,7 +2926,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 9px;
 
   letter-spacing: 0.08em;
@@ -2930,7 +2938,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 1.75;
 }
@@ -2952,7 +2960,7 @@ body {
 
   color: #0a66c2;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 9px;
 
   letter-spacing: 0.12em;
@@ -2969,7 +2977,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 10px;
 
   text-decoration: none;
@@ -2998,7 +3006,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 11px;
 
   text-decoration: none;
@@ -3065,7 +3073,7 @@ body {
 
   color: #0a66c2;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 9px;
 
   letter-spacing: 0.12em;
@@ -3077,7 +3085,7 @@ body {
 
   color: #111827;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 38px;
   font-weight: 500;
 }
@@ -3087,7 +3095,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 10px;
 }
 
@@ -3096,7 +3104,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 1.7;
 }
@@ -3106,7 +3114,7 @@ body {
 
   color: #0a66c2;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 10px;
 }
 
@@ -3122,7 +3130,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 11px;
 
   cursor: pointer;
@@ -3187,7 +3195,7 @@ body {
 
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
 
   line-height: 1.8;
@@ -3220,7 +3228,7 @@ body {
 .testimonial-user span {
   color: #475569;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 9px;
 }
 
@@ -3336,7 +3344,7 @@ body {
 
   max-width: 850px;
 
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: clamp(38px, 5vw, 58px);
 
@@ -3359,7 +3367,7 @@ body {
 
   margin: 0 auto 32px;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 13.5px;
 
@@ -3407,7 +3415,7 @@ body {
 
   color: #ffffff !important;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 13px;
 
@@ -3454,7 +3462,7 @@ body {
 
   color: #475569 !important;
 
-  font-family: "JetBrains Mono", monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 
   font-size: 13px;
 
@@ -3559,7 +3567,7 @@ body {
 
   color: #1f2937;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
 
@@ -3576,7 +3584,7 @@ body {
 
   color: #475569;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -3600,7 +3608,7 @@ body {
 
   color: #1f2937;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
 
   letter-spacing: 0;
@@ -3615,7 +3623,7 @@ body {
 
   color: #475569;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
 
   text-decoration: none;
@@ -3641,7 +3649,7 @@ body {
 
   color: #94a3b8;
 
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
 
   letter-spacing: 0;
@@ -3742,7 +3750,7 @@ body {
   border-radius:999px;
   background:#f1f7ff;
   color:#0a66c2;
-  font-family:"JetBrains Mono",monospace;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:9px;
   font-weight:700;
   letter-spacing:.08em;
@@ -3764,7 +3772,7 @@ body {
   max-width:760px;
   margin:0 auto 18px;
   color:#0b2239;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:clamp(38px,5vw,58px);
   font-weight:500;
   line-height:1.04;
@@ -3779,7 +3787,7 @@ body {
   max-width:690px;
   margin:0 auto;
   color:#637b8e;
-  font-family:"JetBrains Mono",monospace;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:11px;
   font-weight:400;
   line-height:1.8;
@@ -3803,7 +3811,7 @@ body {
 }
 
 .search-box{
-  width:min(1180px,100%);
+  width:80%;
   min-height:58px;
   margin:0 auto 48px;
   padding:0 19px;
@@ -3830,7 +3838,7 @@ body {
   outline:0;
   background:transparent;
   color:#173b59;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:14px;
   font-weight:400;
 }
@@ -3908,7 +3916,7 @@ body {
 .agent-top h3{
   margin:0;
   color:#173b59;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:20px;
   font-weight:600;
   line-height:1.2;
@@ -3931,7 +3939,7 @@ body {
   min-height:25px;
   padding:0 10px;
   border-radius:999px;
-  font-family:"JetBrains Mono",monospace;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:8px;
   font-weight:600;
   line-height:1;
@@ -3955,7 +3963,7 @@ body {
   min-height:52px;
   margin:18px 0 15px;
   color:#637b8e;
-  font-family:"JetBrains Mono",monospace;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:10px;
   font-weight:400;
   line-height:1.7;
@@ -3969,7 +3977,7 @@ body {
   gap:4px;
   margin-top:auto;
   color:#f2b01e;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:13px;
   font-weight:600;
 }
@@ -3999,7 +4007,7 @@ body {
   min-height:44px;
   padding:0 14px;
   border-radius:8px;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:12px;
   font-weight:600;
   cursor:pointer;
@@ -4052,7 +4060,7 @@ body {
   border-radius:8px;
   background:#ffffff;
   color:#526b80;
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif;
   font-size:11px;
   font-weight:600;
   cursor:pointer;
@@ -6240,7 +6248,7 @@ border-radius:8px;
 .wa-container {
   padding: 20px;
   background: #f5f7fb;
-  font-family: Inter, Arial, sans-serif;
+  font-family: "DM Sans", Arial, Arial, sans-serif;
   color: #1f2937;
 }
 
@@ -10673,7 +10681,7 @@ input:checked + .slider::before {
 }
 
 .api-key-value {
-  font-family: monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   color: #475569;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -10790,7 +10798,7 @@ input:checked + .slider::before {
 .api-endpoint-info code {
   color: #111827;
   font-size: 13px;
-  font-family: monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
 }
 
 .api-endpoint-info span {
@@ -10842,7 +10850,7 @@ input:checked + .slider::before {
   color: #e9d5ff;
   padding: 11px 14px;
   border-radius: 6px;
-  font-family: monospace;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
 }
 
@@ -11154,8 +11162,8 @@ input:checked + .slider::before {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -11195,6 +11203,8 @@ input:checked + .slider::before {
   color: #14213d;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11224,8 +11234,8 @@ input:checked + .slider::before {
   color: #64748b;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -11252,6 +11262,8 @@ input:checked + .slider::before {
   color: #475569;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11339,8 +11351,8 @@ input:checked + .slider::before {
   color: #0a66c2;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 9px;
 
@@ -11374,6 +11386,8 @@ input:checked + .slider::before {
   color: #14213d;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11401,6 +11415,8 @@ input:checked + .slider::before {
   color: #14213d;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11428,6 +11444,8 @@ input:checked + .slider::before {
   color: #475569;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11471,6 +11489,8 @@ input:checked + .slider::before {
   color: #475569;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11533,6 +11553,8 @@ input:checked + .slider::before {
   color: #475569;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11597,6 +11619,8 @@ input:checked + .slider::before {
   color: #475569;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11618,8 +11642,8 @@ input:checked + .slider::before {
   color: #64748b;
 
   font-family:
-    "JetBrains Mono",
-    monospace;
+    "DM Sans",
+    "DM Sans", Arial, Arial, Helvetica, sans-serif;
 
   font-size: 10px;
 
@@ -11691,6 +11715,8 @@ input:checked + .slider::before {
   color: #0a66c2;
 
   font-family:
+    "DM Sans",
+    Arial,
     Arial,
     Helvetica,
     sans-serif;
@@ -11944,31 +11970,39 @@ input:checked + .slider::before {
 
 /* =========================================================
    AZENTMART GLOBAL NAVIGATION
-   Enterprise Blue / White Theme
+   CLEAN WHITE / BLUE THEME
    ========================================================= */
 
 .az-global-nav {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 5000;
-  background: rgba(255, 255, 255, 0.92);
-  border-bottom: 1px solid #e2ebf2;
-  backdrop-filter: blur(18px);
-}
 
+  /* EXACT SAME WHITE AS HERO */
+  background: #ffffff;
+
+  border-bottom: 1px solid #e6eef5;
+
+  /* Remove grey/translucent appearance */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  box-shadow: none;
+}
 .az-nav-shell {
-  width: min(1240px, calc(100% - 48px));
+  width: min(1400px, calc(100% - 48px));
   min-height: 82px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
 }
 
 .az-nav-brand {
   display: inline-flex;
   align-items: center;
-  flex: 0 0 auto;
+  justify-self: start;
 }
 
 .az-nav-brand img {
@@ -11980,31 +12014,39 @@ input:checked + .slider::before {
 .az-nav-links {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-left: auto;
+  justify-content: center;
+  gap: 8px;
+  justify-self: center;
 }
-
 .az-nav-link,
 .az-nav-menu-button {
   min-height: 44px;
   padding: 0 14px;
+
   display: inline-flex;
   align-items: center;
   gap: 7px;
+
   border: 0;
   background: transparent;
-  color: #40566d;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+
+  /* Darker professional navy */
+  color: #334e68;
+
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.4;
+
   text-decoration: none;
   cursor: pointer;
   border-radius: 7px;
-  transition: color 0.2s ease, background 0.2s ease;
-}
 
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
 .az-nav-link:hover,
 .az-nav-menu-button:hover {
   color: #0a66c2;
@@ -12061,7 +12103,7 @@ input:checked + .slider::before {
 
 .az-nav-mega-intro > span {
   color: #0a66c2;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -12070,7 +12112,7 @@ input:checked + .slider::before {
 .az-nav-mega-intro h3 {
   margin: 12px 0 9px;
   color: #102a43;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
   line-height: 1.1;
@@ -12080,7 +12122,7 @@ input:checked + .slider::before {
 .az-nav-mega-intro p {
   margin: 0;
   color: #72879a;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 13px;
   line-height: 1.6;
 }
@@ -12112,7 +12154,7 @@ input:checked + .slider::before {
 
 .az-nav-mega-grid strong {
   color: #17364f;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 13px;
   font-weight: 600;
 }
@@ -12120,7 +12162,7 @@ input:checked + .slider::before {
 .az-nav-mega-grid small {
   margin-top: 5px;
   color: #7b91a3;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 1.5;
 }
@@ -12128,14 +12170,15 @@ input:checked + .slider::before {
 .az-nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-left: 14px;
+  justify-content: flex-end;
+  gap: 16px;
+  justify-self: end;
 }
 
 .az-nav-signin {
   padding: 11px 14px;
   color: #40566d;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
@@ -12157,7 +12200,7 @@ input:checked + .slider::before {
   border-radius: 8px;
   color: #fff;
   background: #0a66c2;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0;
@@ -12196,18 +12239,20 @@ input:checked + .slider::before {
 }
 
 .az-footer-main {
-  width: min(1180px, calc(100% - 64px));
+  width: 90%;
+  max-width: 1500px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.7fr repeat(3, 1fr);
-  gap: 55px;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 60px;
+  align-items: start;
 }
 
 .az-footer-brand p {
   max-width: 350px;
   margin: 18px 0;
   color: #9eb3c4;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.7;
@@ -12251,7 +12296,7 @@ input:checked + .slider::before {
 .az-footer-column > span {
   margin-bottom: 6px;
   color: #fff;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
@@ -12264,7 +12309,7 @@ input:checked + .slider::before {
   align-items: center;
   gap: 6px;
   color: #93aabd;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
@@ -12292,7 +12337,7 @@ input:checked + .slider::before {
   gap: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: #718a9d;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", Arial, Helvetica, sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.5;
@@ -12320,6 +12365,7 @@ input:checked + .slider::before {
   .az-nav-shell {
     width: min(100% - 32px, 900px);
     min-height: 74px;
+    display: flex;
   }
 
   .az-nav-links {
@@ -12434,3 +12480,53 @@ input:checked + .slider::before {
     font-size: 11px;
   }
 }
+
+
+/* Marketplace follows the same 80% content rhythm as the main AzentMart site. */
+.marketplace-section > .container,
+.marketplace-section .search-box
+{
+ width:80%;
+ max-width:none;
+}
+@media(max-width:992px)
+{
+ .marketplace-section > .container,
+ .marketplace-section .search-box
+ { width:90%; }
+}
+@media(max-width:768px)
+{
+ .marketplace-section > .container,
+ .marketplace-section .search-box
+ { width:100%; }
+}
+
+/* =========================================================
+   AGENT FOOTER — shared AzentMart structure, agent-specific theme
+   ========================================================= */
+.az-agent-footer {
+  --agent-footer-bg: #0f263b;
+  --agent-footer-accent: #5fa1d7;
+  --agent-footer-muted: #9eb3c4;
+  background: var(--agent-footer-bg);
+}
+.az-agent-footer--whatsapp { --agent-footer-bg:#102c25; --agent-footer-accent:#55d89a; --agent-footer-muted:#a9cfc0; }
+.az-agent-footer--instagram { --agent-footer-bg:#24152d; --agent-footer-accent:#e66bd0; --agent-footer-muted:#d2b8d0; }
+.az-agent-footer--interview { --agent-footer-bg:#17233b; --agent-footer-accent:#79a9ff; --agent-footer-muted:#b2c0d8; }
+.az-agent-footer--voice { --agent-footer-bg:#1d1b2b; --agent-footer-accent:#9d8cff; --agent-footer-muted:#c1bbd8; }
+.az-agent-footer .az-footer-brand p { color:var(--agent-footer-muted); }
+.az-agent-footer .az-footer-socials a { color:var(--agent-footer-muted); }
+.az-agent-footer .az-footer-socials a:hover { color:#fff; border-color:var(--agent-footer-accent); background:color-mix(in srgb, var(--agent-footer-accent) 18%, transparent); }
+.az-agent-footer .az-footer-column a { color:var(--agent-footer-muted); }
+.az-agent-footer .az-footer-column a:hover { color:#fff; }
+.az-agent-footer .az-footer-column a svg { color:var(--agent-footer-accent); }
+.az-agent-footer .az-footer-bottom { color:var(--agent-footer-muted); }
+.az-agent-footer .az-footer-bottom button { color:var(--agent-footer-muted); }
+.az-agent-footer .az-footer-logo img { width:165px; }
+
+/* Agent landing navs use the approved landing-page AzentMart logo asset. */
+.logo-link { display:inline-flex; align-items:center; text-decoration:none; }
+.your-ai-logo img { max-height:42px; width:auto; display:block; }
+.brand-logo img { width:118px; height:auto; max-height:44px; object-fit:contain; display:block; }
+.sidebar-brand .brand-mark img { width:112px; height:auto; max-height:38px; object-fit:contain; display:block; }

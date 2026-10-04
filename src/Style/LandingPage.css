@@ -1,5 +1,8 @@
 .az-home
 {
+ width:100%;
+ max-width:none;
+ margin:0;
  --blue:#0a66c2;
  --navy:#0b2239;
  --ink:#16344d;
@@ -10,7 +13,7 @@
  color:var(--navy);
  background:#fff;
  overflow:hidden;
- font-family:"Inter", Arial, Helvetica, sans-serif
+ font-family:"DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-home *
 {
@@ -22,9 +25,9 @@
 }
 .az-container
 {
- width:80%;
+ width:90%;
  max-width:none;
- margin:auto
+ margin:0 auto;
 }
 .az-section
 {
@@ -38,8 +41,9 @@
 }
 .az-section-heading
 {
- max-width:760px;
- margin:0 0 54px
+ max-width:920px;
+ margin:0 auto 54px;
+ text-align:center
 }
 .az-section-kicker
 {
@@ -48,7 +52,7 @@
  gap:9px;
  margin-bottom:16px;
  color:var(--blue);
- font:700 9px/1 "JetBrains Mono", monospace;
+ font:700 9px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.16em;
  text-transform:uppercase
 }
@@ -71,10 +75,10 @@
 }
 .az-section-heading p
 {
- max-width:720px;
- margin:20px 0 0;
+ max-width:760px;
+ margin:20px auto 0;
  color:var(--muted);
- font:12px/1.8 "JetBrains Mono", monospace
+ font:12px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-reveal
 {
@@ -91,14 +95,14 @@
 {
  transition-delay:.18s
 }
-.az-hero
+.az-home .az-hero
 {
  position:relative;
  min-height:calc(100vh - 82px);
  padding:70px 0 58px;
  background:radial-gradient(circle at 78% 48%, rgba(10, 102, 194, .12), transparent 31%), linear-gradient(180deg, #f8fcff, #fff 75%)
 }
-.az-hero-grid
+.az-home .az-hero-grid
 {
  position:absolute;
  inset:0;
@@ -106,13 +110,13 @@
  background-size:48px 48px;
  mask-image:linear-gradient(to bottom, rgba(0, 0, 0, .8), transparent 88%)
 }
-.az-hero-glow
+.az-home .az-hero-glow
 {
  position:absolute;
  border-radius:50%;
  pointer-events:none
 }
-.az-hero-glow-one
+.az-home .az-hero-glow-one
 {
  width:520px;
  height:520px;
@@ -120,7 +124,7 @@
  top:80px;
  background:radial-gradient(circle, rgba(10, 102, 194, .09), transparent 68%)
 }
-.az-hero-glow-two
+.az-home .az-hero-glow-two
 {
  width:300px;
  height:300px;
@@ -128,7 +132,7 @@
  bottom:0;
  background:radial-gradient(circle, rgba(77, 168, 230, .07), transparent 68%)
 }
-.az-hero-inner
+.az-home .az-hero-inner
 {
  position:relative;
  z-index:2;
@@ -137,11 +141,11 @@
  gap:56px;
  align-items:center
 }
-.az-hero-copy
+.az-home .az-hero-copy
 {
  max-width:570px
 }
-.az-eyebrow
+.az-home .az-eyebrow
 {
  display:inline-flex;
  align-items:center;
@@ -152,10 +156,10 @@
  border-radius:999px;
  background:rgba(255, 255, 255, .82);
  color:var(--blue);
- font:700 9px/1 "JetBrains Mono", monospace;
+ font:700 9px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.13em
 }
-.az-live-dot
+.az-home .az-live-dot
 {
  width:7px;
  height:7px;
@@ -163,7 +167,7 @@
  background:#2dbb79;
  box-shadow:0 0 0 4px rgba(45, 187, 121, .1)
 }
-.az-hero h1
+.az-home .az-hero h1
 {
  margin:0;
  font-size:62px;
@@ -171,18 +175,18 @@
  line-height:.98;
  letter-spacing:-.065em
 }
-.az-hero h1 span
+.az-home .az-hero h1 span
 {
  color:var(--blue)
 }
-.az-hero-copy>p
+.az-home .az-hero-copy>p
 {
  max-width:560px;
  margin:23px 0 0;
  color:#58728a;
- font:14px/1.75 "JetBrains Mono", monospace
+ font:14px/1.75 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-hero-actions
+.az-home .az-hero-actions
 {
  display:flex;
  flex-wrap:wrap;
@@ -200,7 +204,7 @@
  border:1px solid transparent;
  border-radius:9px;
  text-decoration:none;
- font:700 10px/1 "JetBrains Mono", monospace;
+ font:700 10px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.03em;
  transition:transform .25s ease, box-shadow .25s ease, background .25s ease
 }
@@ -265,7 +269,7 @@
  gap:18px;
  margin-top:21px;
  color:#6a8194;
- font:9px/1.4 "JetBrains Mono", monospace
+ font:9px/1.4 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-trust-row span
 {
@@ -277,12 +281,12 @@
 {
  color:var(--blue)
 }
-.az-hero-product
+.az-home .az-hero-product
 {
  position:relative;
  min-height:560px
 }
-.az-product-backdrop
+.az-home .az-product-backdrop
 {
  position:absolute;
  inset:25px 0 10px 35px;
@@ -290,7 +294,7 @@
  background:linear-gradient(145deg, rgba(10, 102, 194, .08), rgba(255, 255, 255, 0));
  filter:blur(1px)
 }
-.az-ai-window
+.az-home .az-ai-window
 {
  position:absolute;
  inset:0 0 0 25px;
@@ -300,7 +304,7 @@
  background:rgba(255, 255, 255, .96);
  box-shadow:0 32px 90px rgba(11, 34, 57, .13)
 }
-.az-ai-window-header
+.az-home .az-ai-window-header
 {
  height:70px;
  padding:0 22px;
@@ -309,13 +313,13 @@
  justify-content:space-between;
  border-bottom:1px solid #e6eef4
 }
-.az-ai-identity
+.az-home .az-ai-identity
 {
  display:flex;
  align-items:center;
  gap:11px
 }
-.az-ai-mark
+.az-home .az-ai-mark
 {
  width:31px;
  height:31px;
@@ -325,20 +329,20 @@
  background:var(--blue);
  color:#fff
 }
-.az-ai-identity strong
+.az-home .az-ai-identity strong
 {
  display:block;
  font-size:11px;
  letter-spacing:.08em
 }
-.az-ai-identity small
+.az-home .az-ai-identity small
 {
  display:block;
  margin-top:4px;
  color:#6e8495;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-ai-identity small span
+.az-home .az-ai-identity small span
 {
  display:inline-block;
  width:5px;
@@ -353,28 +357,28 @@
  border:1px solid #dce7ee;
  border-radius:999px;
  color:#70869a;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-ai-context-row
+.az-home .az-ai-context-row
 {
  padding:12px 22px;
  display:flex;
  gap:24px;
  color:#72889a;
- font:8px "JetBrains Mono", monospace;
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  border-bottom:1px solid #edf2f6
 }
-.az-ai-context-row span
+.az-home .az-ai-context-row span
 {
  display:flex;
  align-items:center;
  gap:6px
 }
-.az-ai-context-row svg
+.az-home .az-ai-context-row svg
 {
  color:var(--blue)
 }
-.az-ai-dashboard
+.az-home .az-ai-dashboard
 {
  padding:22px
 }
@@ -390,7 +394,7 @@
 .az-employee-demo small
 {
  color:#7890a1;
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-dashboard-title h3
@@ -410,7 +414,7 @@
  border-radius:999px;
  background:#f4fbf7;
  color:#2a8c63;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-status-pill i
 {
@@ -445,7 +449,7 @@
  display:block;
  margin-top:5px;
  color:#7890a1;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-card-icon
 {
@@ -461,7 +465,7 @@
 {
  margin:9px 0;
  color:#688095;
- font:9px/1.5 "JetBrains Mono", monospace
+ font:9px/1.5 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-progress
 {
@@ -532,7 +536,7 @@
  align-items:center;
  gap:6px;
  color:#6b8396!important;
- font:8px "JetBrains Mono", monospace!important
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif!important
 }
 .az-review-line svg
 {
@@ -570,7 +574,7 @@
  color:#2a9b6c;
  font-size:11px
 }
-.az-ai-input-area
+.az-home .az-ai-input-area
 {
  position:absolute;
  left:0;
@@ -580,7 +584,7 @@
  background:linear-gradient(180deg, rgba(255, 255, 255, .65), #fff 35%);
  border-top:1px solid #edf2f6
 }
-.az-ai-input
+.az-home .az-ai-input
 {
  height:43px;
  display:flex;
@@ -590,9 +594,9 @@
  border:1px solid #dbe6ed;
  border-radius:10px;
  color:#93a5b2;
- font:9px "JetBrains Mono", monospace
+ font:9px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-ai-input button
+.az-home .az-ai-input button
 {
  width:34px;
  height:34px;
@@ -603,12 +607,12 @@
  color:#fff;
  cursor:pointer
 }
-.az-ai-input-area>small
+.az-home .az-ai-input-area>small
 {
  display:block;
  margin-top:8px;
  color:#92a3af;
- font:7px "JetBrains Mono", monospace;
+ font:7px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  text-align:center
 }
 .az-floating-proof
@@ -639,7 +643,7 @@
 {
  display:block;
  color:#8296a6;
- font:7px "JetBrains Mono", monospace
+ font:7px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-floating-proof strong
 {
@@ -782,7 +786,7 @@
 }
 .az-proof-heading>span
 {
- font:700 9px "Inter", Arial, Helvetica, sans-serif;
+ font:700 9px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.14em;
  color:#6f8798
 }
@@ -791,7 +795,7 @@
  max-width:460px;
  margin:0;
  color:#718799;
- font:14px/1.75 "Inter", Arial, Helvetica, sans-serif
+ font:14px/1.75 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-logo-row, 
 .az-metric-row
@@ -905,7 +909,7 @@
  max-width:500px;
  margin:0;
  color:#657e92;
- font:13px/1.8 "JetBrains Mono", monospace
+ font:13px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-problem-list
 {
@@ -924,7 +928,7 @@
 {
  grid-row:span 2;
  color:#9aabb7;
- font:9px "JetBrains Mono", monospace
+ font:9px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-problem-list strong
 {
@@ -934,7 +938,7 @@
 .az-problem-list span
 {
  color:#7b90a0;
- font:9px/1.6 "JetBrains Mono", monospace
+ font:9px/1.6 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-cost-callout
 {
@@ -951,7 +955,7 @@
 {
  min-width:160px;
  color:var(--blue);
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-cost-callout strong
@@ -1010,7 +1014,7 @@
 {
  margin-top:13px;
  color:#7690a2;
- font:7px "JetBrains Mono", monospace;
+ font:7px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.16em
 }
 .az-solution-core strong
@@ -1041,7 +1045,7 @@
 .az-solution-node span
 {
  color:var(--navy);
- font:700 10px "JetBrains Mono", monospace
+ font:700 10px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .sn-sales
 {
@@ -1142,7 +1146,7 @@
 .az-employee-tabs button>span
 {
  color:#91a3af;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-employee-tabs button div strong
 {
@@ -1155,7 +1159,7 @@
  display:block;
  margin-top:5px;
  color:#8296a5;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-employee-tabs button svg
 {
@@ -1203,7 +1207,7 @@
 .az-employee-detail-top>span
 {
  color:#8a9ca9;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-employee-icon
 {
@@ -1229,7 +1233,7 @@
 {
  max-width:570px;
  color:#6d8496;
- font:11px/1.8 "JetBrains Mono", monospace
+ font:11px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-tag-row
 {
@@ -1249,7 +1253,7 @@
  border-radius:999px;
  background:#fff;
  color:#667e90;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-tag-row svg, 
 .az-industry-points svg
@@ -1283,7 +1287,7 @@
  margin-top:22px;
  color:var(--blue)!important;
  text-decoration:none;
- font:700 9px "JetBrains Mono", monospace
+ font:700 9px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-text-link svg
 {
@@ -1300,17 +1304,55 @@
 }
 .az-process
 {
+ position:relative;
  display:grid;
  grid-template-columns:repeat(4, minmax(0, 1fr));
  gap:14px;
 }
 .az-process-line
 {
- display:none
+ position:absolute;
+ z-index:0;
+ top:50%;
+ left:8%;
+ right:8%;
+ height:2px;
+ overflow:hidden;
+ border-radius:99px;
+ background:repeating-linear-gradient(90deg, #c8dce9 0 5px, transparent 5px 11px);
+ transform:translateY(-50%);
+ pointer-events:none;
+}
+.az-process-line:before
+{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:repeating-linear-gradient(90deg, transparent 0 10px, #0a66c2 10px 15px, transparent 15px 25px);
+ background-size:50px 100%;
+ animation:az-workflow-flow 2.2s linear infinite;
+}
+.az-process-line:after
+{
+ content:"";
+ position:absolute;
+ right:0;
+ top:50%;
+ width:7px;
+ height:7px;
+ border-top:2px solid #0a66c2;
+ border-right:2px solid #0a66c2;
+ transform:translateY(-50%) rotate(45deg);
+}
+@keyframes az-workflow-flow
+{
+ from{background-position:0 0}
+ to{background-position:50px 0}
 }
 .az-process-step
 {
  position:relative;
+ z-index:1;
  min-height:218px;
  padding:22px 20px 20px;
  overflow:hidden;
@@ -1348,7 +1390,7 @@
 {
  display:block;
  color:#91a7b7;
- font:700 8px/1 "Inter", Arial, Helvetica, sans-serif;
+ font:700 8px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.08em;
 }
 .az-step-icon
@@ -1382,7 +1424,7 @@
  max-width:250px;
  margin:0;
  color:#72899a;
- font:10px/1.65 "JetBrains Mono", monospace;
+ font:10px/1.65 "DM Sans", Arial, Arial, Helvetica, sans-serif;
 }
 .az-process-step:after
 {
@@ -1535,50 +1577,51 @@
 }
 .az-why-header
 {
- display:grid;
- grid-template-columns:1fr .75fr;
- gap:80px;
- align-items:end
+ display:block;
+ text-align:center
 }
 .az-why-header .az-section-heading
 {
- margin:0
+ max-width:920px;
+ margin:0 auto
 }
 .az-why-header>p
 {
- margin:0;
+ max-width:760px;
+ margin:20px auto 0;
  color:#6f8798;
- font:11px/1.8 "JetBrains Mono", monospace
+ font:15px/1.7 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-why-grid
 {
  display:grid;
- grid-template-columns:repeat(5, 1fr);
- gap:10px;
- margin-top:58px
+ grid-template-columns:repeat(5, minmax(0, 1fr));
+ gap:14px;
+ margin-top:56px;
+ align-items:stretch
 }
 .az-why-card
 {
  position:relative;
- min-height:260px;
- padding:22px;
+ min-height:285px;
+ padding:24px;
  border:1px solid #dfe9ef;
- border-radius:14px;
+ border-radius:16px;
  background:#fbfdfe;
- transition:.25s
+ transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+ overflow:hidden
 }
 .az-why-card:hover, 
 .az-why-card:focus-within
 {
- min-height:300px;
- transform:translateY(-4px);
+ transform:translateY(-5px);
  border-color:#bfd8e9;
  box-shadow:0 18px 38px rgba(16, 42, 67, .09)
 }
 .az-why-card>span
 {
  color:#a0b0ba;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-why-icon
 {
@@ -1601,7 +1644,7 @@
 {
  margin:0;
  color:#758b9a;
- font:9px/1.75 "JetBrains Mono", monospace
+ font:9px/1.75 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-card-arrow
 {
@@ -1686,7 +1729,7 @@
 {
  max-width:570px;
  color:#718899;
- font:10px/1.8 "JetBrains Mono", monospace
+ font:10px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-results-copy .az-btn
 {
@@ -1723,13 +1766,13 @@
  display:block;
  margin-top:6px;
  color:#7c91a0;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-results-placeholder small
 {
  grid-column:span 2;
  color:#a0afb8;
- font:8px "JetBrains Mono", monospace
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-pricing-section
 {
@@ -1749,7 +1792,7 @@
 .az-pricing-note>div>span
 {
  color:var(--blue);
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-pricing-note strong
@@ -1764,7 +1807,7 @@
  max-width:700px;
  margin:8px 0 0;
  color:#718899;
- font:9px/1.7 "JetBrains Mono", monospace
+ font:9px/1.7 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-faq-section
 {
@@ -1821,7 +1864,7 @@
  overflow:hidden;
  margin:0;
  color:#718899;
- font:9px/1.8 "JetBrains Mono", monospace
+ font:9px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-faq-item.is-open .az-faq-answer
 {
@@ -1882,7 +1925,7 @@
 {
  max-width:600px;
  color:#b3c7d7;
- font:11px/1.8 "JetBrains Mono", monospace
+ font:11px/1.8 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-final-actions
 {
@@ -1896,19 +1939,19 @@
 }
 @media(max-width:1050px)
 {
- .az-hero-inner
+ .az-home .az-hero-inner
  {
  grid-template-columns:1fr
  }
- .az-hero-copy
+ .az-home .az-hero-copy
  {
  max-width:760px
  }
- .az-hero-product
+ .az-home .az-hero-product
  {
  min-height:540px
  }
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:56px
  }
@@ -1946,23 +1989,28 @@
  {
  padding:76px 0
  }
+ .az-section-heading
+ {
+ max-width:100%;
+ text-align:center
+ }
  .az-section-heading h2
  {
  font-size:36px
  }
- .az-hero
+ .az-home .az-hero
  {
  padding:50px 0 30px
  }
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:45px
  }
- .az-hero-copy>p
+ .az-home .az-hero-copy>p
  {
  font-size:11px
  }
- .az-hero-actions
+ .az-home .az-hero-actions
  {
  flex-direction:column;
  align-items:stretch
@@ -1971,16 +2019,16 @@
  {
  width:100%
  }
- .az-hero-product
+ .az-home .az-hero-product
  {
  min-height:480px;
  margin-top:10px
  }
- .az-ai-window
+ .az-home .az-ai-window
  {
  left:0
  }
- .az-ai-context-row
+ .az-home .az-ai-context-row
  {
  gap:10px;
  overflow:hidden
@@ -2010,12 +2058,17 @@
  margin-top:12px
  }
  .az-problem-grid, 
- .az-industry-layout, 
- .az-why-header
+ .az-industry-layout
  {
  grid-template-columns:1fr;
  gap:30px
  }
+ .az-why-header
+ {
+ display:block;
+ text-align:center
+ }
+
  .az-cost-callout
  {
  display:block
@@ -2116,7 +2169,7 @@
 }
 @media(max-width:480px)
 {
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:39px
  }
@@ -2125,11 +2178,11 @@
  display:grid;
  grid-template-columns:1fr 1fr
  }
- .az-ai-window-header
+ .az-home .az-ai-window-header
  {
  padding:0 14px
  }
- .az-ai-dashboard
+ .az-home .az-ai-dashboard
  {
  padding:14px
  }
@@ -2141,7 +2194,7 @@
  {
  font-size:20px
  }
- .az-ai-input-area
+ .az-home .az-ai-input-area
  {
  padding:11px
  }
@@ -2163,6 +2216,36 @@
  .az-process
  {
  grid-template-columns:1fr
+ }
+ .az-process-line
+ {
+ top:40px;
+ bottom:40px;
+ left:50%;
+ right:auto;
+ width:2px;
+ height:auto;
+ transform:translateX(-50%);
+ background:repeating-linear-gradient(180deg, #c8dce9 0 5px, transparent 5px 11px);
+ }
+ .az-process-line:before
+ {
+ background:repeating-linear-gradient(180deg, transparent 0 10px, #0a66c2 10px 15px, transparent 15px 25px);
+ background-size:100% 50px;
+ animation:az-workflow-flow-vertical 2.2s linear infinite;
+ }
+ .az-process-line:after
+ {
+ top:auto;
+ right:auto;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%) rotate(135deg);
+ }
+ @keyframes az-workflow-flow-vertical
+ {
+ from{background-position:0 0}
+ to{background-position:0 50px}
  }
  .az-why-grid
  {
@@ -2227,56 +2310,56 @@
  --line:#dce8f1;
  --soft:#f3f8fc
 }
-.az-hero
+.az-home .az-hero
 {
  min-height:calc(100vh - 82px);
  padding:62px 0 54px
 }
-.az-hero-inner
+.az-home .az-hero-inner
 {
  grid-template-columns:.92fr 1.08fr;
  gap:42px
 }
-.az-hero-copy
+.az-home .az-hero-copy
 {
  max-width:620px
 }
-.az-hero h1
+.az-home .az-hero h1
 {
  max-width:650px;
  font-size:60px;
  line-height:1.01;
  letter-spacing:-.065em
 }
-.az-hero h1 span
+.az-home .az-hero h1 span
 {
  display:inline;
  color:var(--blue)
 }
-.az-hero-subline
+.az-home .az-hero-subline
 {
  margin-top:18px;
  color:#173b5b;
- font:700 17px/1.45 Inter, Arial, sans-serif;
+ font:700 17px/1.45 "DM Sans", Arial, Arial, sans-serif;
  letter-spacing:-.02em
 }
-.az-hero-subline strong
+.az-home .az-hero-subline strong
 {
  color:var(--blue);
  font-weight:700
 }
-.az-hero-copy>p
+.az-home .az-hero-copy>p
 {
  max-width:610px;
  margin-top:18px;
  font-size:13px;
  line-height:1.75
 }
-.az-hero-actions
+.az-home .az-hero-actions
 {
  margin-top:25px
 }
-.az-hero-deck-wrap
+.az-home .az-hero-deck-wrap
 {
  position:relative;
  min-height:585px;
@@ -2284,7 +2367,7 @@
  align-items:center;
  justify-content:center
 }
-.az-deck-glow
+.az-home .az-deck-glow
 {
  position:absolute;
  width:560px;
@@ -2293,7 +2376,7 @@
  background:radial-gradient(circle, rgba(10, 102, 194, .15), rgba(10, 102, 194, .04) 42%, transparent 70%);
  filter:blur(3px)
 }
-.az-deck-stage
+.az-home .az-deck-stage
 {
  position:relative;
  width:min(570px, 100%);
@@ -2301,7 +2384,7 @@
  perspective:1200px;
  transform-style:preserve-3d
 }
-.az-deck-label
+.az-home .az-deck-label
 {
  position:absolute;
  left:50%;
@@ -2316,12 +2399,12 @@
  border-radius:999px;
  background:rgba(255, 255, 255, .92);
  color:#0a66c2;
- font:700 8px/1 "JetBrains Mono", monospace;
+ font:700 8px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.14em;
  white-space:nowrap;
  box-shadow:0 8px 22px rgba(11, 34, 57, .06)
 }
-.az-deck-label span
+.az-home .az-deck-label span
 {
  width:6px;
  height:6px;
@@ -2329,7 +2412,7 @@
  background:#2dbb79;
  box-shadow:0 0 0 4px rgba(45, 187, 121, .1)
 }
-.az-deck-card
+.az-home .az-deck-card
 {
  position:absolute;
  left:50%;
@@ -2347,7 +2430,7 @@
  box-shadow:0 28px 65px rgba(12, 43, 69, .13);
  color:var(--navy)
 }
-.az-deck-card:before
+.az-home .az-deck-card:before
 {
  content:"";
  position:absolute;
@@ -2359,7 +2442,7 @@
  background:radial-gradient(circle, rgba(10, 102, 194, .16), transparent 67%);
  pointer-events:none
 }
-.az-deck-card-0
+.az-home .az-deck-card-0
 {
  z-index:10;
  transform:translateX(-50%) translateY(0) rotate(0deg) scale(1);
@@ -2367,42 +2450,42 @@
  filter:none;
  box-shadow:0 30px 75px rgba(12, 43, 69, .17)
 }
-.az-deck-card-1
+.az-home .az-deck-card-1
 {
  z-index:9;
  transform:translateX(-47%) translateY(27px) rotate(2.2deg) scale(.94);
  opacity:.88;
  filter:saturate(.85)
 }
-.az-deck-card-2
+.az-home .az-deck-card-2
 {
  z-index:8;
  transform:translateX(-44%) translateY(52px) rotate(4.2deg) scale(.88);
  opacity:.68;
  filter:saturate(.7)
 }
-.az-deck-card-3
+.az-home .az-deck-card-3
 {
  z-index:7;
  transform:translateX(-41%) translateY(75px) rotate(6deg) scale(.82);
  opacity:.44;
  filter:saturate(.55)
 }
-.az-deck-card-4
+.az-home .az-deck-card-4
 {
  z-index:2;
  transform:translateX(-36%) translateY(120px) rotate(10deg) scale(.72);
  opacity:0;
  filter:blur(1px)
 }
-.az-deck-card-top
+.az-home .az-deck-card-top
 {
  display:flex;
  align-items:center;
  justify-content:space-between;
  margin-bottom:24px
 }
-.az-deck-icon
+.az-home .az-deck-icon
 {
  width:48px;
  height:48px;
@@ -2413,20 +2496,20 @@
  color:var(--blue);
  font-size:21px
 }
-.az-deck-card-top>span
+.az-home .az-deck-card-top>span
 {
  color:#9aabba;
- font:700 10px "JetBrains Mono", monospace;
+ font:700 10px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
-.az-deck-card>small
+.az-home .az-deck-card>small
 {
  display:block;
  color:var(--blue);
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.16em
 }
-.az-deck-card h3
+.az-home .az-deck-card h3
 {
  margin:10px 0 0;
  font-size:31px;
@@ -2434,14 +2517,14 @@
  letter-spacing:-.045em;
  font-weight:600
 }
-.az-deck-card p
+.az-home .az-deck-card p
 {
  max-width:370px;
  margin:11px 0 18px;
  color:#5e7589;
- font:11px/1.65 "JetBrains Mono", monospace
+ font:11px/1.65 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-deck-card ul
+.az-home .az-deck-card ul
 {
  display:grid;
  grid-template-columns:1fr 1fr;
@@ -2450,22 +2533,22 @@
  padding:0;
  list-style:none
 }
-.az-deck-card li
+.az-home .az-deck-card li
 {
  display:flex;
  align-items:flex-start;
  gap:7px;
  color:#27455e;
- font:9px/1.45 Inter, Arial, sans-serif
+ font:9px/1.45 "DM Sans", Arial, Arial, sans-serif
 }
-.az-deck-card li svg
+.az-home .az-deck-card li svg
 {
  flex:0 0 auto;
  margin-top:2px;
  color:var(--blue);
  font-size:8px
 }
-.az-deck-card-footer
+.az-home .az-deck-card-footer
 {
  position:absolute;
  left:29px;
@@ -2477,35 +2560,35 @@
  padding-top:14px;
  border-top:1px solid #e5edf3;
  color:#8a9cab;
- font:700 7px "JetBrains Mono", monospace;
+ font:700 7px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
-.az-deck-card-footer i
+.az-home .az-deck-card-footer i
 {
  font-style:normal;
  color:#2a9b6c
 }
-.az-accent-violet .az-deck-icon
+.az-home .az-accent-violet .az-deck-icon
 {
  color:#6e4dd8;
  background:#f0ecff
 }
-.az-accent-cyan .az-deck-icon
+.az-home .az-accent-cyan .az-deck-icon
 {
  color:#1392b7;
  background:#e9f8fc
 }
-.az-accent-orange .az-deck-icon
+.az-home .az-accent-orange .az-deck-icon
 {
  color:#d88716;
  background:#fff4df
 }
-.az-accent-green .az-deck-icon
+.az-home .az-accent-green .az-deck-icon
 {
  color:#168d6d;
  background:#e9f8f3
 }
-.az-deck-counter
+.az-home .az-deck-counter
 {
  position:absolute;
  right:17px;
@@ -2515,14 +2598,14 @@
  align-items:baseline;
  gap:4px;
  color:#8094a4;
- font:10px "JetBrains Mono", monospace
+ font:10px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
-.az-deck-counter strong
+.az-home .az-deck-counter strong
 {
  color:var(--blue);
  font-size:20px
 }
-.az-deck-dots
+.az-home .az-deck-dots
 {
  display:flex;
  gap:7px;
@@ -2532,7 +2615,7 @@
  transform:translateX(-50%);
  z-index:30
 }
-.az-deck-dots button
+.az-home .az-deck-dots button
 {
  width:8px;
  height:8px;
@@ -2543,7 +2626,7 @@
  cursor:pointer;
  transition:transform .25s ease, background .25s ease, border-color .25s ease
 }
-.az-deck-dots button.is-active
+.az-home .az-deck-dots button.is-active
 {
  width:24px;
  border-radius:99px;
@@ -2567,14 +2650,14 @@
 .az-proof-heading>span
 {
  color:#123554;
- font:700 24px/1.12 Inter, Arial, sans-serif;
+ font:700 24px/1.12 "DM Sans", Arial, Arial, sans-serif;
  letter-spacing:-.04em
 }
 .az-proof-heading p
 {
  margin:0;
  color:#5e7589;
- font:11px/1.75 "JetBrains Mono", monospace
+ font:11px/1.75 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-proof-heading p strong
 {
@@ -2597,7 +2680,7 @@
  place-items:center;
  border-right:1px solid #e7eef3;
  color:#91a1ad;
- font:700 9px "JetBrains Mono", monospace;
+ font:700 9px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-logo-row span:last-child
@@ -2635,7 +2718,7 @@
  display:block;
  margin-top:6px;
  color:#7b90a0;
- font:8px "JetBrains Mono", monospace;
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  text-transform:uppercase;
  letter-spacing:.08em
 }
@@ -2675,7 +2758,7 @@
 .az-workforce-card-head>span
 {
  color:#0b3150;
- font:700 10px "JetBrains Mono", monospace;
+ font:700 10px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.08em
 }
 .az-workforce-card-head>div
@@ -2697,7 +2780,7 @@
 .az-workforce-card-body>small
 {
  color:#9aabba;
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-workforce-card h3
@@ -2712,7 +2795,7 @@
  min-height:42px;
  margin:9px 0 16px;
  color:#70879a;
- font:9px/1.55 "JetBrains Mono", monospace
+ font:9px/1.55 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-workforce-card ul
 {
@@ -2728,7 +2811,7 @@
  gap:8px;
  align-items:flex-start;
  color:#29475f;
- font:9px/1.35 Inter, Arial, sans-serif
+ font:9px/1.35 "DM Sans", Arial, Arial, sans-serif
 }
 .az-workforce-card li svg
 {
@@ -2830,7 +2913,7 @@
  max-width:640px;
  margin:22px 0 0;
  color:#163b5c;
- font:600 20px/1.4 Inter, Arial, sans-serif;
+ font:600 20px/1.4 "DM Sans", Arial, Arial, sans-serif;
  letter-spacing:-.025em
 }
 .az-company-body
@@ -2838,7 +2921,7 @@
  max-width:650px;
  margin:18px 0 28px;
  color:#637b8e;
- font:12px/1.85 "JetBrains Mono", monospace
+ font:12px/1.85 "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-company-panel
 {
@@ -2864,7 +2947,7 @@
 {
  display:block;
  color:#0a66c2;
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.15em
 }
 .az-company-panel>strong
@@ -2889,7 +2972,7 @@
  border:1px solid #e0ebf2;
  border-radius:10px;
  color:#426078;
- font:9px "JetBrains Mono", monospace
+ font:9px "DM Sans", Arial, Arial, Helvetica, sans-serif
 }
 .az-company-panel-lines i
 {
@@ -2932,7 +3015,7 @@
 .az-company-link-grid span
 {
  color:#0a66c2;
- font:700 7px "JetBrains Mono", monospace;
+ font:700 7px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-company-link-grid strong
@@ -2977,7 +3060,7 @@
  margin-top:2px;
  color:#0a66c2;
  text-decoration:none;
- font:700 9px "Inter", Arial, sans-serif
+ font:700 9px "DM Sans", Arial, Arial, sans-serif
 }
 .az-nav-agent-marketplace svg
 {
@@ -3001,7 +3084,7 @@
 {
  display:block;
  color:#0a66c2;
- font:700 8px "JetBrains Mono", monospace;
+ font:700 8px "DM Sans", Arial, Arial, Helvetica, sans-serif;
  letter-spacing:.12em
 }
 .az-nav-submenu-block>div:first-child strong
@@ -3009,7 +3092,7 @@
  display:block;
  margin-top:6px;
  color:#193b56;
- font:600 11px Inter, Arial, sans-serif
+ font:600 11px "DM Sans", Arial, Arial, sans-serif
 }
 .az-nav-chip-grid
 {
@@ -3024,7 +3107,7 @@
  border-radius:999px!important;
  background:#f8fbfd!important;
  color:#4c667b!important;
- font:8px "JetBrains Mono", monospace!important
+ font:8px "DM Sans", Arial, Arial, Helvetica, sans-serif!important
 }
 .az-nav-chip-grid a:hover
 {
@@ -3035,16 +3118,16 @@
 }
 @media(max-width:1100px)
 {
- .az-hero-inner
+ .az-home .az-hero-inner
  {
  grid-template-columns:1fr;
  gap:30px
  }
- .az-hero-copy
+ .az-home .az-hero-copy
  {
  max-width:800px
  }
- .az-hero-deck-wrap
+ .az-home .az-hero-deck-wrap
  {
  min-height:540px
  }
@@ -3087,7 +3170,7 @@
  {
  grid-template-columns:1fr
  }
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:52px
  }
@@ -3123,70 +3206,70 @@
  {
  padding:76px 0
  }
- .az-hero
+ .az-home .az-hero
  {
  min-height:auto;
  padding:48px 0 36px
  }
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:43px
  }
- .az-hero-subline
+ .az-home .az-hero-subline
  {
  font-size:14px
  }
- .az-hero-copy>p
+ .az-home .az-hero-copy>p
  {
  font-size:10px
  }
- .az-hero-deck-wrap
+ .az-home .az-hero-deck-wrap
  {
  min-height:500px;
  margin-top:2px
  }
- .az-deck-stage
+ .az-home .az-deck-stage
  {
  height:450px
  }
- .az-deck-card
+ .az-home .az-deck-card
  {
  top:48px;
  width:88%;
  height:370px;
  padding:23px 22px
  }
- .az-deck-card h3
+ .az-home .az-deck-card h3
  {
  font-size:25px
  }
- .az-deck-card p
+ .az-home .az-deck-card p
  {
  font-size:9px
  }
- .az-deck-card ul
+ .az-home .az-deck-card ul
  {
  grid-template-columns:1fr
  }
- .az-deck-card-footer
+ .az-home .az-deck-card-footer
  {
  left:22px;
  right:22px;
  bottom:19px
  }
- .az-deck-card-1
+ .az-home .az-deck-card-1
  {
  transform:translateX(-47%) translateY(24px) rotate(2deg) scale(.93)
  }
- .az-deck-card-2
+ .az-home .az-deck-card-2
  {
  transform:translateX(-44%) translateY(45px) rotate(4deg) scale(.87)
  }
- .az-deck-card-3
+ .az-home .az-deck-card-3
  {
  transform:translateX(-41%) translateY(65px) rotate(6deg) scale(.81)
  }
- .az-deck-card-4
+ .az-home .az-deck-card-4
  {
  transform:translateX(-36%) translateY(105px) rotate(9deg) scale(.72)
  }
@@ -3280,43 +3363,43 @@
 }
 @media(max-width:480px)
 {
- .az-hero h1
+ .az-home .az-hero h1
  {
  font-size:38px
  }
- .az-deck-stage
+ .az-home .az-deck-stage
  {
  height:420px
  }
- .az-deck-card
+ .az-home .az-deck-card
  {
  height:345px;
  width:92%;
  padding:20px
  }
- .az-deck-icon
+ .az-home .az-deck-icon
  {
  width:42px;
  height:42px
  }
- .az-deck-card h3
+ .az-home .az-deck-card h3
  {
  font-size:22px
  }
- .az-deck-card p
+ .az-home .az-deck-card p
  {
  margin-bottom:12px
  }
- .az-deck-card li
+ .az-home .az-deck-card li
  {
  font-size:8px
  }
- .az-deck-card-footer
+ .az-home .az-deck-card-footer
  {
  left:20px;
  right:20px
  }
- .az-deck-counter
+ .az-home .az-deck-counter
  {
  right:7px
  }
@@ -3335,7 +3418,7 @@
 }
 @media(prefers-reduced-motion:reduce)
 {
- .az-deck-card
+ .az-home .az-deck-card
  {
  transition:none
  }
@@ -3371,12 +3454,12 @@
 .az-home textarea, 
 .az-home select
 {
- font-family: "Inter", Arial, Helvetica, sans-serif;
+ font-family: "DM Sans", Arial, Arial, Helvetica, sans-serif;
 }
 /* Force all visible landing-page text to use the same Inter family as the navbar. */
 .az-home *
 {
- font-family: "Inter", Arial, Helvetica, sans-serif !important;
+ font-family: "DM Sans", Arial, Arial, Helvetica, sans-serif !important;
 }
 /* Keep the same type family as the landing navbar, while preserving
    the small uppercase treatment through spacing rather than a second font. */
@@ -3396,7 +3479,7 @@
 .az-home .az-results-placeholder small, 
 .az-home .az-final-card p
 {
- font-family: "Inter", Arial, Helvetica, sans-serif;
+ font-family: "DM Sans", Arial, Arial, Helvetica, sans-serif;
 }
 /* Larger supporting copy — headings keep their existing sizes. */
 .az-home .az-hero-copy > p
@@ -3455,24 +3538,24 @@
  line-height: 1.7;
 }
 /* Hero deck: physical stack / drop animation. */
-.az-hero-deck-wrap
+.az-home .az-hero-deck-wrap
 {
  min-height: 610px;
 }
-.az-deck-stage
+.az-home .az-deck-stage
 {
  width: min(590px, 100%);
  height: 555px;
  perspective: 1400px;
  transform-style: preserve-3d;
 }
-.az-deck-glow
+.az-home .az-deck-glow
 {
  width: 620px;
  height: 620px;
  background: radial-gradient(circle, rgba(10, 102, 194, .18), rgba(10, 102, 194, .05) 43%, transparent 70%);
 }
-.az-deck-card
+.az-home .az-deck-card
 {
  top: 54px;
  width: min(475px, 84%);
@@ -3482,7 +3565,7 @@
  transition: transform .76s cubic-bezier(.18, .88, .24, 1), opacity .55s ease, filter .55s ease, box-shadow .55s ease;
  backface-visibility: hidden;
 }
-.az-deck-card-0
+.az-home .az-deck-card-0
 {
  z-index: 20;
  transform: translateX(-50%) translateY(0) rotate(0deg) scale(1);
@@ -3490,35 +3573,35 @@
  filter: none;
  box-shadow: 0 32px 78px rgba(12, 43, 69, .18);
 }
-.az-deck-card-1
+.az-home .az-deck-card-1
 {
  z-index: 16;
  transform: translateX(-46%) translateY(27px) rotate(1.7deg) scale(.965);
  opacity: .92;
  filter: saturate(.9);
 }
-.az-deck-card-2
+.az-home .az-deck-card-2
 {
  z-index: 12;
  transform: translateX(-42%) translateY(53px) rotate(3.4deg) scale(.93);
  opacity: .72;
  filter: saturate(.76);
 }
-.az-deck-card-3
+.az-home .az-deck-card-3
 {
  z-index: 8;
  transform: translateX(-38%) translateY(78px) rotate(5deg) scale(.895);
  opacity: .52;
  filter: saturate(.62);
 }
-.az-deck-card-4
+.az-home .az-deck-card-4
 {
  z-index: 4;
  transform: translateX(-34%) translateY(103px) rotate(6.5deg) scale(.86);
  opacity: .34;
  filter: saturate(.5);
 }
-.az-deck-card-0.is-dropping
+.az-home .az-deck-card-0.is-dropping
 {
  z-index: 30;
  transform: translateX(-56%) translateY(150px) rotate(7deg) rotateX(-3deg) scale(.94);
@@ -3526,7 +3609,7 @@
  filter: blur(1px) saturate(.8);
  box-shadow: 0 14px 30px rgba(12, 43, 69, .06);
 }
-.az-deck-card:after
+.az-home .az-deck-card:after
 {
  content: "";
  position: absolute;
@@ -3535,47 +3618,47 @@
  background: linear-gradient(180deg, transparent, rgba(10, 102, 194, .035));
  pointer-events: none;
 }
-.az-deck-card-top
+.az-home .az-deck-card-top
 {
  margin-bottom: 20px;
 }
-.az-deck-icon
+.az-home .az-deck-icon
 {
  width: 52px;
  height: 52px;
  border-radius: 15px;
  font-size: 22px;
 }
-.az-deck-card-top > span
+.az-home .az-deck-card-top > span
 {
  font-size: 11px;
  letter-spacing: .1em;
 }
-.az-deck-card > small
+.az-home .az-deck-card > small
 {
  font-size: 9px;
  letter-spacing: .14em;
 }
-.az-deck-card h3
+.az-home .az-deck-card h3
 {
  font-size: 32px;
  margin-top: 9px;
 }
-.az-deck-card-role
+.az-home .az-deck-card-role
 {
  margin: 12px 0 7px !important;
  max-width: 405px !important;
  color: #123554 !important;
- font: 600 15px/1.45 "Inter", Arial, Helvetica, sans-serif !important;
+ font: 600 15px/1.45 "DM Sans", Arial, Arial, Helvetica, sans-serif !important;
 }
-.az-deck-card-description
+.az-home .az-deck-card-description
 {
  margin: 0 0 17px !important;
  max-width: 405px !important;
  color: #637b8e !important;
- font: 14px/1.55 "Inter", Arial, Helvetica, sans-serif !important;
+ font: 14px/1.55 "DM Sans", Arial, Arial, Helvetica, sans-serif !important;
 }
-.az-deck-card-section-label
+.az-home .az-deck-card-section-label
 {
  margin: 0 0 9px;
  color: #7a91a2;
@@ -3583,21 +3666,21 @@
  font-weight: 700;
  letter-spacing: .13em;
 }
-.az-deck-card ul
+.az-home .az-deck-card ul
 {
  gap: 9px 18px;
 }
-.az-deck-card li
+.az-home .az-deck-card li
 {
  gap: 8px;
  color: #29475f;
- font: 500 12px/1.4 "Inter", Arial, Helvetica, sans-serif;
+ font: 500 12px/1.4 "DM Sans", Arial, Arial, Helvetica, sans-serif;
 }
-.az-deck-card li svg
+.az-home .az-deck-card li svg
 {
  font-size: 9px;
 }
-.az-deck-card-footer
+.az-home .az-deck-card-footer
 {
  left: 30px;
  right: 30px;
@@ -3606,17 +3689,17 @@
  font-size: 9px;
  letter-spacing: .09em;
 }
-.az-deck-counter
+.az-home .az-deck-counter
 {
  bottom: 18px;
  right: 5px;
- font-family: "Inter", Arial, Helvetica, sans-serif;
+ font-family: "DM Sans", Arial, Arial, Helvetica, sans-serif;
 }
-.az-deck-counter strong
+.az-home .az-deck-counter strong
 {
  font-size: 22px;
 }
-.az-deck-dots
+.az-home .az-deck-dots
 {
  bottom: -4px;
 }
@@ -3642,11 +3725,11 @@
 }
 @media (max-width: 1100px)
 {
- .az-hero-deck-wrap
+ .az-home .az-hero-deck-wrap
  {
  min-height: 590px;
  }
- .az-deck-stage
+ .az-home .az-deck-stage
  {
  height: 535px;
  }
@@ -3665,64 +3748,64 @@
  {
  font-size: 14px;
  }
- .az-hero-deck-wrap
+ .az-home .az-hero-deck-wrap
  {
  min-height: 520px;
  }
- .az-deck-stage
+ .az-home .az-deck-stage
  {
  height: 490px;
  }
- .az-deck-card
+ .az-home .az-deck-card
  {
  top: 45px;
  width: 90%;
  height: 400px;
  padding: 24px 23px;
  }
- .az-deck-card h3
+ .az-home .az-deck-card h3
  {
  font-size: 26px;
  }
- .az-deck-card-role
+ .az-home .az-deck-card-role
  {
  font-size: 14px !important;
  }
- .az-deck-card-description
+ .az-home .az-deck-card-description
  {
  font-size: 13px !important;
  }
- .az-deck-card li
+ .az-home .az-deck-card li
  {
  font-size: 11px;
  }
- .az-deck-card-1
+ .az-home .az-deck-card-1
  {
  transform: translateX(-47%) translateY(23px) rotate(1.7deg) scale(.94);
  }
- .az-deck-card-2
+ .az-home .az-deck-card-2
  {
  transform: translateX(-43%) translateY(45px) rotate(3.4deg) scale(.89);
  }
- .az-deck-card-3
+ .az-home .az-deck-card-3
  {
  transform: translateX(-39%) translateY(66px) rotate(5deg) scale(.84);
  }
- .az-deck-card-4
+ .az-home .az-deck-card-4
  {
  transform: translateX(-35%) translateY(88px) rotate(6.5deg) scale(.79);
  }
- .az-deck-card-0.is-dropping
+ .az-home .az-deck-card-0.is-dropping
  {
  transform: translateX(-55%) translateY(135px) rotate(7deg) scale(.92);
  }
- .az-deck-card-footer
+ .az-home .az-deck-card-footer
  {
  left: 23px;
  right: 23px;
  bottom: 18px;
  }
- .az-deck-card ul
+ .az-home .az-deck-card ul
  {
  grid-template-columns: 1fr;
  gap: 7px;
@@ -3730,12 +3813,347 @@
 }
 @media (prefers-reduced-motion: reduce)
 {
- .az-deck-card
+ .az-home .az-deck-card
  {
  transition: none !important;
  }
- .az-deck-card-0.is-dropping
+ .az-home .az-deck-card-0.is-dropping
  {
  opacity: 0;
+ }
+}
+
+
+/* Dedicated navigation targets: existing cards keep their visual treatment while becoming real links. */
+.az-home .az-industry-card,
+.az-home .az-why-card,
+.az-home .az-process-step,
+.az-home .az-more-functions a
+{
+ text-decoration:none;
+ color:inherit;
+}
+.az-home .az-process-step,
+.az-home .az-more-functions a
+{
+ cursor:pointer;
+}
+.az-home .az-process-step:focus-visible,
+.az-home .az-industry-card:focus-visible,
+.az-home .az-why-card:focus-visible,
+.az-home .az-more-functions a:focus-visible
+{
+ outline:2px solid #0a66c2;
+ outline-offset:3px;
+}
+
+/* Main-site typography refinement: readable, modern and intentionally restrained. */
+.az-home .az-section-kicker{font-size:11px;line-height:1.2}
+.az-home .az-section-heading h2{font-size:clamp(34px,4vw,50px);line-height:1.08}
+.az-home .az-section-heading p{font-size:15px;line-height:1.75;text-align:center;margin-left:auto;margin-right:auto}
+.az-home .az-hero h1{font-size:clamp(48px,5.1vw,66px);line-height:1.02}
+.az-home .az-hero-copy>p{font-size:15px;line-height:1.75}
+.az-home .az-btn{font-size:12px}
+.az-home .az-eyebrow{font-size:10px}
+.az-home .az-process-step p{font-size:12px;line-height:1.65}
+
+/* CTA hierarchy: Explore is secondary; Get a demo is the larger primary action. */
+.az-home .az-hero-actions {
+ display:flex;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+.az-home .az-hero-actions .az-hero-explore {
+ min-height:50px;
+ padding:0 20px;
+}
+.az-home .az-hero-actions .az-hero-demo {
+ min-height:58px;
+ min-width:154px;
+ padding:0 25px;
+ font-size:11px;
+ border-radius:10px;
+}
+.az-home .az-ai-employees-actions {
+ align-items:center;
+}
+@media (max-width:650px) {
+ .az-home .az-hero-actions .az-hero-demo,
+ .az-home .az-hero-actions .az-hero-explore {
+   width:100%;
+   justify-content:center;
+ }
+ .az-home .az-hero-actions .az-hero-demo {
+   min-height:56px;
+ }
+}
+
+/* =========================================================
+   AZENTMART WORKFLOW EXPLAINER
+   ========================================================= */
+.az-workflow-section {
+  position: relative;
+  padding: 105px 0 95px;
+  overflow: hidden;
+  background: #f7fbff;
+  border-top: 1px solid #e6eff5;
+  border-bottom: 1px solid #e6eff5;
+}
+.az-workflow-heading {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 70px;
+  align-items: end;
+  margin-bottom: 52px;
+}
+.az-workflow-heading h2 {
+  max-width: 690px;
+  margin: 12px 0 0;
+  color: #0b2239;
+  font-size: clamp(38px, 4.3vw, 58px);
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -.055em;
+}
+.az-workflow-heading p {
+  max-width: 570px;
+  margin: 0;
+  color: #60798f;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.az-workflow-canvas {
+  position: relative;
+  min-height: 360px;
+  padding: 55px 35px;
+  overflow: hidden;
+  border: 1px solid #d9e7f1;
+  border-radius: 24px;
+  background-color: #fff;
+  background-image: linear-gradient(#edf4f9 1px, transparent 1px), linear-gradient(90deg, #edf4f9 1px, transparent 1px);
+  background-size: 40px 40px;
+  box-shadow: 0 24px 60px rgba(20, 65, 100, .08);
+}
+.az-workflow-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.az-workflow-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-dasharray: 8 11;
+  stroke-linecap: round;
+  animation: azWorkflowFlow 2.8s linear infinite;
+}
+.az-workflow-path-blue { stroke: #4161db; }
+.az-workflow-path-green { stroke: #24ad62; animation-delay: -.9s; }
+@keyframes azWorkflowFlow {
+  to { stroke-dashoffset: -76; }
+}
+.az-workflow-node {
+  position: absolute;
+  z-index: 2;
+  width: 188px;
+  min-height: 112px;
+  padding: 17px 18px 15px;
+  border: 1px solid #d9e6ef;
+  border-radius: 15px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 14px 30px rgba(25, 64, 92, .09);
+}
+.az-workflow-node > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  color: #fff;
+  background: #0a66c2;
+  font-size: 10px;
+  font-weight: 700;
+}
+.az-workflow-node strong {
+  display: block;
+  color: #17364f;
+  font-size: 15px;
+  line-height: 1.25;
+}
+.az-workflow-node small {
+  display: block;
+  margin-top: 6px;
+  color: #7890a2;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.az-workflow-node-1 { left: 3%; top: 42px; }
+.az-workflow-node-2 { left: 25%; bottom: 42px; }
+.az-workflow-node-3 { left: 43%; top: 42px; }
+.az-workflow-node-4 { left: 64%; bottom: 42px; }
+.az-workflow-node-5 { right: 3%; top: 42px; }
+.az-workflow-note {
+  margin-top: 17px;
+  color: #8195a6;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =========================================================
+   COMPANY PAGES — richer editorial content
+   ========================================================= */
+.az-company-panel > strong { color: #0b2239; font-weight: 600; }
+.az-company-detail-section {
+  padding: 95px 0 105px;
+  background: #fff;
+}
+.az-company-detail-grid {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: 75px;
+  align-items: start;
+}
+.az-company-detail-grid h2 {
+  max-width: 520px;
+  margin-top: 12px;
+  color: #0b2239;
+  font-size: clamp(34px, 4vw, 50px);
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -.055em;
+}
+.az-company-detail-copy {
+  display: grid;
+  gap: 25px;
+}
+.az-company-detail-copy > p {
+  margin: 0;
+  color: #60798f;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.az-company-detail-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+.az-company-detail-card {
+  min-height: 132px;
+  padding: 21px;
+  border: 1px solid #dbe7ee;
+  border-radius: 14px;
+  background: #f9fcfe;
+}
+.az-company-detail-card strong {
+  display: block;
+  color: #163b5c;
+  font-size: 15px;
+}
+.az-company-detail-card p {
+  margin: 9px 0 0;
+  color: #71889a;
+  font-size: 12px;
+  line-height: 1.65;
+}
+@media (max-width: 900px) {
+  .az-workflow-heading,
+  .az-company-detail-grid { grid-template-columns: 1fr; gap: 30px; }
+  .az-workflow-canvas { min-height: 640px; }
+  .az-workflow-node { width: calc(50% - 16px); }
+  .az-workflow-node-1 { left: 3%; top: 35px; }
+  .az-workflow-node-2 { left: 53%; top: 165px; bottom: auto; }
+  .az-workflow-node-3 { left: 3%; top: 295px; }
+  .az-workflow-node-4 { left: 53%; top: 425px; bottom: auto; }
+  .az-workflow-node-5 { left: 3%; right: auto; top: 555px; }
+  .az-workflow-lines { display: none; }
+}
+@media (max-width: 600px) {
+  .az-workflow-section { padding: 75px 0; }
+  .az-workflow-canvas { min-height: 720px; padding: 20px; }
+  .az-workflow-node { width: calc(100% - 40px); left: 20px !important; }
+  .az-workflow-node-1 { top: 25px; }
+  .az-workflow-node-2 { top: 165px; }
+  .az-workflow-node-3 { top: 305px; }
+  .az-workflow-node-4 { top: 445px; }
+  .az-workflow-node-5 { top: 585px; }
+  .az-company-detail-cards { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   GLOBAL LANDING-PAGE WIDTH / ALIGNMENT
+   Full-width backgrounds with a 90% content rail.
+   The hero keeps its current controlled 88% composition.
+   ========================================================= */
+.az-home .az-hero,
+.az-home .az-workflow-section,
+.az-home .az-proof-strip,
+.az-home .az-section,
+.az-home .az-final-cta
+{
+ width:100%;
+ max-width:none;
+ margin-left:0;
+ margin-right:0;
+}
+.az-home .az-hero-inner
+{
+ width:88%;
+ max-width:none;
+ margin:0 auto;
+}
+.az-home .az-section > .az-container,
+.az-home .az-workflow-section > .az-container,
+.az-home .az-proof-strip > .az-container,
+.az-home .az-final-cta > .az-container
+{
+ width:90%;
+ max-width:none;
+ margin-left:auto;
+ margin-right:auto;
+}
+
+/* Let wide grids actually use the wider rail instead of creating a narrow centered block. */
+.az-home .az-problem-grid,
+.az-home .az-employee-layout,
+.az-home .az-industry-cards,
+.az-home .az-why-grid,
+.az-home .az-results-card,
+.az-home .az-pricing-note,
+.az-home .az-faq-grid
+{
+ width:100%;
+ max-width:none;
+}
+
+/* Workflow canvas and solution visual should use the wider section footprint. */
+.az-home .az-workflow-canvas
+{
+ width:100%;
+ max-width:none;
+}
+.az-home .az-solution-visual
+{
+ width:100%;
+ max-width:none;
+}
+
+@media (max-width:760px)
+{
+ .az-container,
+ .az-home .az-section > .az-container,
+ .az-home .az-workflow-section > .az-container,
+ .az-home .az-proof-strip > .az-container,
+ .az-home .az-final-cta > .az-container
+ {
+   width:min(100% - 34px, 620px);
+ }
+ .az-home .az-hero-inner
+ {
+   width:min(100% - 34px, 620px);
  }
 }

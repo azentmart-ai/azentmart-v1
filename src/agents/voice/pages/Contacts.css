@@ -1,0 +1,1040 @@
+/* =========================================================
+   CONTACTS PAGE
+========================================================= */
+
+.contacts-page {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+
+  padding: 24px 22px;
+
+  box-sizing: border-box;
+
+  background: #061a2d;
+  color: #ffffff;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.contacts-page-header {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 18px;
+}
+
+.contacts-heading h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.contacts-heading p {
+  margin: 6px 0 0;
+
+  color: #6e91b4;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.contacts-toolbar {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.contacts-search-box {
+  position: relative;
+
+  width: 235px;
+  height: 40px;
+}
+
+.contacts-search-box input {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  padding: 0 13px 0 38px;
+
+  background: #0b2945 !important;
+
+  border: 1px solid #294f72;
+  border-radius: 7px;
+
+  color: #ffffff !important;
+
+  font-size: 13px;
+
+  outline: none;
+
+  caret-color: #ffffff;
+}
+
+.contacts-search-box input::placeholder {
+  color: #6f8ca8 !important;
+}
+
+.contacts-search-box input:focus {
+  border-color: #7657f5;
+
+  box-shadow: 0 0 0 2px rgba(118, 87, 245, 0.12);
+}
+
+.contacts-search-icon {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   TOOLBAR BUTTON
+========================================================= */
+
+.contacts-toolbar-btn {
+  height: 40px;
+
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background: #0c2945;
+
+  border: 1px solid #294f72;
+
+  border-radius: 7px;
+
+  color: #dce9f7;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.contacts-toolbar-btn:hover {
+  background: #123554;
+
+  border-color: #3a6083;
+}
+
+/* =========================================================
+   CREATE
+========================================================= */
+
+.contacts-create-wrapper {
+  position: relative;
+}
+
+.contacts-create-btn {
+  height: 40px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  background: #7657f5;
+
+  border: none;
+  border-radius: 7px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.contacts-create-btn:hover {
+  background: #8568ff;
+}
+
+.rotate-arrow {
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   CREATE MENU
+========================================================= */
+
+.contacts-create-menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 215px;
+
+  padding: 6px;
+
+  background: #0b2540;
+
+  border: 1px solid #2a5275;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45);
+
+  z-index: 100;
+}
+
+.contacts-create-menu button {
+  width: 100%;
+
+  min-height: 52px;
+
+  padding: 8px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  background: transparent !important;
+
+  border: none;
+
+  border-radius: 6px;
+
+  color: #ffffff !important;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.contacts-create-menu button:hover {
+  background: #153856 !important;
+}
+
+.create-menu-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #172f4c;
+
+  border-radius: 6px;
+
+  color: #8d72ff;
+}
+
+.contacts-create-menu button span:last-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.contacts-create-menu strong {
+  color: #ffffff !important;
+
+  font-size: 12px;
+}
+
+.contacts-create-menu small {
+  color: #7290ad !important;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.contacts-card {
+  width: 100%;
+
+  background: #081d32;
+
+  border: 1px solid #173d5f;
+
+  border-radius: 7px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   TABLE SCROLL
+========================================================= */
+
+.contacts-table-scroll {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.contacts-table {
+  width: 100%;
+
+  min-width: 1050px;
+
+  border-collapse: collapse;
+
+  table-layout: auto;
+}
+
+.contacts-table thead {
+  background: #0b2945;
+}
+
+.contacts-table th {
+  height: 45px;
+
+  padding: 0 14px;
+
+  border-bottom: 1px solid #234b6d;
+
+  color: #8eabc7;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.contacts-table td {
+  height: 56px;
+
+  padding: 0 14px;
+
+  border-bottom: 1px solid #173b5b;
+
+  color: #dce8f5;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.contacts-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.contacts-table tbody tr:hover {
+  background: #0c2944;
+}
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.check-column {
+  width: 42px;
+
+  text-align: center;
+}
+
+.contacts-table input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+
+  accent-color: #7657f5;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.contact-name-cell {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.contact-avatar {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #163b5f;
+
+  border-radius: 50%;
+
+  color: #8eb7dc;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.contact-name-cell strong {
+  color: #ffffff;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   MUTED
+========================================================= */
+
+.contact-muted {
+  color: #7895b1;
+}
+
+.contact-email {
+  color: #d8e7f5;
+}
+
+.lifecycle-text {
+  color: #d6e4f2;
+}
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+.contact-phone-cell {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #dce9f7;
+}
+
+.contact-phone-cell svg {
+  color: #7657f5;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.lead-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: rgba(55, 145, 255, 0.12);
+
+  color: #75b1ff;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.lead-status.contacted {
+  background: rgba(255, 190, 80, 0.12);
+
+  color: #ffc861;
+}
+
+.lead-status.qualified {
+  background: rgba(71, 210, 158, 0.12);
+
+  color: #4ee0ad;
+}
+
+.lead-status.converted {
+  background: rgba(118, 87, 245, 0.14);
+
+  color: #9b83ff;
+}
+
+.lead-status.lost {
+  background: rgba(255, 80, 100, 0.12);
+
+  color: #ff7386;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.contact-row-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.contact-row-actions button {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: #102e4a;
+
+  border: 1px solid #234968;
+
+  border-radius: 6px;
+
+  color: #8daac5;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.contact-row-actions button:hover {
+  background: #7657f5;
+
+  border-color: #7657f5;
+
+  color: #ffffff;
+}
+
+.contact-row-actions button.delete-action:hover {
+  background: #c54258;
+
+  border-color: #c54258;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.contacts-empty-row {
+  height: 120px !important;
+
+  text-align: center !important;
+
+  color: #708da9 !important;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.contacts-footer {
+  min-height: 56px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  border-top: 1px solid #173b5b;
+
+  color: #708da9;
+
+  font-size: 11px;
+}
+
+.contacts-footer select {
+  height: 32px;
+
+  min-width: 105px;
+
+  padding: 0 10px;
+
+  background: #0b2945;
+
+  border: 1px solid #294f72;
+
+  border-radius: 6px;
+
+  color: #ffffff;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.contacts-footer select option {
+  background: #0b2945;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   DRAWER OVERLAY
+========================================================= */
+
+.contact-drawer-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(2, 12, 24, 0.72);
+
+  backdrop-filter: blur(3px);
+
+  z-index: 9999;
+}
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.contact-drawer {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 420px;
+  max-width: 94vw;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #071d31;
+
+  border-left: 1px solid #254a6a;
+
+  box-shadow:
+    -20px 0 50px rgba(0, 0, 0, 0.4);
+
+  animation: drawerSlide 0.22s ease;
+}
+
+@keyframes drawerSlide {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* =========================================================
+   DRAWER HEADER
+========================================================= */
+
+.contact-drawer-header {
+  min-height: 105px;
+
+  padding: 20px 22px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #1d4263;
+}
+
+.drawer-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #68a9e9;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+.contact-drawer-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 20px;
+}
+
+.contact-drawer-header p {
+  margin: 6px 0 0;
+
+  color: #7895b1;
+
+  font-size: 11px;
+}
+
+.drawer-close-btn {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #0c2944;
+
+  border: 1px solid #294e70;
+
+  border-radius: 6px;
+
+  color: #8ba7c0;
+
+  cursor: pointer;
+}
+
+.drawer-close-btn:hover {
+  color: #ffffff;
+
+  border-color: #7657f5;
+
+  background: #153856;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.contact-form {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-content {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 24px 22px;
+}
+
+.form-section {
+  margin-bottom: 28px;
+}
+
+.form-section h3 {
+  margin: 0 0 16px;
+
+  color: #65a5e5;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.1px;
+}
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+  display: grid;
+
+  gap: 12px;
+}
+
+.form-grid.two-columns {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #91aac2;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.form-group label span {
+  color: #ff647b;
+}
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.form-group input,
+.form-group select {
+  width: 100%;
+
+  height: 40px;
+
+  box-sizing: border-box;
+
+  padding: 0 11px;
+
+  background: #0b2945 !important;
+
+  border: 1px solid #285173;
+
+  border-radius: 6px;
+
+  color: #ffffff !important;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  outline: none;
+
+  caret-color: #ffffff;
+}
+
+.form-group input::placeholder {
+  color: #6987a3 !important;
+
+  opacity: 1;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  background: #0d2d4b !important;
+
+  border-color: #7657f5;
+
+  color: #ffffff !important;
+
+  box-shadow: 0 0 0 2px rgba(118, 87, 245, 0.12);
+}
+
+.form-group select option {
+  background: #0b2945;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   CHROME AUTOFILL
+========================================================= */
+
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+
+  caret-color: #ffffff;
+
+  -webkit-box-shadow:
+    0 0 0 1000px #0b2945 inset !important;
+
+  box-shadow:
+    0 0 0 1000px #0b2945 inset !important;
+}
+
+/* =========================================================
+   DRAWER FOOTER
+========================================================= */
+
+.contact-form-footer {
+  min-height: 68px;
+
+  padding: 13px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  box-sizing: border-box;
+
+  background: #071d31;
+
+  border-top: 1px solid #1d4263;
+}
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+.drawer-cancel-btn {
+  height: 38px;
+
+  padding: 0 16px;
+
+  background: #0c2944;
+
+  border: 1px solid #2a506f;
+
+  border-radius: 6px;
+
+  color: #a1b7cb;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.drawer-cancel-btn:hover {
+  background: #153855;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+.drawer-save-btn {
+  height: 38px;
+
+  padding: 0 17px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  background: #7657f5;
+
+  border: none;
+
+  border-radius: 6px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.drawer-save-btn:hover {
+  background: #866aff;
+
+  box-shadow: 0 5px 18px rgba(118, 87, 245, 0.2);
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.contacts-table-scroll::-webkit-scrollbar,
+.drawer-content::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.contacts-table-scroll::-webkit-scrollbar-track,
+.drawer-content::-webkit-scrollbar-track {
+  background: #071d31;
+}
+
+.contacts-table-scroll::-webkit-scrollbar-thumb,
+.drawer-content::-webkit-scrollbar-thumb {
+  background: #2b5273;
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+  .contacts-page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .contacts-toolbar {
+    width: 100%;
+  }
+
+  .contacts-search-box {
+    flex: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .contacts-page {
+    padding: 18px 14px;
+  }
+
+  .contacts-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .contacts-search-box {
+    width: 100%;
+
+    flex-basis: 100%;
+  }
+
+  .contacts-toolbar-btn,
+  .contacts-create-btn {
+    flex: 1;
+  }
+
+  .form-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-drawer {
+    width: 100%;
+    max-width: 100%;
+  }
+}

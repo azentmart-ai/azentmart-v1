@@ -7,7 +7,7 @@ function Marketplace(){
 
   return(
     <>
-      <Navbar showMarketplace={false} />
+      <Navbar />
       <MarketplaceHero />
       <MarketplaceAgents />
       <Footer />

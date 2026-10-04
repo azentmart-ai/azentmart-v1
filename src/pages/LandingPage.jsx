@@ -8,7 +8,6 @@ import {
   FaCogs,
   FaHeadset,
   FaInstagram,
-  FaMicrophone,
   FaPhoneAlt,
   FaRobot,
   FaShieldAlt,
@@ -32,6 +31,7 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import agentUrls from "../config/agentUrls";
+import { slugify } from "../config/siteContent";
 import "../Style/LandingPage.css";
 
 const workforceCards = [
@@ -59,7 +59,7 @@ const workforceCards = [
     url: agentUrls.instagram,
   },
   {
-    id: "support",
+    id: "customer-support",
     number: "03",
     name: "AI Customer Support Employee",
     eyebrow: "CUSTOMER SUPPORT",
@@ -71,7 +71,7 @@ const workforceCards = [
     url: agentUrls.whatsapp,
   },
   {
-    id: "hr",
+    id: "hr-and-recruitment",
     number: "04",
     name: "AI HR & Recruitment Employee",
     eyebrow: "HR & RECRUITMENT",
@@ -82,7 +82,7 @@ const workforceCards = [
     accent: "orange",
   },
   {
-    id: "finance",
+    id: "finance-and-bfsi",
     number: "05",
     name: "AI Finance Employee",
     eyebrow: "FINANCE",
@@ -102,16 +102,16 @@ const additionalFunctions = [
 
 const industries = [
   { id: "healthcare", name: "Healthcare", text: "AI employees for customer, administrative and operational workflows with people involved where judgment matters.", icon: <FaHospital /> },
-  { id: "retail", name: "Retail & E-commerce", text: "Customer engagement, lead capture and commerce workflows across digital channels.", icon: <FaShoppingCart /> },
+  { id: "retail-and-e-commerce", name: "Retail & E-commerce", text: "Customer engagement, lead capture and commerce workflows across digital channels.", icon: <FaShoppingCart /> },
   { id: "manufacturing", name: "Manufacturing", text: "Process, procurement, inventory and operational workflows connected to business teams.", icon: <FaIndustry /> },
   { id: "real-estate", name: "Real Estate", text: "Lead response, follow-up and customer workflows for property businesses.", icon: <FaBuilding /> },
-  { id: "hospitality", name: "Hospitality & Food", text: "Customer conversations, reservations and repeatable service workflows.", icon: <FaBuilding /> },
+  { id: "hospitality-and-food", name: "Hospitality & Food", text: "Customer conversations, reservations and repeatable service workflows.", icon: <FaBuilding /> },
   { id: "education", name: "Education", text: "Support, admissions, coordination and administrative workflows for education teams.", icon: <FaGraduationCap /> },
-  { id: "finance", name: "Finance & BFSI", text: "Information-heavy service, finance and operational workflows with controlled human oversight.", icon: <FaFileInvoiceDollar /> },
+  { id: "finance-and-bfsi", name: "Finance & BFSI", text: "Information-heavy service, finance and operational workflows with controlled human oversight.", icon: <FaFileInvoiceDollar /> },
   { id: "legal", name: "Legal", text: "Research, document, contract and compliance workflows supported by AI.", icon: <FaBalanceScale /> },
-  { id: "saas", name: "IT & SaaS", text: "Customer support, sales and operations workflows for technology businesses.", icon: <FaLaptopCode /> },
-  { id: "logistics", name: "Logistics & Supply Chain", text: "Procurement, inventory, customer and workflow automation across supply operations.", icon: <FaTruck /> },
-  { id: "travel", name: "Travel & Tourism", text: "Customer conversations, travel support and operational coordination.", icon: <FaPlane /> },
+  { id: "it-and-saas", name: "IT & SaaS", text: "Customer support, sales and operations workflows for technology businesses.", icon: <FaLaptopCode /> },
+  { id: "logistics-and-supply-chain", name: "Logistics & Supply Chain", text: "Procurement, inventory, customer and workflow automation across supply operations.", icon: <FaTruck /> },
+  { id: "travel-and-tourism", name: "Travel & Tourism", text: "Customer conversations, travel support and operational coordination.", icon: <FaPlane /> },
 ];
 
 const whyItems = [
@@ -198,8 +198,8 @@ function LandingPage() {
               <div className="az-hero-subline">One Platform. <strong>Every Business.</strong> <strong>Every Function.</strong></div>
               <p>AzentMart AI gives your business a ready-to-deploy workforce of 10,000+ AI employees across industries and business functions—helping teams automate work, move faster and scale with confidence.</p>
               <div className="az-hero-actions">
-                <a href="#final-cta" className="az-btn az-btn-primary">Get a demo <FaArrowRight /></a>
-                <a href="#employees" className="az-btn az-btn-secondary">Explore AI employees <FaArrowRight /></a>
+                <Link to="/ai-employees/10k-plus" className="az-btn az-btn-secondary az-hero-explore">Explore AI employees <FaArrowRight /></Link>
+                <Link to="/demo" className="az-btn az-btn-primary az-hero-demo">Get a demo <FaArrowRight /></Link>
               </div>
               <div className="az-trust-row">
                 <span><FaCheck /> Business-ready workflows</span>
@@ -239,6 +239,38 @@ function LandingPage() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="az-workflow-section" id="workflow">
+          <div className="az-container">
+            <div className="az-workflow-heading az-reveal">
+              <div>
+                <span className="az-section-kicker">HOW AI WORK FLOWS</span>
+                <h2>From a business signal to a completed outcome.</h2>
+              </div>
+              <p>Connect the work your teams already do with specialized AI employees. The animated paths show how information moves through the workflow while people stay in control where judgment matters.</p>
+            </div>
+            <div className="az-workflow-canvas az-reveal">
+              <svg className="az-workflow-lines" viewBox="0 0 1200 320" preserveAspectRatio="none" aria-hidden="true">
+                <path className="az-workflow-path az-workflow-path-blue" d="M170 95 C330 95 335 220 500 220 S690 95 820 95 S1010 220 1085 220" />
+                <path className="az-workflow-path az-workflow-path-green" d="M170 220 C330 220 350 95 500 95 S690 220 820 220 S1000 95 1085 95" />
+              </svg>
+              {[
+                ["01", "Business signal", "Lead, request or customer event"],
+                ["02", "AI employee", "Understands context and next action"],
+                ["03", "Workflow action", "Uses connected systems to execute"],
+                ["04", "Human checkpoint", "Review, approve or take over when needed"],
+                ["05", "Outcome", "A completed task with a clear result"],
+              ].map(([number, title, text], index) => (
+                <div className={`az-workflow-node az-workflow-node-${index + 1}`} key={number}>
+                  <span>{number}</span>
+                  <strong>{title}</strong>
+                  <small>{text}</small>
+                </div>
+              ))}
+            </div>
+            <div className="az-workflow-note">The moving dotted paths indicate direction—not just a static diagram.</div>
           </div>
         </section>
 
@@ -299,12 +331,12 @@ function LandingPage() {
                 <article className={`az-workforce-card az-accent-${card.accent} az-reveal`} key={card.id}>
                   <div className="az-workforce-card-head"><span>{card.eyebrow}</span><div>{card.icon}</div></div>
                   <div className="az-workforce-card-body"><small>{card.number}</small><h3>{card.name}</h3><p>{card.title}</p><ul>{card.items.map((item) => <li key={item}><FaCheck /> {item}</li>)}</ul></div>
-                  {card.url ? <a className="az-text-link" href={card.url} target="_blank" rel="noreferrer">Open existing agent <FaArrowRight /></a> : <a className="az-text-link" href="#final-cta">Explore workflow <FaArrowRight /></a>}
+                  {card.url ? <Link className="az-text-link" to={card.url}>Open agent <FaArrowRight /></Link> : <Link className="az-text-link" to={`/ai-employees/${card.id}`}>Explore workflow <FaArrowRight /></Link>}
                 </article>
               ))}
             </div>
             <div className="az-more-functions az-reveal">
-              {additionalFunctions.map((item) => <div key={item.name}><span>{item.icon}</span><strong>{item.name}</strong></div>)}
+              {additionalFunctions.map((item) => <Link to={item.name === "And thousands more" ? "/ai-employees/10k-plus" : `/business-functions/${slugify(item.name)}`} key={item.name}><span>{item.icon}</span><strong>{item.name}</strong></Link>)}
             </div>
           </div>
         </section>
@@ -313,11 +345,11 @@ function LandingPage() {
           <div className="az-container">
             <div className="az-section-heading az-reveal"><span className="az-section-kicker">HOW IT WORKS</span><h2>From idea to AI employee in four steps.</h2><p>Discover the right workflow, validate it, deploy it and keep improving your AI workforce.</p></div>
             <div className="az-process"><div className="az-process-line" />{[
-              { n: "01", title: "Discover", text: "Identify the workflows where AI can create the greatest impact.", icon: <FaSearch /> },
-              { n: "02", title: "Test", text: "Validate your AI employee in a real business environment before going live.", icon: <FaFlask /> },
-              { n: "03", title: "Deploy", text: "Connect your tools, workflows and teams and put your AI employee to work.", icon: <FaRocket /> },
-              { n: "04", title: "Manage", text: "Monitor performance, review outcomes and continuously improve your AI workforce.", icon: <FaTasks /> },
-            ].map((step) => <div className="az-process-step az-reveal" key={step.n}><div className="az-step-number">{step.n}</div><div className="az-step-icon">{step.icon}</div><h3>{step.title}</h3><p>{step.text}</p></div>)}</div>
+              { n: "01", slug: "discover", title: "Discover", text: "Identify the workflows where AI can create the greatest impact.", icon: <FaSearch /> },
+              { n: "02", slug: "test", title: "Test", text: "Validate your AI employee in a real business environment before going live.", icon: <FaFlask /> },
+              { n: "03", slug: "deploy", title: "Deploy", text: "Connect your tools, workflows and teams and put your AI employee to work.", icon: <FaRocket /> },
+              { n: "04", slug: "manage", title: "Manage", text: "Monitor performance, review outcomes and continuously improve your AI workforce.", icon: <FaTasks /> },
+            ].map((step) => <Link className="az-process-step az-reveal" key={step.n} to={`/how-it-works/${step.slug}`}><div className="az-step-number">{step.n}</div><div className="az-step-icon">{step.icon}</div><h3>{step.title}</h3><p>{step.text}</p></Link>)}</div>
           </div>
         </section>
 
@@ -326,10 +358,10 @@ function LandingPage() {
             <div className="az-section-heading az-reveal"><span className="az-section-kicker">USE CASES / INDUSTRIES</span><h2>AI that adapts to the way your industry works.</h2><p>Explore the domains from the AzentMart AI workforce catalog.</p></div>
             <div className="az-industry-cards az-reveal">
               {industries.map((industry) => (
-                <article
+                <Link
                   key={industry.id}
                   className="az-industry-card"
-                  tabIndex={0}
+                  to={`/industries/${industry.id}`}
                 >
                   <div className="az-industry-card-main">
                     <span className="az-industry-card-icon">{industry.icon}</span>
@@ -341,7 +373,7 @@ function LandingPage() {
                     <span><FaCheck /> AI-assisted operations</span>
                     <span><FaCheck /> Human escalation</span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
@@ -359,25 +391,25 @@ function LandingPage() {
                 ["Start with focused workflows", "Expand across functions", "Scale from small teams to enterprises"],
               ][index];
               return (
-                <div className="az-why-card az-reveal" key={item.title}>
+                <Link className="az-why-card az-reveal" key={item.title} to={`/why-azentmart/${slugify(item.title)}`}>
                   <span>0{index + 1}</span>
                   <div className="az-why-icon">{item.icon}</div>
                   <h3>{item.title}</h3>
                   <p className="az-why-summary">{item.text}</p>
                   <div className="az-why-points">{points.map((point) => <span key={point}><FaCheck /> {point}</span>)}</div>
                   <FaArrowRight className="az-card-arrow" />
-                </div>
+                </Link>
               );
             })}</div>
           </div>
         </section>
 
         <section className="az-section az-results-section" id="results">
-          <div className="az-container"><div className="az-results-card az-reveal"><div className="az-results-copy"><span className="az-section-kicker">CASE STUDIES / RESULTS</span><h2>See what happens when AI gets to work.</h2><p>Use verified customer outcomes to show where AzentMart creates measurable impact. Add approved case studies and results here as they become available.</p><a href="#final-cta" className="az-btn az-btn-primary">Discuss your workflow <FaArrowRight /></a></div><div className="az-results-placeholder"><div><strong>10,000+</strong><span>AI employee catalog target</span></div><div><strong>24/7</strong><span>Workforce availability</span></div><div><strong>Human + AI</strong><span>Human oversight</span></div><small>Customer-specific performance metrics should be replaced with verified results.</small></div></div></div>
+          <div className="az-container"><div className="az-results-card az-reveal"><div className="az-results-copy"><span className="az-section-kicker">CASE STUDIES / RESULTS</span><h2>See what happens when AI gets to work.</h2><p>Use verified customer outcomes to show where AzentMart creates measurable impact. Add approved case studies and results here as they become available.</p><Link to="/company/contact" className="az-btn az-btn-primary">Discuss your workflow <FaArrowRight /></Link></div><div className="az-results-placeholder"><div><strong>10,000+</strong><span>AI employee catalog target</span></div><div><strong>24/7</strong><span>Workforce availability</span></div><div><strong>Human + AI</strong><span>Human oversight</span></div><small>Customer-specific performance metrics should be replaced with verified results.</small></div></div></div>
         </section>
 
         <section className="az-section az-pricing-section" id="pricing">
-          <div className="az-container"><div className="az-section-heading az-reveal"><span className="az-section-kicker">PRICING / CTA</span><h2>Start with what your business needs. Scale when you're ready.</h2><p>Choose a focused workflow and expand your AI workforce as your business grows.</p></div><div className="az-pricing-note az-reveal"><div><span>AI WORKFORCE PLATFORM</span><strong>Flexible deployment for growing teams.</strong><p>Explore the right AI employee, workflow and deployment approach for your business.</p></div><a href="#final-cta" className="az-btn az-btn-primary">Book a free demo <FaArrowRight /></a></div></div>
+          <div className="az-container"><div className="az-section-heading az-reveal"><span className="az-section-kicker">PRICING / CTA</span><h2>Start with what your business needs. Scale when you're ready.</h2><p>Choose a focused workflow and expand your AI workforce as your business grows.</p></div><div className="az-pricing-note az-reveal"><div><span>AI WORKFORCE PLATFORM</span><strong>Flexible deployment for growing teams.</strong><p>Explore the right AI employee, workflow and deployment approach for your business.</p></div><Link to="/demo" className="az-btn az-btn-primary">Book a free demo <FaArrowRight /></Link></div></div>
         </section>
 
         <section className="az-section az-faq-section" id="faq">
@@ -385,7 +417,7 @@ function LandingPage() {
         </section>
 
         <section className="az-final-cta" id="final-cta">
-          <div className="az-cta-orb" /><div className="az-container"><div className="az-final-card az-reveal"><div><span className="az-section-kicker">READY TO BUILD YOUR AI WORKFORCE?</span><h2>Hire. Deploy. Manage.<br /><span>Scale with AI.</span></h2><p>See how AzentMart AI can help your business automate work, improve customer experiences and scale more efficiently.</p></div><div className="az-final-actions"><a href="mailto:hello@azentmart.ai" className="az-btn az-btn-white">Book Free Demo <FaArrowRight /></a><Link to="/marketplace" className="az-btn az-btn-blue-ghost">Explore agents</Link></div></div></div>
+          <div className="az-cta-orb" /><div className="az-container"><div className="az-final-card az-reveal"><div><span className="az-section-kicker">READY TO BUILD YOUR AI WORKFORCE?</span><h2>Hire. Deploy. Manage.<br /><span>Scale with AI.</span></h2><p>See how AzentMart AI can help your business automate work, improve customer experiences and scale more efficiently.</p></div><div className="az-final-actions"><Link to="/demo" className="az-btn az-btn-white">Book Free Demo <FaArrowRight /></Link><Link to="/marketplace" className="az-btn az-btn-blue-ghost">Explore agents</Link></div></div></div>
         </section>
       </main>
       <Footer />

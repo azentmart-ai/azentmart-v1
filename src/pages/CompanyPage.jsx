@@ -9,38 +9,74 @@ const content = {
   about: {
     kicker: "COMPANY",
     title: "About AzentMart",
-    intro: "AzentMart AI is building an AI workforce platform for businesses.",
-    body: "Our platform is designed around the idea that every business can use specialized AI employees across sales, support, voice, marketing, operations and other business functions. The goal is to make AI work part of everyday business workflows—not just another standalone tool.",
-    cards: ["AI workforce platform", "10,000+ AI employee vision", "Every business. Every function."]
+    intro: "Building the AI workforce for every business.",
+    body: "AzentMart AI is building a practical AI workforce platform where specialized AI employees can support people across sales, customer service, voice, marketing, operations and other business functions. The focus is not simply adding another AI tool—it is connecting capable AI systems to the work businesses already do.",
+    detailTitle: "AI that fits the way businesses work.",
+    detail: [
+      ["A workforce, not just a chatbot", "Specialized AI employees are designed around roles, responsibilities and repeatable workflows."],
+      ["Built for real workflows", "AzentMart focuses on the handoffs, tools and processes that turn an AI response into useful business work."],
+      ["Human + AI by design", "People can review, approve or take over when context, judgment or accountability matters."],
+      ["A growing workforce vision", "The platform is designed around a long-term vision of 10,000+ AI employees across industries and functions."],
+    ],
+    cards: ["AI workforce platform", "10,000+ AI employee vision", "Every business. Every function."],
   },
   leadership: {
     kicker: "COMPANY",
     title: "Leadership Team",
     intro: "The people shaping the AzentMart AI journey.",
-    body: "This space is designed for the official leadership profiles, roles and biographies supplied by the AzentMart team. Keeping these details editable makes it easy to publish approved leadership information without changing the site structure.",
-    cards: ["Leadership", "Vision", "Execution"]
+    body: "AzentMart is being built around a clear product vision: make advanced AI useful inside everyday business operations. This section is intentionally structured to introduce official leaders, roles and biographies as they are approved, without inventing names, credentials or claims.",
+    detailTitle: "A leadership model built around useful AI.",
+    detail: [
+      ["Product vision", "Keep the platform focused on practical business outcomes, clear workflows and measurable value."],
+      ["Technology & AI", "Build reliable AI systems that can reason about tasks, use connected tools and operate within defined boundaries."],
+      ["Business execution", "Turn customer needs into deployable workflows while keeping implementation understandable and accountable."],
+      ["Responsible growth", "Expand the AI workforce without losing sight of security, human oversight and customer trust."],
+    ],
+    cards: ["Product vision", "Technology & AI", "Business execution", "Responsible growth"],
   },
   culture: {
     kicker: "COMPANY",
     title: "Culture",
     intro: "Build boldly. Work thoughtfully. Keep people at the center.",
-    body: "AzentMart's culture page can communicate the values, working principles and employee experience that define the company. The layout is ready for your approved culture statements, team stories and visuals.",
-    cards: ["Customer first", "Human + AI", "Continuous learning"]
+    body: "We value curiosity, ownership, collaboration and continuous learning. We aim to build with a practical mindset: solve meaningful problems, make AI useful, communicate clearly and keep people involved wherever context, judgment or responsibility matters.",
+    detailTitle: "How we want to work together.",
+    detail: [
+      ["Build with purpose", "Start with a real problem and make every product decision serve a useful outcome."],
+      ["Stay curious", "Question assumptions, learn quickly and keep improving the systems we build."],
+      ["Own the outcome", "Take responsibility for the quality of the work, not just the task that was assigned."],
+      ["Work together", "Share context, give useful feedback and make collaboration part of the product process."],
+      ["Human + AI", "Use AI to extend what people can do while respecting human judgment and responsibility."],
+    ],
+    cards: ["Build with purpose", "Stay curious", "Own the outcome", "Work together", "Human + AI"],
   },
   careers: {
     kicker: "COMPANY",
     title: "Careers",
-    intro: "Help build the AI workforce of the future.",
-    body: "AzentMart brings together people who want to work on practical AI products, business automation and new ways for people and AI systems to collaborate. Add current openings and role details here as hiring needs are published.",
-    cards: ["Engineering", "AI & Automation", "Product & Growth"]
+    intro: "Build the future of work with us.",
+    body: "We are interested in people who want to build practical AI products, intelligent workflows and new ways for people and AI systems to work together. As roles become available, opportunities may span engineering, AI and automation, product, design, growth and business operations.",
+    detailTitle: "Work on problems that connect AI to real businesses.",
+    detail: [
+      ["Engineering", "Build dependable web products, platforms, integrations and systems that businesses can use every day."],
+      ["AI & Automation", "Design AI workflows, agent behavior, tool use and evaluation around concrete business tasks."],
+      ["Product & Growth", "Understand customer problems, shape useful experiences and help turn adoption into measurable value."],
+      ["Design", "Create interfaces and workflows that make powerful AI understandable, approachable and easy to use."],
+      ["Business Operations", "Help connect product, customers, partnerships and internal processes as the company grows."],
+    ],
+    cards: ["Engineering", "AI & Automation", "Product & Growth", "Design", "Business Operations"],
   },
   contact: {
     kicker: "COMPANY",
     title: "Contact Us",
     intro: "Let's talk about your AI workforce.",
-    body: "Tell us what your business is trying to automate, where your teams need support and which workflows you want to improve. The AzentMart team can then help identify a practical starting point.",
-    cards: ["Sales enquiries", "Partnerships", "Support"]
-  }
+    body: "Tell us what your business is trying to automate, where your teams need support and which workflows you want to improve. The AzentMart team can help identify a practical starting point.",
+    detailTitle: "Start with the workflow you want to improve.",
+    detail: [
+      ["Sales enquiries", "Explore AI employees and workflows for lead generation, qualification and follow-up."],
+      ["Partnerships", "Discuss integrations, channel opportunities and ways to work with AzentMart."],
+      ["Support", "Share product, account or technical questions so the right team can help."],
+    ],
+    cards: ["Sales enquiries", "Partnerships", "Support"],
+  },
 };
 
 function CompanyPage() {
@@ -59,7 +95,7 @@ function CompanyPage() {
               <h1>{page.title}</h1>
               <p className="az-company-intro">{page.intro}</p>
               <p className="az-company-body">{page.body}</p>
-              {section === "contact" && <a className="az-btn az-btn-primary" href="mailto:hello@azentmart.ai">Email AzentMart <FaEnvelope /></a>}
+              {section === "contact" && <Link className="az-btn az-btn-primary" to="/company/contact">Talk to AzentMart <FaEnvelope /></Link>}
               {section === "careers" && <a className="az-btn az-btn-primary" href="mailto:careers@azentmart.ai">Ask about careers <FaBriefcase /></a>}
             </div>
             <div className="az-company-panel">
@@ -70,6 +106,27 @@ function CompanyPage() {
             </div>
           </div>
         </section>
+
+        <section className="az-company-detail-section">
+          <div className="az-container az-company-detail-grid">
+            <div>
+              <span className="az-section-kicker">{page.title.toUpperCase()}</span>
+              <h2>{page.detailTitle}</h2>
+            </div>
+            <div className="az-company-detail-copy">
+              <p>{page.body}</p>
+              <div className="az-company-detail-cards">
+                {page.detail.map(([title, text]) => (
+                  <article className="az-company-detail-card" key={title}>
+                    <strong>{title}</strong>
+                    <p>{text}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="az-section az-company-links-section">
           <div className="az-container">
             <div className="az-section-heading"><span className="az-section-kicker">EXPLORE COMPANY</span><h2>Learn more about AzentMart.</h2></div>

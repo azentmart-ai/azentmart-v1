@@ -1,0 +1,52 @@
+.az-content-site{background:#fff;color:#0b2239}
+.az-content-page{overflow:hidden}
+.az-content-hero{position:relative;min-height:650px;padding:140px 0 90px;background:radial-gradient(circle at 82% 28%,rgba(10,102,194,.13),transparent 32%),linear-gradient(180deg,#f7fbff 0%,#fff 100%)}
+.az-content-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(10,102,194,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(10,102,194,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 90%)}
+.az-content-glow{position:absolute;width:360px;height:360px;right:-90px;top:150px;border-radius:50%;background:rgba(10,102,194,.08);filter:blur(35px);pointer-events:none}
+.az-content-hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:70px;align-items:center}
+.az-content-copy{max-width:760px}
+.az-content-breadcrumb{display:inline-flex;margin-bottom:28px;color:#0a66c2;text-decoration:none;font:700 9px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.az-content-breadcrumb:hover{text-decoration:underline}
+.az-content-icon{width:54px;height:54px;display:grid;place-items:center;margin:18px 0;border:1px solid #cfe2f2;border-radius:15px;background:#eaf4fb;color:#0a66c2;font-size:21px}
+.az-content-copy h1{max-width:780px;margin:0;color:#0b2239;font:600 clamp(42px,5vw,64px)/.98 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.065em}
+.az-content-intro{max-width:720px;margin:24px 0 0;color:#163b5c;font:600 21px/1.42 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.025em}
+.az-content-body{max-width:720px;margin:18px 0 0;color:#637b8e;font:12px/1.9 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-content-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.az-content-panel{padding:30px;border:1px solid #d4e4ee;border-radius:22px;background:rgba(255,255,255,.92);box-shadow:0 28px 70px rgba(14,48,74,.1)}
+.az-content-panel>span{color:#0a66c2;font:700 8px/1 "DM Sans", Arial, Arial, Helvetica, sans-serif;letter-spacing:.15em}
+.az-content-panel>strong{display:block;margin-top:10px;color:#0b2239;font:600 28px/1.15 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.04em}
+.az-content-points{display:grid;gap:10px;margin-top:26px}
+.az-content-points div{display:flex;align-items:center;gap:10px;padding:12px 13px;border:1px solid #e0ebf2;border-radius:10px;color:#426078;font:9px/1.4 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-content-points i{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#0a66c2}
+.az-content-detail-section{background:#fff}
+.az-content-detail-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:start}
+.az-content-detail-grid h2{margin:0;color:#0b2239;font:600 clamp(34px,4vw,52px)/1.02 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.055em}
+.az-content-detail-copy{color:#637b8e;font:12px/1.9 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-content-detail-copy p{margin:0 0 18px}
+.az-content-related-section{background:#f8fbfd}
+.az-content-related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.az-content-related-card{min-height:190px;padding:22px;display:flex;flex-direction:column;text-decoration:none;border:1px solid #dbe7ee;border-radius:16px;background:#fff;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.az-content-related-card:hover{transform:translateY(-4px);border-color:#b9d4e8;box-shadow:0 18px 38px rgba(13,48,74,.08)}
+.az-content-related-card>span{color:#0a66c2;font:700 7px "DM Sans", Arial, Arial, Helvetica, sans-serif;letter-spacing:.12em}
+.az-content-related-card strong{margin-top:16px;color:#173b59;font:600 17px/1.2 "DM Sans", Arial, Arial, sans-serif}
+.az-content-related-card p{margin:10px 0;color:#637b8e;font:9px/1.7 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-content-related-card svg{margin-top:auto;align-self:flex-end;color:#0a66c2}
+.az-content-contact-strip{padding:70px 0;background:#0a66c2;color:#fff}
+.az-content-contact-strip .az-container{display:flex;justify-content:space-between;align-items:center;gap:30px}
+.az-content-contact-strip h2{margin:8px 0 0;color:#fff;font:600 clamp(30px,4vw,48px)/1.02 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.05em}
+.az-content-contact-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px}
+.az-content-email{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font:600 10px "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-content-email:hover{text-decoration:underline}
+.az-demo-shell{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+.az-demo-copy h1{max-width:700px;margin:10px 0 20px;color:#0b2239;font:600 clamp(42px,5vw,64px)/.98 "DM Sans", Arial, Arial, sans-serif;letter-spacing:-.06em}
+.az-demo-copy>p{max-width:620px;color:#637b8e;font:12px/1.9 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+.az-demo-points{display:grid;gap:12px;margin-top:28px;color:#173b59;font:600 11px "DM Sans", Arial, Arial, sans-serif}
+.az-demo-points span{display:flex;align-items:center;gap:9px}.az-demo-points svg{color:#0a66c2}
+.az-demo-direct{display:flex;flex-wrap:wrap;gap:18px;margin-top:30px}.az-demo-direct a{display:inline-flex;align-items:center;gap:8px;color:#0a66c2;text-decoration:none;font:600 9px "DM Sans", Arial, Arial, Helvetica, sans-serif}.az-demo-direct a:hover{text-decoration:underline}
+.az-demo-form{padding:28px;border:1px solid #d4e4ee;border-radius:20px;background:#fff;box-shadow:0 28px 70px rgba(14,48,74,.1)}
+.az-demo-form label{display:grid;gap:8px;margin-bottom:16px;color:#173b59;font:600 10px "DM Sans", Arial, Arial, sans-serif}
+.az-demo-form input,.az-demo-form textarea{width:100%;border:1px solid #d8e6ef;border-radius:10px;background:#fbfdff;color:#173b59;outline:0;padding:12px 13px;font:10px "DM Sans", Arial, Arial, Helvetica, sans-serif;transition:border-color .2s ease,box-shadow .2s ease}
+.az-demo-form input{height:46px}.az-demo-form textarea{min-height:125px;resize:vertical}.az-demo-form input:focus,.az-demo-form textarea:focus{border-color:#8dbce3;box-shadow:0 0 0 4px rgba(10,102,194,.07)}
+.az-demo-form .az-btn{width:100%;border:0;justify-content:center}.az-demo-success{margin:4px 0 16px;padding:11px 12px;border:1px solid #bfe0c9;border-radius:9px;background:#f1fbf4;color:#23633a;font:9px/1.6 "DM Sans", Arial, Arial, Helvetica, sans-serif}
+@media(max-width:980px){.az-content-hero-inner,.az-demo-shell{grid-template-columns:1fr;gap:40px}.az-content-panel{max-width:620px}.az-content-detail-grid{grid-template-columns:1fr;gap:30px}.az-content-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.az-content-contact-strip .az-container{align-items:flex-start;flex-direction:column}}
+@media(max-width:650px){.az-content-hero{padding:120px 0 65px}.az-content-copy h1,.az-demo-copy h1{font-size:42px}.az-content-intro{font-size:17px}.az-content-body,.az-content-detail-copy,.az-demo-copy>p{font-size:10px}.az-content-actions{flex-direction:column;align-items:stretch}.az-content-actions .az-btn{justify-content:center}.az-content-related-grid{grid-template-columns:1fr}.az-content-contact-actions{align-items:flex-start;flex-direction:column}.az-demo-form{padding:20px}}

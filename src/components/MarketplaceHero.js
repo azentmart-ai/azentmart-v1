@@ -7,14 +7,14 @@ function MarketplaceHero() {
 
       <div className="marketplace-badge">
         <FaMagic className="spark-icon" />
-        100+ AI Agents Available
+        READY-TO-USE AI AGENTS
       </div>
 
-      <h4 className="marketplace-title">
+      <h1 className="marketplace-title">
         Discover the Right AI Agent
         <br />
         for Your Business
-      </h4>
+      </h1>
 
       <p className="marketplace-desc">
         Browse, filter, and activate powerful AI agents that automate your workflows
