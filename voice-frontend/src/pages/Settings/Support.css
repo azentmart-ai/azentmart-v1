@@ -1,0 +1,557 @@
+/* =========================================================
+   AZENTMART AI - SUPPORT PAGE
+   MATCHES AI CHAT PAGE SIZE / STRUCTURE
+   DARK THEME
+   ========================================================= */
+
+.support-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px 28px 28px;
+  box-sizing: border-box;
+
+  background: #061a2d;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.support-header {
+  margin-bottom: 20px;
+}
+
+.support-eyebrow {
+  margin-bottom: 5px;
+
+  color: #55a9f5;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.support-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.support-header p {
+  margin: 6px 0 0;
+
+  color: #6fa4d2;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TOP SUPPORT CARDS
+   ========================================================= */
+
+.support-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.support-info-card {
+  min-height: 108px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  border: 1px solid #214d72;
+  border-radius: 10px;
+
+  background: #0b2944;
+
+  box-sizing: border-box;
+}
+
+.support-info-card:hover {
+  border-color: #32658f;
+}
+
+
+/* ICON */
+
+.support-info-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #292b6d;
+  color: #9479ff;
+
+  font-size: 16px;
+}
+
+
+/* CONTENT */
+
+.support-info-content {
+  min-width: 0;
+}
+
+.support-card-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #6ca0cc;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+}
+
+.support-info-content h3 {
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.support-info-content p {
+  margin: 0;
+
+  color: #6796bd;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   MAIN SUPPORT CONTENT
+   ========================================================= */
+
+.support-main-grid {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+
+  gap: 14px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   CONTACT SUPPORT
+   ========================================================= */
+
+.support-form-card {
+  padding: 18px 20px 20px;
+
+  border: 1px solid #214d72;
+  border-radius: 10px;
+
+  background: #0b2944;
+
+  box-sizing: border-box;
+}
+
+
+/* HEADING */
+
+.support-section-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.support-heading-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #7355f5;
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+.support-section-heading h2 {
+  margin: 0 0 3px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.support-section-heading p {
+  margin: 0;
+
+  color: #699ac1;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.support-success {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 12px;
+  padding: 9px 12px;
+
+  border: 1px solid #276353;
+  border-radius: 7px;
+
+  background: #0d302c;
+
+  color: #65d8ae;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.support-field {
+  margin-bottom: 12px;
+}
+
+.support-field label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #d8e7f5;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* INPUT */
+
+.support-field input,
+.support-field select,
+.support-field textarea {
+  width: 100%;
+
+  border: 1px solid #275477;
+  border-radius: 6px;
+
+  outline: none;
+
+  background: #08243c;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 11px;
+
+  box-sizing: border-box;
+}
+
+
+/* INPUT + SELECT */
+
+.support-field input,
+.support-field select {
+  height: 38px;
+
+  padding: 0 11px;
+}
+
+
+/* TEXTAREA */
+
+.support-field textarea {
+  height: 120px;
+
+  padding: 10px 11px;
+
+  resize: none;
+
+  line-height: 1.5;
+}
+
+
+/* PLACEHOLDER */
+
+.support-field input::placeholder,
+.support-field textarea::placeholder {
+  color: #557d9f;
+}
+
+
+/* SELECT */
+
+.support-field select {
+  cursor: pointer;
+}
+
+
+/* FOCUS */
+
+.support-field input:focus,
+.support-field select:focus,
+.support-field textarea:focus {
+  border-color: #7355f5;
+
+  box-shadow:
+    0 0 0 2px rgba(115, 85, 245, 0.12);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.support-submit-btn {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #6e4df4;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.support-submit-btn:hover {
+  background: #7c5cff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RIGHT COLUMN
+   ========================================================= */
+
+.support-side {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   HOW CAN WE HELP
+   ========================================================= */
+
+.support-side-card {
+  padding: 18px;
+
+  border: 1px solid #214d72;
+  border-radius: 10px;
+
+  background: #0b2944;
+
+  box-sizing: border-box;
+}
+
+.support-side-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border-radius: 8px;
+
+  background: #7355f5;
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+.support-side-card h3 {
+  margin: 0 0 6px;
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.support-side-card p {
+  margin: 0;
+
+  color: #6c9bc2;
+
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   TOPICS
+   ========================================================= */
+
+.support-topics {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  margin-top: 15px;
+  padding-top: 13px;
+
+  border-top: 1px solid #204765;
+}
+
+.support-topic {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #c7dced;
+
+  font-size: 11px;
+}
+
+.support-topic span {
+  width: 5px;
+  height: 5px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #7857ff;
+}
+
+
+/* =========================================================
+   SUPPORT RESPONSE
+   ========================================================= */
+
+.support-response-card {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 16px 18px;
+}
+
+.support-response-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #292b6d;
+  color: #927aff;
+
+  font-size: 14px;
+}
+
+.support-response-card .support-card-label {
+  margin-bottom: 4px;
+}
+
+.support-response-card h3 {
+  margin: 0 0 4px;
+
+  font-size: 14px;
+}
+
+.support-response-card p {
+  font-size: 10.5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .support-page {
+    padding: 20px;
+  }
+
+  .support-main-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  }
+}
+
+
+@media (max-width: 850px) {
+  .support-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .support-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-page {
+    overflow-y: auto;
+  }
+}

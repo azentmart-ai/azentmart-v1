@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b16" />
+  <title>AzentMart AI | Marketing Agent</title>
+  <link rel="stylesheet" href="./LandingPage.css" />
+  <style>
+    html, body { margin: 0; padding: 0; min-height: 100%; background: #070b16; }
+    #app-host { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="marketing-landing" class="landing-page">
+    <div class="landing-noise"></div>
+    <div class="landing-orb landing-orb-one"></div>
+    <div class="landing-orb landing-orb-two"></div>
+
+    <header class="landing-header">
+      <div class="landing-header-inner">
+        <button class="landing-brand" data-scroll="top" aria-label="Azentmart AI home">
+          <span class="brand-logo-frame"><img src="./azentmart-ai-logo.jpg" alt="Azentmart AI" /></span>
+        </button>
+        <nav class="landing-nav" aria-label="Main navigation">
+          <button data-scroll="capabilities">Capabilities</button>
+          <button data-scroll="agents">AI Employees</button>
+          <button data-scroll="workflow">How it works</button>
+          <button data-scroll="about">About</button>
+        </nav>
+        <button class="landing-login-button" data-login>Login <span class="inline-arrow">→</span></button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="landing-hero">
+        <div class="hero-copy">
+          <div class="eyebrow-pill"><span class="eyebrow-dot"></span><span class="spark-mark">✦</span> MARKETING AI WORKSPACE</div>
+          <h1>Your marketing team,<span> amplified by AI.</span></h1>
+          <p class="hero-description">Bring strategy, content, SEO, social media, advertising, email and research into one intelligent marketing workspace built around specialized AI employees.</p>
+          <div class="hero-actions">
+            <button class="primary-cta" data-login>Enter Marketing Workspace <span class="inline-arrow">→</span></button>
+            <button class="secondary-cta" data-scroll="agents">Explore AI Employees</button>
+          </div>
+          <div class="hero-note"><span class="status-dot"></span><span>Powered by the existing authenticated Marketing AI workspace</span></div>
+        </div>
+
+        <div class="hero-visual" aria-label="Marketing AI workspace preview">
+          <div class="hero-glow"></div>
+          <div class="dashboard-preview">
+            <div class="preview-topbar"><div class="preview-brand-mini"><span class="mini-mark">A</span><span>Marketing Workspace</span></div><span class="preview-status"><i></i> Live</span></div>
+            <div class="preview-body">
+              <div class="preview-sidebar"><span class="preview-label">AI EMPLOYEES</span>
+                <div class="preview-agent active"><span>✦</span><b>Marketing &amp; Strategy</b></div>
+                <div class="preview-agent"><span>Aa</span><b>Content</b></div>
+                <div class="preview-agent"><span>◎</span><b>Social Media</b></div>
+                <div class="preview-agent"><span>⌕</span><b>SEO</b></div>
+                <div class="preview-agent"><span>↗</span><b>Ads</b></div>
+              </div>
+              <div class="preview-main">
+                <div class="preview-heading"><div><span class="preview-kicker">CAMPAIGN ORCHESTRATOR</span><h3>Launch a coordinated campaign</h3></div><span class="preview-spark">✦</span></div>
+                <div class="preview-input"><span>Describe your marketing objective...</span><span class="preview-send">→</span></div>
+                <div class="preview-cards">
+                  <div class="preview-result large"><span>STRATEGY</span><strong>Audience + positioning</strong><div class="fake-lines"><i></i><i></i><i></i></div></div>
+                  <div class="preview-result"><span>CONTENT</span><strong>Campaign messaging</strong><div class="fake-bars"><i></i><i></i><i></i><i></i></div></div>
+                  <div class="preview-result"><span>INSIGHTS</span><strong>Market signals</strong><div class="fake-chart"><i></i><i></i><i></i><i></i><i></i></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="capability-strip" id="capabilities"><div class="capability-strip-inner"><div><span class="section-kicker">ONE WORKSPACE</span><strong>From the first idea to campaign analysis.</strong></div><div class="capability-tags"><span>Strategy</span><span>Content</span><span>SEO</span><span>Social</span><span>Ads</span><span>Email</span><span>Research</span></div></div></section>
+
+      <section class="landing-section" id="agents">
+        <div class="section-heading centered"><span class="section-kicker">SPECIALIZED AI EMPLOYEES</span><h2>Different marketing jobs.<br><span>One coordinated workspace.</span></h2><p>The existing Marketing AI project includes specialized employees for the core parts of a modern marketing workflow.</p></div>
+        <div class="employee-grid">
+          <article class="employee-card"><div class="employee-icon violet">✦</div><div class="employee-card-copy"><h3>Marketing &amp; Strategy</h3><p>Turn business goals into clear marketing plans, campaigns and next steps.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon blue">Aa</div><div class="employee-card-copy"><h3>Content</h3><p>Create campaign copy, blogs, messaging and content ideas for every stage.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon cyan">◎</div><div class="employee-card-copy"><h3>Social Media</h3><p>Plan social content, engagement ideas and channel-ready messaging.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon indigo">⌕</div><div class="employee-card-copy"><h3>SEO</h3><p>Explore keywords, search intent and optimization opportunities for content.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon purple">↗</div><div class="employee-card-copy"><h3>Ads</h3><p>Develop paid-search concepts, ad messaging and campaign directions.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon sky">✉</div><div class="employee-card-copy"><h3>Email Marketing</h3><p>Build personalized email campaign ideas, sequences and audience messaging.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon teal">◫</div><div class="employee-card-copy"><h3>Market Research</h3><p>Organize customer, market and competitor research into useful insights.</p></div><span class="card-arrow">→</span></article>
+          <article class="employee-card"><div class="employee-icon blue">⌁</div><div class="employee-card-copy"><h3>Campaign Analyst</h3><p>Review campaign outputs and identify opportunities for optimization.</p></div><span class="card-arrow">→</span></article>
+        </div>
+      </section>
+
+      <section class="landing-section workflow-section" id="workflow"><div class="workflow-layout"><div class="section-heading"><span class="section-kicker">HOW IT WORKS</span><h2>Turn a marketing brief into coordinated AI work.</h2><p>Start with the outcome you want. The workspace is designed around specialized agents so each marketing task has a clear place in the workflow.</p><button class="text-cta" data-login>Open the workspace <span class="inline-arrow">→</span></button></div><div class="workflow-list"><div class="workflow-step"><span class="step-number">01</span><div><h3>Describe the goal</h3><p>Give the workspace a product, audience, campaign objective or marketing task.</p></div></div><div class="workflow-step"><span class="step-number">02</span><div><h3>Let the agents collaborate</h3><p>Specialized marketing employees can handle strategy, content, SEO, social, ads and research.</p></div></div><div class="workflow-step"><span class="step-number">03</span><div><h3>Work from one workspace</h3><p>Review the generated campaign work and use the existing authenticated workspace to continue.</p></div></div></div></div></section>
+
+      <section class="architecture-section" id="about"><div class="architecture-panel"><div class="architecture-copy"><span class="section-kicker">BUILT AROUND YOUR WORKFLOW</span><h2>A polished front door to the Marketing AI system you already have.</h2><p>This landing experience sits in front of the existing application. Your authentication, marketing agents, APIs, database and backend workflow remain behind the same workspace entry point.</p><div class="architecture-points"><span><i></i> Existing authentication</span><span><i></i> Existing AI employees</span><span><i></i> Existing backend APIs</span><span><i></i> Existing workspace data</span></div></div><div class="architecture-visual"><div class="architecture-node main-node"><span class="node-symbol">✦</span><div><small>FRONT DOOR</small><strong>Marketing Landing</strong></div></div><div class="architecture-line"></div><div class="architecture-node"><span class="node-symbol blue">↗</span><div><small>AUTHENTICATED</small><strong>Existing Workspace</strong></div></div><div class="architecture-line short"></div><div class="architecture-chip-row"><span>Strategy</span><span>Content</span><span>SEO</span><span>Research</span></div></div></div></section>
+
+      <section class="final-cta-section"><div class="final-cta-glow"></div><div class="final-cta-content"><span class="section-kicker">READY WHEN YOU ARE</span><h2>Make your next marketing workflow<br><span>feel less fragmented.</span></h2><p>Enter the existing Marketing AI workspace and continue where the platform already works.</p><button class="primary-cta large" data-login>Login to Marketing AI <span class="inline-arrow">→</span></button></div></section>
+    </main>
+
+    <footer class="landing-footer"><div class="footer-top"><div class="footer-brand-block"><span class="footer-logo-frame"><img src="./azentmart-ai-logo.jpg" alt="Azentmart AI" /></span><p>Intelligent marketing workflows, presented through one focused AI workspace.</p></div><div class="footer-links"><div><span>EXPLORE</span><button data-scroll="capabilities">Capabilities</button><button data-scroll="agents">AI Employees</button><button data-scroll="workflow">How it works</button></div><div><span>WORKSPACE</span><button data-login>Login</button><button data-scroll="about">About</button></div></div></div><div class="footer-bottom"><span>© 2026 Azentmart AI</span><span>Marketing AI Workspace</span></div></footer>
+  </div>
+
+  <div id="app-host" style="display:none;min-height:100vh;"></div>
+
+  <script>
+    (() => {
+      const landing = document.getElementById('marketing-landing');
+      const host = document.getElementById('app-host');
+      const scroll = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('[data-scroll]').forEach((button) => button.addEventListener('click', () => scroll(button.dataset.scroll)));
+      document.querySelectorAll('[data-login]').forEach((button) => button.addEventListener('click', () => {
+        landing.style.display = 'none';
+        host.style.display = 'block';
+        host.id = 'root';
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = './assets/index-DgoAc1cy.css';
+        document.head.appendChild(css);
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = './assets/index-DlOU4rSe.js';
+        document.body.appendChild(script);
+      }));
+    })();
+  </script>
+</body>
+</html>

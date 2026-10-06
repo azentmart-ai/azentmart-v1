@@ -1,0 +1,5 @@
+ function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }import axios from "axios";
+const api=axios.create({baseURL:import.meta.env.VITE_API_URL||"/api",headers:{"Content-Type":"application/json"}});
+api.interceptors.request.use(config=>{const token=localStorage.getItem("azentmart_hr_token");if(token)config.headers.Authorization=`Bearer ${token}`;return config;});
+api.interceptors.response.use(r=>r,error=>{if(_optionalChain([error, 'access', _ => _.response, 'optionalAccess', _2 => _2.status])===401){localStorage.removeItem("azentmart_hr_token");localStorage.removeItem("azentmart_hr_user");}return Promise.reject(error)});
+export default api;

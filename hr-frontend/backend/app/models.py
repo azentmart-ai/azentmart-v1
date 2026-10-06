@@ -1,0 +1,33 @@
+from .db.models import (
+    User,
+    Employee,
+    Onboarding,
+    OnboardingTask,
+    Attendance,
+    AttendanceRegularization,
+    Leave,
+    Document,
+    Policy,
+    PolicyAcknowledgement,
+    Benefit,
+    Payroll,
+    Ticket,
+    KnowledgeChunk,
+)
+
+__all__ = [
+    "User",
+    "Employee",
+    "Onboarding",
+    "OnboardingTask",
+    "Attendance",
+    "AttendanceRegularization",
+    "Leave",
+    "Document",
+    "Policy",
+    "PolicyAcknowledgement",
+    "Benefit",
+    "Payroll",
+    "Ticket",
+    "KnowledgeChunk",
+]
