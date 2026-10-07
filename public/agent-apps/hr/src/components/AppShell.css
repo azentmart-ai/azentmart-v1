@@ -1,4 +1,0 @@
-.app-shell { min-height:100vh; display:flex; background:var(--bg); }
-.app-main { min-width:0; flex:1; display:flex; flex-direction:column; }
-.app-content { width:100%; max-width:none; padding:26px 30px 42px; flex:1; }
-@media (max-width:900px){ .app-content{padding:22px 18px 34px;} }

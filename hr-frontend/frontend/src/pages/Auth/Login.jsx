@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import {
   ArrowRight,
   Check,
@@ -69,16 +70,16 @@ export default function Login() {
 
       <header className="flex h-[74px] items-center justify-between border-b border-slate-200 bg-white px-6 sm:px-10">
 
-        <Link
-          to="/"
-          className="flex items-center gap-3"
-        >
-          <img
-            src="/agent-apps/hr/assets/logo.svg"
-            alt="AzentMart AI"
-            className="h-10 w-[170px] object-contain object-left"
-          />
-        </Link>
+       <Link
+  to="/"
+  className="flex items-center gap-3"
+>
+  <img
+    src={logo}
+    alt="AzentMart AI"
+    className="h-10 w-[170px] object-contain object-left"
+  />
+</Link>
 
         <div className="hidden items-center gap-2 text-[10px] font-semibold text-slate-400 sm:flex">
           <ShieldCheck size={14} />

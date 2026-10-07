@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import logo from "../../assets/logo.png";
 import {
   ArrowRight,
   ChevronRight,
@@ -119,14 +119,12 @@ function Home() {
         <div className="hr-nav-inner">
 
           <Link to="/" className="hr-logo">
-
-            <img
-              className="hr-logo-image"
-              src="/agent-apps/hr/assets/logo.svg"
+           <img
+              src={logo}
               alt="AzentMart AI"
-            />
-
-          </Link>
+              className="hr-logo-image"
+          />
+           </Link>
 
 
           <nav className={`hr-navigation ${menuOpen ? "show" : ""}`}>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./HRFooter.css";
+import logo from "../assets/logo.png";
 
 export default function HRFooter() {
   return (
@@ -9,7 +10,7 @@ export default function HRFooter() {
         <div className="hr-footer-brand">
           <Link to="/" className="hr-footer-logo">
             <span className="hr-footer-logo-surface">
-              <img src="/agent-apps/hr/assets/logo.svg" alt="AzentMart AI" />
+              <img src={logo} alt="AzentMart AI" />
             </span>
           </Link>
           <p>Intelligent people operations for modern organizations.</p>

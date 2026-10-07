@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import {
   ArrowRight,
   ArrowLeft,
@@ -47,15 +48,13 @@ export default function ForgotPassword() {
 
       <header className="auth-navbar">
 
-        <Link to="/" className="auth-logo">
-
-          <img
-            src="/agent-apps/hr/assets/logo.svg"
-            alt="AzentMart AI"
-            className="auth-logo-image"
-          />
-
-        </Link>
+   <Link to="/" className="auth-logo">
+  <img
+    src={logo}
+    alt="AzentMart AI"
+    className="auth-logo-image"
+  />
+</Link>
 
 
         <Link to="/" className="auth-home-link">

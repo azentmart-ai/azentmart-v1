@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import {
   ArrowRight,
   Check,
@@ -93,14 +94,12 @@ export default function Signup() {
         <div className="signup-header-inner">
 
           <Link to="/" className="signup-brand">
-
-            <img
-              src="/agent-apps/hr/assets/logo.svg"
-              alt="AzentMart AI"
-              className="signup-brand-logo"
-            />
-
-          </Link>
+  <img
+    src={logo}
+    alt="AzentMart AI"
+    className="signup-brand-logo"
+  />
+</Link>
 
           <div className="signup-header-right">
 
