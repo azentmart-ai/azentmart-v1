@@ -12,7 +12,7 @@ import {
   Bar,
 } from "recharts";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://feature-instagram-agent.d1teziqxcf0044.amplifyapp.com";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://instagram-backend-v1-env.eba-q3wfrvxd.ap-south-1.elasticbeanstalk.com";
 
 export default function InstaDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
